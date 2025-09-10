@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navigation/Navbar.jsx'
 import Home from './Components/Pages/Home.jsx'
+import Discover from './Components/Pages/Discover.jsx'
+import Artists from './Components/Pages/Artists.jsx'
 
 import { useLocation } from 'react-router-dom';
 
@@ -17,8 +19,8 @@ function App() {
 
         <Routes>
           <Route path="/" element={ <Home />} />
-
-       
+          <Route path="/discover" element={ <Discover />} />
+          <Route path="/artists" element={ <Artists />} />
         </Routes>
       </div>
     </div>

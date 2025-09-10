@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import AdvancedSearchDropdown from './Filtering/AdvancedSearchDropdown.jsx';
 import SearchPreview from './SearchPreview.jsx';
@@ -7,7 +7,6 @@ import { useFetchSearch } from './CustomHooks/useFetchSearch.jsx';
 
 export default function Navbar() {
   const location = useLocation();
-  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   
   const isHomePage = location.pathname === '/';
@@ -16,18 +15,12 @@ export default function Navbar() {
     ? "bg-transparent text-stone-100 px-8 py-6" 
     : "bg-stone-900 text-stone-100 px-8 py-6 border-b border-stone-800";
 
-  const { data, loading, error } = useFetchSearch({ searchTerm });
+  const { data, loading } = useFetchSearch({ searchTerm });
 
   if (data) {
     console.log('Search Data:', data);
   }
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
-    }
-  };
 
   function handleChange(e) {
     setSearchTerm(e.target.value);

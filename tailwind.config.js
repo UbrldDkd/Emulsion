@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 export default {
   content: [
     "./index.html",
@@ -8,8 +9,11 @@ export default {
     extend: {},
   },
   plugins: [
+    // eslint-disable-next-line no-undef
     require('@tailwindcss/forms'),
+    // eslint-disable-next-line no-undef
     require('@tailwindcss/typography'),
+    // eslint-disable-next-line no-undef
     require('tailwind-scrollbar-hide'),
   ],
 }
