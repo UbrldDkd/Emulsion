@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Keys } from '../../Keys.js';
 
 export default function MovementListView({
@@ -11,6 +12,7 @@ export default function MovementListView({
   onZoomToEra
 }) {
   const { movementsByEra } = Keys.filters;
+  const [hoveredEra, setHoveredEra] = useState(null);
 
   const toggleEra = (eraKey) => {
     setExpandedEras(prev => {
@@ -36,12 +38,29 @@ export default function MovementListView({
     });
   };
 
+  const clearEraSelections = (eraId, eraMovements) => {
+    setSelectedMovements(prev => {
+      const newSet = new Set(prev);
+      eraMovements.forEach(movement => {
+        const movementId = `${eraId}-${movement.label}`;
+        newSet.delete(movementId);
+      });
+      return newSet;
+    });
+  };
+
   return (
     <div className="space-y-3 max-h-64 overflow-y-auto">
       {Object.entries(movementsByEra).map(([eraKey, era]) => {
         const eraId = era.label.toLowerCase().replace(/\s+/g, '-');
         const isExpanded = expandedEras.has(eraId);
         const isEraSelected = selectedEras && selectedEras.has(eraId);
+        
+        // Count selected movements in this era
+        const selectedCount = era.movements.filter(movement => {
+          const movementId = `${eraId}-${movement.label}`;
+          return selectedMovements && selectedMovements.has(movementId);
+        }).length;
 
         return (
           <div key={eraKey} className="border border-stone-700/30 rounded-lg overflow-hidden">
@@ -53,11 +72,18 @@ export default function MovementListView({
                   : 'bg-stone-800/50 hover:bg-stone-700/50'
               }`}
               onClick={() => toggleEra(eraId)}
+              onMouseEnter={() => setHoveredEra(eraId)}
+              onMouseLeave={() => setHoveredEra(null)}
             >
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-stone-200 text-sm font-medium">{era.label}</span>
                   <span className="text-stone-500 text-xs">({era.period})</span>
+                  {selectedCount > 0 && (
+                    <span className="bg-amber-500 text-amber-950 text-xs px-1.5 py-0.5 rounded-full font-medium">
+                      {selectedCount}
+                    </span>
+                  )}
                 </div>
                 <div className="text-stone-500 text-xs mt-0.5">
                   {era.movements.length} movements
@@ -65,8 +91,24 @@ export default function MovementListView({
               </div>
               
               <div className="flex items-center gap-2">
+                {/* Clear Selections Button */}
+                {selectedCount > 0 && hoveredEra === eraId && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      clearEraSelections(eraId, era.movements);
+                    }}
+                    className="p-1 rounded text-stone-400 hover:text-red-400 hover:bg-stone-700 transition-colors"
+                    title="Clear selections from this era"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
+                
                 {/* Zoom to Timeline Button */}
-                {onZoomToEra && (
+                {onZoomToEra && hoveredEra === eraId && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
