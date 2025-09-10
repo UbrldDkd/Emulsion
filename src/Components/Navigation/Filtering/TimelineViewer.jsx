@@ -3,6 +3,7 @@ import { Keys } from '../../Keys.js';
 
 const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExpandedEras, selectedMovements, hoveredMovement, setHoveredMovement }, ref) {
   const [zoom, setZoom] = useState(1);
+  const [localHoveredMovement, setLocalHoveredMovement] = useState(null); // For timeline-only hovers
   const containerRef = useRef(null);
   const isTimelineHoverRef = useRef(false);
 
@@ -22,7 +23,8 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
         endYear = 1800;
       }
     } else if (era.period.includes('BCE') && era.period.includes('CE')) {
-      const bceMatch = era.period.match(/(\d+) BCE - (\d+) CE/);
+      // Handle formats like "3500 BCE - 500 CE"
+      const bceMatch = era.period.match(/(\d+)\s*BCE\s*-\s*(\d+)\s*CE/);
       if (bceMatch) {
         startYear = -parseInt(bceMatch[1]);
         endYear = parseInt(bceMatch[2]);
@@ -64,17 +66,45 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
         let movStartYear, movEndYear;
         const movPeriodMatch = movement.period.match(/(\d+)(?:-(\d+))?/);
         
-        if (movement.period.includes('BCE') && movement.period.includes('CE')) {
-          const bceMatch = movement.period.match(/(\d+) BCE-(\d+) CE/);
-          if (bceMatch) {
-            movStartYear = -parseInt(bceMatch[1]);
-            movEndYear = parseInt(bceMatch[2]);
+        if (movement.period.includes('BCE') && movement.period.includes(' CE')) {
+          // Handle formats like "27 BCE-476 CE" (note: space before CE to distinguish from BCE)
+          const mixedMatch = movement.period.match(/(\d+)\s*BCE-(\d+)\s*CE/);
+          if (mixedMatch) {
+            movStartYear = -parseInt(mixedMatch[1]);  // BCE year becomes negative
+            movEndYear = parseInt(mixedMatch[2]);     // CE year stays positive
           }
-        } else if (movement.period.includes('BCE') && !movement.period.includes('CE')) {
-          const bcePeriod = movement.period.match(/(\d+)-(\d+) BCE/);
+        } else if (movement.period.includes('BCE')) {
+          // Handle formats like "509-27 BCE" or "1550-1077 BCE"  
+          const bcePeriod = movement.period.match(/(\d+)-(\d+)\s*BCE/);
           if (bcePeriod) {
-            movStartYear = -parseInt(bcePeriod[2]); // Start is the larger (older) number
-            movEndYear = -parseInt(bcePeriod[1]); // End is the smaller (newer) number
+            const firstNum = parseInt(bcePeriod[1]);
+            const secondNum = parseInt(bcePeriod[2]);
+            
+            // Timeline positioning uses: movStartY = yearToPixel(movement.endYear), movEndY = yearToPixel(movement.startYear)
+            // So startYear should be NEWER (lower on timeline), endYear should be OLDER (higher on timeline)
+            if (firstNum > secondNum) {
+              // Format like "1550-1077 BCE" where 1550 BCE is older
+              movStartYear = -secondNum;  // Newer date (1077 BCE = -1077)  
+              movEndYear = -firstNum;     // Older date (1550 BCE = -1550)
+            } else {
+              // Format like "27-509 BCE" where 509 BCE is older  
+              movStartYear = -firstNum;   // Newer date (27 BCE = -27)
+              movEndYear = -secondNum;    // Older date (509 BCE = -509)
+            }
+          } else {
+            // Handle single BCE dates like "500 BCE"
+            const singleBce = movement.period.match(/(\d+)\s*BCE/);
+            if (singleBce) {
+              movStartYear = -parseInt(singleBce[1]);
+              movEndYear = movStartYear + 50; // Give it a 50 year span
+            }
+          }
+        } else if (movement.period.includes('CE')) {
+          // Handle formats like "330-726 CE"
+          const cePeriod = movement.period.match(/(\d+)-(\d+)\s*CE/);
+          if (cePeriod) {
+            movStartYear = parseInt(cePeriod[1]);
+            movEndYear = parseInt(cePeriod[2]);
           }
         } else if (movement.period.includes('present')) {
           const presentMatch = movement.period.match(/(\d+)-present/);
@@ -94,6 +124,32 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
           movEndYear = endYear;
         }
 
+        // Debug BEFORE fallback
+        if (era.label === 'Ancient World') {
+          console.log(`BEFORE fallback - Movement: ${movement.label}, Period: "${movement.period}", Start: ${movStartYear}, End: ${movEndYear}`);
+          console.log(`  - Contains BCE: ${movement.period.includes('BCE')}, Contains CE: ${movement.period.includes('CE')}`);
+          if (movement.period.includes('BCE') && movement.period.includes('CE')) {
+            console.log(`  - Mixed BCE-CE regex test: ${movement.period.match(/(\d+)\s*BCE[\s\-–—]+(\d+)\s*CE/)}`);
+          } else if (movement.period.includes('BCE')) {
+            console.log(`  - BCE only regex test: ${movement.period.match(/(\d+)[\-–—](\d+)\s*BCE/)}`);
+          } else if (movement.period.includes('CE')) {
+            console.log(`  - CE only regex test: ${movement.period.match(/(\d+)[\-–—](\d+)\s*CE/)}`);
+          }
+        }
+        
+        // Final fallback - ensure we always have valid years
+        if (movStartYear === undefined || isNaN(movStartYear) || movEndYear === undefined || isNaN(movEndYear)) {
+          console.warn(`Failed to parse period for ${movement.label}: "${movement.period}" - using era dates`);
+          // Use era's dates as fallback
+          movStartYear = startYear || 0;
+          movEndYear = endYear || 100;
+        }
+        
+        // Debug AFTER fallback
+        if (era.label === 'Ancient World') {
+          console.log(`AFTER fallback - Movement: ${movement.label}, Start: ${movStartYear}, End: ${movEndYear}`);
+        }
+        
         return {
           name: movement.label,
           startYear: movStartYear,
@@ -107,11 +163,41 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
 
   // Timeline calculation
   const baseHeight = 400;
-  const minYear = Math.min(...timelineEras.map(era => era.startYear));
-  const maxYear = Math.max(...timelineEras.map(era => era.endYear));
+  // Filter out undefined/NaN values and get all years
+  const allYears = timelineEras.flatMap(era => {
+    const years = [era.startYear, era.endYear];
+    era.subMovements.forEach(mov => {
+      if (mov.startYear !== undefined && !isNaN(mov.startYear)) years.push(mov.startYear);
+      if (mov.endYear !== undefined && !isNaN(mov.endYear)) years.push(mov.endYear);
+    });
+    return years.filter(y => y !== undefined && !isNaN(y));
+  });
+  
+  const minYear = Math.min(...allYears);
+  const maxYear = Math.max(...allYears);
   const totalYears = maxYear - minYear;
   const pixelsPerYear = (baseHeight * zoom) / totalYears;
-  const yearToPixel = (year) => (maxYear - year) * pixelsPerYear;
+  
+  // Debug timeline calculations
+  console.log(`Timeline: minYear=${minYear}, maxYear=${maxYear}, totalYears=${totalYears}`);
+  
+  // Debug Ancient World movements positioning
+  const ancientEra = timelineEras.find(era => era.id === 'ancient-world');
+  if (ancientEra) {
+    console.log('Ancient World movements positioning:');
+    ancientEra.subMovements.forEach(mov => {
+      const startPixel = (maxYear - mov.endYear) * pixelsPerYear;
+      const endPixel = (maxYear - mov.startYear) * pixelsPerYear;
+      console.log(`  ${mov.name}: ${mov.startYear} to ${mov.endYear} → pixels ${startPixel} to ${endPixel}`);
+    });
+  }
+  const yearToPixel = (year) => {
+    if (year === undefined || isNaN(year)) {
+      console.warn(`Invalid year value: ${year}`);
+      return 0;
+    }
+    return (maxYear - year) * pixelsPerYear;
+  };
 
   // Auto-scroll function to center an element in the timeline
   const scrollToElement = (elementY) => {
@@ -242,7 +328,8 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
   // Auto-scroll to movement when hoveredMovement changes (triggered from list only)
   // Only scroll if the hover did NOT originate from the timeline itself
   useEffect(() => {
-    if (hoveredMovement && containerRef.current && !isTimelineHoverRef.current) {
+    // Only scroll if hoveredMovement is set AND it's not also a local timeline hover
+    if (hoveredMovement && containerRef.current && localHoveredMovement !== hoveredMovement) {
       // Parse the movement ID to get era and movement info
       const parts = hoveredMovement.split('-');
       if (parts.length >= 2) {
@@ -283,16 +370,17 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
     if (isTimelineHoverRef.current) {
       isTimelineHoverRef.current = false;
     }
-  }, [hoveredMovement, expandedEras, timelineEras, zoom, baseHeight, totalYears, maxYear]);
+  }, [hoveredMovement, localHoveredMovement, expandedEras, timelineEras, zoom, baseHeight, totalYears, maxYear]);
 
 
   return (
-    <div className="relative h-80">
+    <div className="relative" style={{ height: '450px' }}>
       {/* Timeline Container */}
       <div 
         ref={containerRef}
-        className="relative h-80 overflow-auto bg-stone-900/20 rounded-lg border border-stone-700/30"
+        className="relative overflow-auto bg-stone-900/20 rounded-lg border border-stone-700/30"
         style={{
+          height: '450px',
           scrollbarWidth: 'none', /* Firefox */
           msOverflowStyle: 'none', /* IE and Edge */
         }}
@@ -598,7 +686,9 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                     });
                     
                     const movementId = `${era.id}-${movement.name}`;
-                    const isHovered = hoveredMovement === movementId;
+                    // Only consider it a list hover if it's NOT also a timeline hover
+                    const isHoveredFromList = hoveredMovement === movementId && localHoveredMovement !== movementId;
+                    const isHoveredFromTimeline = localHoveredMovement === movementId; // Local timeline hover
                     const isSelected = selectedMovements && selectedMovements.has(movementId);
 
                     // Dynamic text sizing based on zoom level - smaller text
@@ -608,10 +698,13 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                       <g 
                         key={movement.name}
                         onMouseEnter={() => {
-                          isTimelineHoverRef.current = true;
-                          setHoveredMovement(movementId);
+                          setLocalHoveredMovement(movementId); // Set local hover for timeline color change
+                          setHoveredMovement(movementId); // Also trigger hover in the list
                         }}
-                        onMouseLeave={() => setHoveredMovement(null)}
+                        onMouseLeave={() => {
+                          setLocalHoveredMovement(null);
+                          setHoveredMovement(null); // Clear list hover too
+                        }}
                       >
                         {/* Movement Indicator - FARTHER FROM TIMELINE */}
                         <circle
@@ -620,29 +713,31 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                           r={zoom >= 5 ? 4 : 3}
                           fill={isSelected ? '#fbbf24' : era.color}
                           className={`cursor-pointer transition-all duration-300 ${
-                            isHovered ? 'opacity-100' : isSelected ? 'opacity-90' : 'opacity-80 hover:opacity-90'
+                            isHoveredFromList ? 'opacity-100' : isSelected ? 'opacity-90' : 'opacity-80 hover:opacity-90'
                           }`}
                         />
 
-                        {/* Movement Name and Duration - FARTHER FROM TIMELINE with smooth slide animation */}
+                        {/* Movement Name and Duration - Smart hover behavior */}
+                        {/* When hovered from list: slide animation + amber color */}
+                        {/* When hovered from timeline: only lighter color */}
                         <text
-                          x={isHovered ? timelineX - 70 : timelineX - 60}
+                          x={isHoveredFromList ? timelineX - 70 : timelineX - 60}
                           y={(movStartY + movEndY) / 2} // Center vertically within the curly brace
-                          className={`cursor-pointer transition-all duration-300 ease-out ${fontSize} font-medium ${
-                            isHovered 
-                              ? 'fill-amber-300' 
-                              : isSelected
-                                ? 'fill-amber-400 hover:fill-amber-300' // Lighter amber for selected movements
-                                : isExpanded 
-                                  ? 'fill-stone-600 hover:fill-stone-400' // Darker when era is expanded and not hovered
-                                  : 'fill-stone-500 hover:fill-stone-400' // Default when era is collapsed
+                          className={`cursor-pointer ${fontSize} font-medium ${
+                            isHoveredFromTimeline
+                              ? 'fill-stone-300' // Light color for direct timeline hover only
+                              : isHoveredFromList
+                                ? 'fill-amber-300' // Amber for list hover
+                                : isSelected
+                                  ? 'fill-amber-400' 
+                                  : isExpanded 
+                                    ? 'fill-stone-600' 
+                                    : 'fill-stone-500'
                           }`}
                           dominantBaseline="central"
                           textAnchor="end"
                           style={{
-                            transform: `translateX(${isHovered ? -10 : 0}px)`,
-                            transition: 'transform 0.3s ease-out, fill 0.3s ease-out',
-                            zIndex: isHovered ? 100 : 1
+                            transition: isHoveredFromTimeline ? 'fill 0.2s' : 'all 0.3s ease-out',
                           }}
                         >
                           {/* Show full name and duration without truncation */}
@@ -650,14 +745,15 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                         </text>
 
 
-                        {/* Movement Duration Curly Brace with Traces (smooth fade in/out) */}
+                        {/* Movement Duration Curly Brace with Traces (only for list hover) */}
                         <g
                           style={{
-                            opacity: isHovered || isSelected ? 1 : 0,
-                            transform: `scale(${isHovered || isSelected ? 1 : 0.8})`,
+                            opacity: isHoveredFromList || isSelected ? 1 : 0,
+                            transform: `scale(${isHoveredFromList || isSelected ? 1 : 0.8})`,
                             transition: 'opacity 0.4s ease-in-out, transform 0.4s ease-in-out',
                             transformOrigin: `${timelineX - 45}px ${(movStartY + movEndY) / 2}px`,
-                            zIndex: isHovered ? 100 : (isSelected ? 50 : 1)
+                            zIndex: isHoveredFromList ? 100 : (isSelected ? 50 : 1),
+                            pointerEvents: 'none'
                           }}
                         >
                           {/* Curly Brace with smooth scaling animation */}
@@ -667,7 +763,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             stroke={isSelected ? '#fbbf24' : era.color}
                             strokeWidth="2"
                             className="transition-all duration-400 ease-in-out"
-                            style={{ opacity: isHovered ? 0.8 : (isSelected ? 0.6 : 0) }}
+                            style={{ opacity: isHoveredFromList ? 0.8 : (isSelected ? 0.6 : 0) }}
                             transform={`translate(${timelineX - 50}, 0)`}
                           />
                           
@@ -680,7 +776,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             stroke={isSelected ? '#fbbf24' : era.color}
                             strokeWidth="1"
                             className="transition-all duration-400 ease-in-out"
-                            style={{ opacity: isHovered ? 0.6 : (isSelected ? 0.4 : 0) }}
+                            style={{ opacity: isHoveredFromList ? 0.6 : (isSelected ? 0.4 : 0) }}
                             strokeDasharray="3,2"
                           />
                           
@@ -693,13 +789,13 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             stroke={isSelected ? '#fbbf24' : era.color}
                             strokeWidth="1"
                             className="transition-all duration-400 ease-in-out"
-                            style={{ opacity: isHovered ? 0.6 : (isSelected ? 0.4 : 0) }}
+                            style={{ opacity: isHoveredFromList ? 0.6 : (isSelected ? 0.4 : 0) }}
                             strokeDasharray="3,2"
                           />
                         </g>
 
                         {/* Selected Movement Duration Curly Brace with Traces (persistent light stone) */}
-                        {isSelected && !isHovered && (
+                        {isSelected && !isHoveredFromList && (
                           <g
                             style={{
                               opacity: 0.4,

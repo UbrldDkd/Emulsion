@@ -50,7 +50,7 @@ export default function MovementListView({
   };
 
   return (
-    <div className="space-y-3 max-h-64 overflow-y-auto">
+    <div className="space-y-3 max-h-80 overflow-y-auto scrollbar-hide">
       {Object.entries(movementsByEra).map(([eraKey, era]) => {
         const eraId = era.label.toLowerCase().replace(/\s+/g, '-');
         const isExpanded = expandedEras.has(eraId);
@@ -80,9 +80,24 @@ export default function MovementListView({
                   <span className="text-stone-200 text-sm font-medium">{era.label}</span>
                   <span className="text-stone-500 text-xs">({era.period})</span>
                   {selectedCount > 0 && (
-                    <span className="bg-amber-500 text-amber-950 text-xs px-1.5 py-0.5 rounded-full font-medium">
-                      {selectedCount}
-                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        clearEraSelections(eraId, era.movements);
+                      }}
+                      className="group bg-amber-500 text-amber-950 text-xs px-1.5 py-0.5 rounded-full font-medium hover:pr-6 transition-all duration-200 ease-in-out relative overflow-hidden"
+                      title="Click to clear selections from this era"
+                    >
+                      <span className="relative z-10">{selectedCount}</span>
+                      <svg 
+                        className="w-3 h-3 absolute right-1.5 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out"
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
                   )}
                 </div>
                 <div className="text-stone-500 text-xs mt-0.5">
@@ -91,22 +106,6 @@ export default function MovementListView({
               </div>
               
               <div className="flex items-center gap-2">
-                {/* Clear Selections Button */}
-                {selectedCount > 0 && hoveredEra === eraId && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      clearEraSelections(eraId, era.movements);
-                    }}
-                    className="p-1 rounded text-stone-400 hover:text-red-400 hover:bg-stone-700 transition-colors"
-                    title="Clear selections from this era"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                )}
-                
                 {/* Zoom to Timeline Button */}
                 {onZoomToEra && hoveredEra === eraId && (
                   <button
