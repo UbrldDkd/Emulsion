@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Keys } from '../../Keys.js';
+import { useTheme } from '../../../contexts/ThemeContext.jsx';
 
 const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExpandedEras, selectedMovements, hoveredMovement, setHoveredMovement }, ref) {
+  const { theme } = useTheme();
   const [zoom, setZoom] = useState(1);
   const [localHoveredMovement, setLocalHoveredMovement] = useState(null); // For timeline-only hovers
   const containerRef = useRef(null);
@@ -40,19 +42,32 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
       endYear = periodMatch[2] ? parseInt(periodMatch[2]) : new Date().getFullYear();
     }
 
-    // Color scheme based on era type
-    const colors = [
-      '#fde68a', // Contemporary - light yellow
-      '#fcd34d', // Early 20th - yellow  
-      '#f59e0b', // 19th Century - amber
-      '#d97706', // Neoclassical - dark amber
-      '#b45309', // Baroque - brown amber
-      '#92400e', // Renaissance - dark brown
-      '#78716c', // Medieval - stone
-      '#57534e', // Ancient - dark stone
-      '#a855f7', // Asian - purple
-      '#7c3aed'  // Regional - dark purple
-    ];
+    // Color scheme based on era type - optimized for light/dark modes
+    const colors = theme.cardBackground.includes('stone') && theme.text.includes('950') 
+      ? [ // Light mode - darker yellows/ambers, lighter others
+        '#b45309', // Contemporary - brown amber (was light yellow)
+        '#d97706', // Early 20th - dark amber (was yellow)
+        '#92400e', // 19th Century - dark brown (was amber)
+        '#78350f', // Neoclassical - very dark brown
+        '#451a03', // Baroque - darkest brown
+        '#292524', // Renaissance - dark stone
+        '#a3a3a3', // Medieval - light stone
+        '#d6d3d1', // Ancient - lighter stone
+        '#6b21a8', // Asian - dark purple
+        '#581c87'  // Regional - darker purple
+      ]
+      : [ // Dark mode - original bright colors
+        '#fde68a', // Contemporary - light yellow
+        '#fcd34d', // Early 20th - yellow  
+        '#f59e0b', // 19th Century - amber
+        '#d97706', // Neoclassical - dark amber
+        '#b45309', // Baroque - brown amber
+        '#92400e', // Renaissance - dark brown
+        '#78716c', // Medieval - stone
+        '#57534e', // Ancient - dark stone
+        '#a855f7', // Asian - purple
+        '#7c3aed'  // Regional - dark purple
+      ];
 
     return {
       id: era.label.toLowerCase().replace(/\s+/g, '-'),
@@ -378,7 +393,11 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
       {/* Timeline Container */}
       <div 
         ref={containerRef}
-        className="relative overflow-auto bg-stone-900/20 rounded-lg border border-stone-700/30"
+        className={`relative overflow-auto rounded-lg ${theme.border} ${
+          theme.cardBackground.includes('stone') && theme.text.includes('950')
+            ? 'bg-stone-200/20 backdrop-blur-sm'
+            : 'bg-stone-900/20 backdrop-blur-sm'
+        }`}
         style={{
           height: '450px',
           scrollbarWidth: 'none', /* Firefox */
@@ -434,7 +453,13 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                   <text
                     x={timelineX + braceDepth + 10}
                     y={startY + (endY - startY) / 2}
-                    className="fill-stone-200 text-sm font-light cursor-pointer hover:fill-amber-300 transition-colors"
+                    className={`text-sm font-light cursor-pointer transition-colors ${
+                      theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                        ? 'hover:fill-stone-700' 
+                        : 'hover:fill-amber-300'
+                    } ${
+                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-900' : 'fill-stone-200'
+                    }`}
                     dominantBaseline="central"
                     textAnchor="start"
                     onClick={() => toggleEra(era.id)}
@@ -446,7 +471,9 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                   <text
                     x={timelineX + braceDepth + 10}
                     y={startY + (endY - startY) / 2 + 14}
-                    className="fill-stone-500 text-xs font-light"
+                    className={`text-xs font-light ${
+                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-700' : 'fill-stone-500'
+                    }`}
                     dominantBaseline="central"
                     textAnchor="start"
                   >
@@ -503,7 +530,11 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                 <text
                                   x={timelineX - 40}
                                   y={startY + (endY - startY) / 2}
-                                  className="text-xs font-light cursor-pointer fill-amber-400 hover:fill-amber-300 transition-colors"
+                                  className={`text-xs font-light cursor-pointer transition-colors ${
+                                    theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                      ? 'fill-stone-800 hover:fill-stone-600' 
+                                      : 'fill-amber-400 hover:fill-amber-300'
+                                  }`}
                                   dominantBaseline="central"
                                   textAnchor="end"
                                   onClick={() => {
@@ -550,8 +581,12 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                   y={startY + (endY - startY) / 2}
                                   className={`text-xs font-light cursor-pointer transition-colors ${
                                     isShowingSelected 
-                                      ? 'fill-amber-400 hover:fill-amber-300' 
-                                      : 'fill-stone-400 hover:fill-amber-300'
+                                      ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                          ? 'fill-stone-700 hover:fill-stone-600' 
+                                          : 'fill-amber-400 hover:fill-amber-300')
+                                      : (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                          ? 'fill-stone-500 hover:fill-stone-700' 
+                                          : 'fill-stone-400 hover:fill-amber-300')
                                   }`}
                                   dominantBaseline="central"
                                   textAnchor="end"
@@ -609,7 +644,9 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                   className={`cursor-pointer transition-all duration-300 ease-out text-xs font-medium ${
                                     isHovered 
                                       ? 'fill-amber-300' 
-                                      : 'fill-amber-500 hover:fill-amber-400'
+                                      : (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                          ? 'fill-stone-700 hover:fill-stone-600' 
+                                          : 'fill-amber-500 hover:fill-amber-400')
                                   }`}
                                   dominantBaseline="central"
                                   textAnchor="end"
@@ -622,7 +659,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                   <path
                                     d={generateCurlyBrace(movStartY, movEndY, 'left', 15)}
                                     fill="none"
-                                    stroke="#f59e0b"
+                                    stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#f59e0b'}
                                     strokeWidth="1.5"
                                     transform={`translate(${timelineX - 50}, 0)`}
                                   />
@@ -632,7 +669,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                     y1={movStartY}
                                     x2={timelineX}
                                     y2={movStartY}
-                                    stroke="#f59e0b"
+                                    stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#f59e0b'}
                                     strokeWidth="1"
                                     strokeDasharray="2,3"
                                   />
@@ -642,7 +679,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                     y1={movEndY}
                                     x2={timelineX}
                                     y2={movEndY}
-                                    stroke="#f59e0b"
+                                    stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#f59e0b'}
                                     strokeWidth="1"
                                     strokeDasharray="2,3"
                                   />
@@ -711,10 +748,27 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                           cx={timelineX - 20}
                           cy={baseMovementY}
                           r={zoom >= 5 ? 4 : 3}
-                          fill={isSelected ? '#fbbf24' : era.color}
-                          className={`cursor-pointer transition-all duration-300 ${
-                            isHoveredFromList ? 'opacity-100' : isSelected ? 'opacity-90' : 'opacity-80 hover:opacity-90'
-                          }`}
+                          fill={
+                            isSelected 
+                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24')
+                              : isHoveredFromList
+                                ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') // Dark amber for list hover
+                                : isHoveredFromTimeline 
+                                  ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                      ? `${era.color}dd` // Darker tone of era color for timeline hover in light mode
+                                      : era.color) // Original color for dark mode
+                                  : (theme.cardBackground.includes('stone') && theme.text.includes('950')
+                                      ? `${era.color}80` // Lighter tone of era color for light mode
+                                      : era.color) // Original color for dark mode
+                          }
+                          className={`cursor-pointer transition-all duration-300`}
+                          style={{
+                            opacity: isHoveredFromList 
+                              ? 1 
+                              : isSelected 
+                                ? 0.9 
+                                : (theme.cardBackground.includes('stone') && theme.text.includes('950') ? 0.3 : 0.6)
+                          }}
                         />
 
                         {/* Movement Name and Duration - Smart hover behavior */}
@@ -727,9 +781,13 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             isHoveredFromTimeline
                               ? 'fill-stone-300' // Light color for direct timeline hover only
                               : isHoveredFromList
-                                ? 'fill-amber-300' // Amber for list hover
+                                ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                  ? 'fill-amber-800' // Dark amber for light mode list hover
+                                  : 'fill-amber-300') // Amber for dark mode list hover
                                 : isSelected
-                                  ? 'fill-amber-400' 
+                                  ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                      ? 'fill-amber-700' // Dark amber for light mode selected
+                                      : 'fill-amber-400') // Amber for dark mode selected 
                                   : isExpanded 
                                     ? 'fill-stone-600' 
                                     : 'fill-stone-500'
@@ -760,7 +818,12 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                           <path
                             d={generateCurlyBrace(movStartY, movEndY, 'left', 15)}
                             fill="none"
-                            stroke={isSelected ? '#fbbf24' : era.color}
+                            stroke={isSelected 
+                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') 
+                              : (isHoveredFromList && theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                  ? '#b45309' 
+                                  : era.color)
+                            }
                             strokeWidth="2"
                             className="transition-all duration-400 ease-in-out"
                             style={{ opacity: isHoveredFromList ? 0.8 : (isSelected ? 0.6 : 0) }}
@@ -773,7 +836,12 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             y1={movStartY}
                             x2={timelineX}
                             y2={movStartY}
-                            stroke={isSelected ? '#fbbf24' : era.color}
+                            stroke={isSelected 
+                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') 
+                              : (isHoveredFromList && theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                  ? '#b45309' 
+                                  : era.color)
+                            }
                             strokeWidth="1"
                             className="transition-all duration-400 ease-in-out"
                             style={{ opacity: isHoveredFromList ? 0.6 : (isSelected ? 0.4 : 0) }}
@@ -786,7 +854,12 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             y1={movEndY}
                             x2={timelineX}
                             y2={movEndY}
-                            stroke={isSelected ? '#fbbf24' : era.color}
+                            stroke={isSelected 
+                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') 
+                              : (isHoveredFromList && theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                  ? '#b45309' 
+                                  : era.color)
+                            }
                             strokeWidth="1"
                             className="transition-all duration-400 ease-in-out"
                             style={{ opacity: isHoveredFromList ? 0.6 : (isSelected ? 0.4 : 0) }}
@@ -861,7 +934,9 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                   <text
                     x={timelineX - 15}
                     y={y}
-                    className="fill-stone-500 text-[10px] font-light"
+                    className={`text-[10px] font-light ${
+                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-700' : 'fill-stone-500'
+                    }`}
                     dominantBaseline="central"
                     textAnchor="end"
                   >
@@ -876,10 +951,10 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
       </div>
 
       {/* Zoom Controls - Positioned in bottom right corner */}
-      <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-stone-900/80 backdrop-blur-sm rounded-md p-1 z-10">
+      <div className={`absolute bottom-2 right-2 flex items-center gap-1 ${theme.cardBackground} backdrop-blur-sm rounded-md p-1 z-10`}>
         <button 
           onClick={() => setZoom(prev => Math.min(prev + 1, 100))}
-          className="w-6 h-6 flex items-center justify-center text-stone-400 hover:text-amber-400 hover:bg-stone-800 rounded transition-colors"
+          className={`w-6 h-6 flex items-center justify-center ${theme.textMuted} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
           title="Zoom In"
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -889,7 +964,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
         </button>
         <button 
           onClick={() => setZoom(prev => Math.max(prev - 1, 0.2))}
-          className="w-6 h-6 flex items-center justify-center text-stone-400 hover:text-amber-400 hover:bg-stone-800 rounded transition-colors"
+          className={`w-6 h-6 flex items-center justify-center ${theme.textMuted} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
           title="Zoom Out"
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -904,7 +979,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
               containerRef.current.scrollTop = 0;
             }
           }}
-          className="px-2 py-1 text-[10px] text-stone-400 hover:text-amber-400 hover:bg-stone-800 rounded transition-colors"
+          className={`px-2 py-1 text-[10px] ${theme.textMuted} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
           title="Reset View"
         >
           ↻

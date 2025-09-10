@@ -1,14 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Keys } from '../Keys.js';
 
-export default function SearchPreview({ data, isLoading }) {
+export default function SearchPreview({ data, isLoading, isVisible }) {
   const { Fields } = Keys;
   
   console.log('SearchPreview - data:', data, 'isLoading:', isLoading);
+
+  const animationClasses = isVisible 
+    ? "animate-in fade-in slide-in-from-top-2 duration-200" 
+    : "animate-out fade-out slide-out-to-top-2 duration-200";
   
   if (isLoading) {
     return (
-      <div className="absolute top-full left-0 right-0 bg-stone-800 border border-stone-700 rounded mt-1 p-4 shadow-lg z-50">
+      <div className={`absolute top-full left-0 right-0 bg-stone-800 border border-stone-700 rounded mt-1 p-4 shadow-lg z-50 ${animationClasses}`}>
         <div className="text-center text-stone-400">Searching artworks...</div>
       </div>
     );
@@ -19,7 +23,7 @@ export default function SearchPreview({ data, isLoading }) {
   }
 
   return (
-    <div className="absolute top-full left-0 right-0 bg-stone-800 border border-stone-700 rounded mt-1 shadow-lg z-50">
+    <div className={`absolute top-full left-0 right-0 bg-stone-800 border border-stone-700 rounded mt-1 shadow-lg z-50 ${animationClasses}`}>
       {data.map((artwork) => (
         <Link 
           to={`/artwork/${artwork[Fields.id]}`}

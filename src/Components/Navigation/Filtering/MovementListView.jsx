@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Keys } from '../../Keys.js';
+import { useTheme } from '../../../contexts/ThemeContext.jsx';
 
 export default function MovementListView({
   expandedEras,
@@ -11,6 +12,7 @@ export default function MovementListView({
   setHoveredMovement,
   onZoomToEra
 }) {
+  const { theme } = useTheme();
   const { movementsByEra } = Keys.filters;
   const [hoveredEra, setHoveredEra] = useState(null);
 
@@ -63,13 +65,13 @@ export default function MovementListView({
         }).length;
 
         return (
-          <div key={eraKey} className="border border-stone-700/30 rounded-lg overflow-hidden">
+          <div key={eraKey} className={`border ${theme.border} rounded-lg overflow-hidden`}>
             {/* Era Header */}
             <div
               className={`flex items-center justify-between p-3 cursor-pointer transition-colors ${
                 isEraSelected 
-                  ? 'bg-amber-600/20 border-amber-600/30' 
-                  : 'bg-stone-800/50 hover:bg-stone-700/50'
+                  ? theme.selected 
+                  : `${theme.cardBackground} ${theme.hover}`
               }`}
               onClick={() => toggleEra(eraId)}
               onMouseEnter={() => setHoveredEra(eraId)}
@@ -77,8 +79,8 @@ export default function MovementListView({
             >
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-stone-200 text-sm font-medium">{era.label}</span>
-                  <span className="text-stone-500 text-xs">({era.period})</span>
+                  <span className={`${theme.text} text-sm font-medium`}>{era.label}</span>
+                  <span className={`${theme.textMuted} text-xs`}>({era.period})</span>
                   {selectedCount > 0 && (
                     <button
                       onClick={(e) => {
@@ -100,7 +102,7 @@ export default function MovementListView({
                     </button>
                   )}
                 </div>
-                <div className="text-stone-500 text-xs mt-0.5">
+                <div className={`${theme.textMuted} text-xs mt-0.5`}>
                   {era.movements.length} movements
                 </div>
               </div>
@@ -113,7 +115,7 @@ export default function MovementListView({
                       e.stopPropagation();
                       onZoomToEra(eraId);
                     }}
-                    className="p-1 rounded text-stone-400 hover:text-amber-400 hover:bg-stone-700 transition-colors"
+                    className={`p-1 rounded ${theme.textMuted} hover:${theme.accent} ${theme.hover} transition-colors`}
                     title="Zoom to timeline"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +126,7 @@ export default function MovementListView({
                 
                 {/* Expand/Collapse Icon */}
                 <svg 
-                  className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${
+                  className={`w-4 h-4 ${theme.textMuted} transition-transform duration-200 ${
                     isExpanded ? 'rotate-90' : ''
                   }`} 
                   fill="none" 
@@ -138,7 +140,11 @@ export default function MovementListView({
 
             {/* Movements List */}
             {isExpanded && (
-              <div className="border-t border-stone-700/30 bg-stone-900/30">
+              <div className={`border-t ${theme.border} ${
+                theme.cardBackground.includes('stone') && theme.text.includes('950')
+                  ? 'bg-stone-200/25 backdrop-blur-sm' 
+                  : 'bg-stone-900/40 backdrop-blur-sm'
+              }`}>
                 {era.movements.map((movement, index) => {
                   const movementId = `${eraId}-${movement.label}`;
                   const isSelected = selectedMovements && selectedMovements.has(movementId);
@@ -147,12 +153,12 @@ export default function MovementListView({
                   return (
                     <div
                       key={index}
-                      className={`flex items-center justify-between p-2 border-b border-stone-700/20 last:border-b-0 cursor-pointer transition-colors ${
+                      className={`flex items-center justify-between p-2 border-b ${theme.border} last:border-b-0 cursor-pointer transition-colors ${
                         isSelected 
-                          ? 'bg-amber-600/10 hover:bg-amber-600/15' 
+                          ? `${theme.selected} ${theme.hover}` 
                           : isHovered
-                            ? 'bg-stone-700/50'
-                            : 'hover:bg-stone-700/30'
+                            ? theme.hover.replace('hover:', '')
+                            : theme.hover
                       }`}
                       onMouseEnter={() => setHoveredMovement(movementId)}
                       onMouseLeave={() => setHoveredMovement(null)}
@@ -161,14 +167,14 @@ export default function MovementListView({
                       <div className="flex-1">
                         <div className={`text-sm ${
                           isSelected 
-                            ? 'text-amber-300' 
+                            ? theme.accent 
                             : isHovered
-                              ? 'text-stone-200'
-                              : 'text-stone-300'
+                              ? theme.text
+                              : theme.textSecondary
                         }`}>
                           {movement.label}
                         </div>
-                        <div className="text-stone-500 text-xs">
+                        <div className={`${theme.textMuted} text-xs`}>
                           {movement.period}
                         </div>
                       </div>
@@ -176,8 +182,8 @@ export default function MovementListView({
                       {/* Selection Indicator */}
                       <div className={`w-4 h-4 rounded border-2 transition-all ${
                         isSelected 
-                          ? 'bg-amber-500 border-amber-500' 
-                          : 'border-stone-500 hover:border-stone-400'
+                          ? 'bg-amber-600 border-amber-600' 
+                          : `${theme.border.replace('border-', 'border-')} hover:${theme.textMuted.replace('text-', 'border-')}`
                       }`}>
                         {isSelected && (
                           <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">

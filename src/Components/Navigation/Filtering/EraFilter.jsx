@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MovementListView from './MovementListView.jsx';
 import TimelineViewer from './TimelineViewer.jsx';
+import { useTheme } from '../../../contexts/ThemeContext.jsx';
 
 export default function EraFilter({
   expandedEras,
@@ -15,6 +16,7 @@ export default function EraFilter({
   setShowTimeline,
   timelineViewerRef
 }) {
+  const { theme } = useTheme();
   const [showTimelineTooltip, setShowTimelineTooltip] = useState(false);
 
   // Function to handle zoom to era from MovementListView
@@ -31,7 +33,7 @@ export default function EraFilter({
   return (
     <div className="space-y-4">
       {/* Header with Timeline Toggle */}
-      <div className="flex items-center border-b border-stone-700/30 pb-3">
+      <div className={`flex items-center border-b ${theme.border} pb-3`}>
         <div className="relative mr-3">
           <button
             onClick={() => setShowTimeline(!showTimeline)}
@@ -39,8 +41,8 @@ export default function EraFilter({
             onMouseLeave={() => setShowTimelineTooltip(false)}
             className={`flex items-center justify-center w-8 h-8 rounded transition-colors ${
               showTimeline 
-                ? 'text-amber-400 bg-amber-400/10' 
-                : 'text-stone-500 hover:text-amber-400 hover:bg-stone-800/50'
+                ? `${theme.accent} ${theme.selected}` 
+                : `${theme.textMuted} ${theme.hover} hover:${theme.accent}`
             }`}
           >
             <svg 
@@ -61,17 +63,17 @@ export default function EraFilter({
                 ? 'opacity-100 translate-x-0' 
                 : 'opacity-0 translate-x-4'
             }`}>
-              <div className="bg-stone-900 text-stone-200 text-xs px-3 py-2 rounded-md shadow-lg border border-stone-700 whitespace-nowrap">
+              <div className={`${theme.cardBackground} ${theme.text} text-xs px-3 py-2 rounded-md shadow-lg ${theme.border} whitespace-nowrap`}>
                 <div className="font-medium mb-1">Timeline View</div>
-                <div className="text-stone-400 text-[10px]">
+                <div className={`${theme.textMuted} text-[10px]`}>
                   Show visual timeline with branching eras
                 </div>
-                <div className="absolute left-full top-1/2 transform -translate-y-1/2 border-t-4 border-b-4 border-l-4 border-transparent border-l-stone-900"></div>
+                <div className={`absolute left-full top-1/2 transform -translate-y-1/2 border-t-4 border-b-4 border-l-4 border-transparent ${theme.cardBackground.includes('amber') ? 'border-l-amber-100' : 'border-l-stone-900'}`}></div>
               </div>
             </div>
           )}
         </div>
-        <div className="text-stone-200 text-sm font-light tracking-wide">
+        <div className={`${theme.text} text-sm font-light tracking-wide`}>
           Select an Era/Movement
         </div>
       </div>

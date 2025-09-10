@@ -1,5 +1,9 @@
+import ImageCarousel from '../Carousel/ImageCarousel.jsx';
+
 export default function Home() {
   return (
-    <div>this is here</div>
+    <div>
+      <ImageCarousel />
+    </div>
   )
 }

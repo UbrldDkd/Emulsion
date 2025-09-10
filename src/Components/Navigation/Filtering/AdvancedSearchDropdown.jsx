@@ -5,8 +5,11 @@ import YearFilter from './YearFilter.jsx';
 import ArtistsFilter from './ArtistsFilter.jsx';
 import EraFilter from './EraFilter.jsx';
 import ArtformFilter from './ArtformFilter.jsx';
+import ThemeToggle from '../../ThemeToggle.jsx';
+import { useTheme } from '../../../contexts/ThemeContext.jsx';
 
 export default function AdvancedSearchDropdown() {
+  const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [filterByOpen, setFilterByOpen] = useState(false);
   const [filterBy, setFilterBy] = useState('Year');
@@ -23,6 +26,14 @@ export default function AdvancedSearchDropdown() {
   // State for MediaDisplay
   const [selectedMediaItems, setSelectedMediaItems] = useState(new Set());
   const [hoveredMediaItem, setHoveredMediaItem] = useState(null);
+  
+  // Artform filter states
+  const [artformFilterState, setArtformFilterState] = useState({
+    selectedArtform: null,
+    filterType: null,
+    showMediums: false,
+    selectedGenres: new Set()
+  });
 
   // Clear filters based on current filterBy
   const clearCurrentFilters = () => {
@@ -132,13 +143,17 @@ export default function AdvancedSearchDropdown() {
       {showTimeline && filterBy === 'Era' && isOpen && (
         <div 
           ref={timelineRef}
-          className={`absolute right-96 mt-4 w-96 h-[550px] bg-stone-800 rounded-l shadow-xl p-4 z-[60] transition-all duration-300 ease-out transform ${
+          className={`absolute right-96 mt-4 w-96 h-[550px] ${
+            theme.cardBackground.includes('stone') && theme.text.includes('950')
+              ? 'bg-stone-100/70 backdrop-blur-xl'
+              : 'bg-stone-800/90 backdrop-blur-xl'
+          } rounded-l shadow-xl p-4 z-[60] transition-all duration-300 ease-out transform ${
             isOpen 
               ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
               : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
           }`}
         >
-          <div className="text-stone-400 text-xs uppercase tracking-wider mb-3">
+          <div className={`${theme.textMuted} text-xs uppercase tracking-wider mb-3`}>
             Timeline View
           </div>
           <TimelineViewer 
@@ -156,7 +171,7 @@ export default function AdvancedSearchDropdown() {
       {/* Main Advanced Search Panel */}
           <div 
             ref={advancedPanelRef}
-        className={`absolute right-0.5 mt-4 bg-stone-800 rounded shadow-xl z-50 transition-all duration-300 ease-out transform ${
+        className={`absolute right-0.5 mt-4 ${theme.cardBackground} ${theme.border} rounded shadow-xl z-50 transition-all duration-300 ease-out transform ${
           isOpen 
             ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
             : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
@@ -167,12 +182,13 @@ export default function AdvancedSearchDropdown() {
               <div className="w-96 p-4">
 
                 <div className="relative">
-                  <div className="flex items-center gap-x-1 text-sm font-medium text-stone-200">
-                    <span>Search by</span>
+                  <div className={`flex items-center justify-between text-sm font-medium ${theme.text}`}>
+                    <div className="flex items-center gap-x-1">
+                      <span>Search by</span>
                     <div className="relative" ref={dropdownRef}>
                       <button
                         onClick={() => setFilterByOpen(!filterByOpen)}
-                        className="flex items-center gap-x-1 px-2 py-1 text-stone-200 hover:text-amber-400 hover:bg-stone-700/30 active:text-amber-500 rounded transition-all duration-200"
+                        className={`flex items-center gap-x-1 px-2 py-1 ${theme.text} ${theme.hover} rounded transition-all duration-200`}
                       >
                         <span>{filterBy}</span>
                         <svg 
@@ -196,12 +212,12 @@ export default function AdvancedSearchDropdown() {
                     }}
                   >
                           <div className="flex items-center whitespace-nowrap">
-                            <span className="text-stone-400 text-sm px-1">or</span>
+                            <span className={`${theme.textMuted} text-sm px-1`}>or</span>
                             {availableOptions.map((option) => (
                               <button
                                 key={option}
                                 onClick={() => handleSelectFilterBy(option)}
-                                className="px-2 py-1 text-stone-300 hover:text-amber-400 hover:bg-stone-800/50 active:text-amber-500 active:bg-stone-800 rounded transition-all duration-200 whitespace-nowrap"
+                                className={`px-2 py-1 ${theme.textSecondary} ${theme.hover} rounded transition-all duration-200 whitespace-nowrap`}
                               >
                                 {option}
                               </button>
@@ -209,6 +225,8 @@ export default function AdvancedSearchDropdown() {
                           </div>
                         </div>
                     </div>
+                    </div>
+                    <ThemeToggle />
                   </div>
                 </div>
                 
@@ -253,15 +271,36 @@ export default function AdvancedSearchDropdown() {
             </div>
 
         {/* Action Buttons */}
-            <div className="border-t border-stone-700 p-3 flex items-center justify-between">
+            <div className={`border-t ${theme.border} p-3 flex items-center justify-between`}>
           <button 
             onClick={clearCurrentFilters}
-            className="text-stone-500 hover:text-stone-300 text-xs font-medium transition-colors"
+            className={`${theme.textMuted} hover:${theme.textSecondary} text-xs font-medium transition-colors`}
           >
                 Clear All
               </button>
-              <button className="px-4 py-2 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm">
-                Apply Search
+              <button 
+                onClick={() => {
+                  // If we're in a filter screen (genres/mediums), go back to artforms
+                  if (filterBy === 'Artform' && (artformFilterState.selectedArtform || artformFilterState.selectedGenres.size > 0 || artformFilterState.showMediums)) {
+                    // Reset artform filter state to return to main artform list
+                    setArtformFilterState({
+                      selectedArtform: null,
+                      filterType: null,
+                      showMediums: false,
+                      selectedGenres: new Set()
+                    });
+                  } else {
+                    // Apply search functionality for other filters or main artform page
+                    console.log('Applying search with current filters');
+                    // Add your search application logic here
+                  }
+                }}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm backdrop-blur-sm ${
+                theme.cardBackground.includes('stone') && theme.text.includes('950')
+                  ? 'bg-stone-700 hover:bg-stone-600 active:bg-stone-800 text-stone-200 hover:text-white' // Light mode
+                  : 'bg-stone-800 hover:bg-stone-700 active:bg-stone-900 text-stone-200 hover:text-white' // Dark mode - darker
+              }`}>
+                {(filterBy === 'Artform' && (artformFilterState.selectedArtform || artformFilterState.selectedGenres.size > 0 || artformFilterState.showMediums)) ? 'Done' : 'Apply Search'}
               </button>
             </div>
           </div>
