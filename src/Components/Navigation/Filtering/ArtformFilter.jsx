@@ -128,7 +128,7 @@ export default function ArtformFilter({
               Back
             </button>
           )}
-          <h3 className={`${theme.textSecondary} text-xs font-medium tracking-[0.2em] uppercase`} id="artform-filter-heading">
+          <h3 className={`${theme.text} text-sm font-light tracking-wide`} id="artform-filter-heading">
             {selectedArtform && filterType === 'mediums' ? `${artForms[selectedArtform].label} - Mediums` : 
              selectedArtform && filterType === 'genres' ? `${artForms[selectedArtform].label} - Genres` : 
              'Filter by Art Form'}
