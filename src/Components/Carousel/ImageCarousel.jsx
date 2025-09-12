@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { artworks } from '../../data/artworks.js';
+import ArtworkDescription from './ArtworkDescription.jsx';
 
 // Helper function to determine era from date
 const getEraFromDate = (dateString) => {
@@ -117,13 +118,13 @@ export default function ImageCarousel() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {/* Main Image */}
-      <div className="relative w-full h-full">
+      <div className="absolute inset-0">
         {cachedImages.has(currentIndex) ? (
           <>
             <img
               src={currentArtwork.primaryImage}
               alt={currentArtwork.title}
-              className={`w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
                 isTransitioning ? 'opacity-0' : 'opacity-100'
               }`}
             />
@@ -164,74 +165,9 @@ export default function ImageCarousel() {
         </svg>
       </button>
 
-      {/* Artwork Information - Right Side */}
-      <div className="absolute top-0 right-0 h-full w-96 bg-gradient-to-l from-black/80 via-black/60 to-transparent flex items-center">
-        <div className={`text-white p-12 space-y-6 transition-all duration-700 ease-in-out ${
-          isTransitioning ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'
-        }`}>
-          <div className="space-y-4">
-            <h2 className="text-3xl font-serif italic tracking-wide leading-tight">
-              {currentArtwork.title}
-            </h2>
-            
-            <div className="space-y-2">
-              <p className="text-xl font-light text-stone-200">
-                {currentArtwork.artistDisplayName}
-              </p>
-              <p className="text-sm text-stone-300 tracking-wide">
-                {currentArtwork.artistNationality}, {currentArtwork.artistBeginDate}–{currentArtwork.artistEndDate}
-              </p>
-            </div>
-          </div>
-
-          <div className="w-16 h-px bg-amber-400/60"></div>
-
-          <div className="space-y-3 text-sm text-stone-300">
-            <div>
-              <span className="text-stone-400 tracking-wide text-xs">Date:</span>
-              <p className="text-stone-200">{currentArtwork.objectDate}</p>
-            </div>
-
-            <div>
-              <span className="text-stone-400 tracking-wide text-xs">Era:</span>
-              <p className="text-stone-200">{getEraFromDate(currentArtwork.objectDate)}</p>
-            </div>
-
-            <div>
-              <span className="text-stone-400 tracking-wide text-xs">Movement:</span>
-              <p className="text-stone-200">{currentArtwork.period}</p>
-            </div>
-            
-            <div>
-              <span className="text-stone-400 tracking-wide text-xs">Medium:</span>
-              <p className="text-stone-200">{currentArtwork.medium}</p>
-            </div>
-            
-            <div>
-              <span className="text-stone-400 tracking-wide text-xs">Dimensions:</span>
-              <p className="text-stone-200">{currentArtwork.dimensions}</p>
-            </div>
-            
-            <div>
-              <span className="text-stone-400 tracking-wide text-xs">Collection:</span>
-              <p className="text-stone-200">{currentArtwork.repository}</p>
-            </div>
-          </div>
-
-          <div className="pt-6 mt-4 border-t border-stone-400/20">
-            <div className="flex gap-6">
-              <div className="flex items-center gap-2">
-                <span className="text-stone-400 tracking-wide text-xs">Era:</span>
-                <span className="text-stone-200 text-sm">{getEraFromDate(currentArtwork.objectDate)}</span>
-              </div>
-              
-              <div className="flex items-center gap-2">
-                <span className="text-stone-400 tracking-wide text-xs">Movement:</span>
-                <span className="text-stone-200 text-sm">{currentArtwork.period}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Artwork Description Panel */}
+      <div className="absolute right-0 top-0 h-full flex items-center">
+        <ArtworkDescription artwork={currentArtwork} isTransitioning={isTransitioning} getEraFromDate={getEraFromDate} />
       </div>
 
       {/* Minimal Dots Indicator */}
