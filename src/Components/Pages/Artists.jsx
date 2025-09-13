@@ -179,26 +179,6 @@ export default function Artists() {
           </div>
         </div>
 
-        {/* Coming Soon Section */}
-        <div className="text-center">
-          <div className="relative overflow-hidden bg-gradient-to-br from-stone-900/50 to-stone-800/30 border border-stone-800/60 backdrop-blur-xl max-w-2xl mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-600/2 to-amber-600/0 animate-pulse"></div>
-            <div className="relative p-12">
-              <div className="text-center">
-                <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-600/40 to-transparent mx-auto mb-6"></div>
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <svg className="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <h3 className="text-stone-300 text-lg font-light tracking-wide">Artist Directory Coming Soon</h3>
-                </div>
-                <p className="text-stone-400 text-sm font-light">
-                  We're building a comprehensive artist directory and biography collection with detailed profiles, artwork galleries, and interactive timelines.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>

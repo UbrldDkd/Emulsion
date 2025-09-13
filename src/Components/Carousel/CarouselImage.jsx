@@ -6,7 +6,7 @@ export default function CarouselImage({ artwork, isTransitioning, cachedImages, 
           <img
             src={artwork.primaryImage}
             alt={artwork.title}
-            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ease-in-out ${
+            className={`absolute inset-0 w-full h-full object-contain lg:object-contain object-cover transition-opacity duration-700 ease-in-out ${
               isTransitioning ? 'opacity-0' : 'opacity-100'
             }`}
           />

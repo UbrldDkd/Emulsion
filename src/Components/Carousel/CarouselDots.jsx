@@ -6,7 +6,7 @@ export default function CarouselDots({
   goToSlide 
 }) {
   return (
-    <div className="absolute bottom-8 left-8 flex space-x-2">
+    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 lg:bottom-8 lg:left-8 lg:transform-none flex space-x-2">
       {artworks.map((_, index) => {
         const isCurrentSlide = index === currentIndex;
         const isCached = cachedImages.has(index);

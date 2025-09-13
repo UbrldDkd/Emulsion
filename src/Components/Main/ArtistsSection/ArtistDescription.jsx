@@ -8,7 +8,7 @@ export default function ArtistDescription({ artist }) {
             {artist.name}
           </h3>
           <p className="text-xs text-amber-400/60 tracking-wider uppercase">
-            {artist.nationality} • {artist.birthYear}{artist.deathYear ? `–${artist.deathYear}` : ''}
+            {artist.birthplace} • {artist.birthYear}{artist.deathYear ? `–${artist.deathYear}` : ''}
           </p>
           <p className="text-xs text-stone-500 uppercase tracking-wider mt-1">
             {artist.period}

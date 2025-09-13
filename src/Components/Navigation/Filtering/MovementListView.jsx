@@ -80,14 +80,14 @@ export default function MovementListView({
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className={`${theme.text} text-sm font-medium`}>{era.label}</span>
-                  <span className={`${theme.textMuted} text-xs`}>({era.period})</span>
+                  <span className="text-stone-300 text-xs">({era.period})</span>
                   {selectedCount > 0 && (
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         clearEraSelections(eraId, era.movements);
                       }}
-                      className="group bg-amber-500 text-amber-950 text-xs px-1.5 py-0.5 rounded-full font-medium hover:pr-6 transition-all duration-200 ease-in-out relative overflow-hidden"
+                      className={`group ${theme.button} ${theme.selected} text-xs px-1.5 py-0.5 rounded-full font-medium hover:pr-6 hover:bg-amber-200/50 active:bg-amber-200/50 transition-all duration-200 ease-in-out relative overflow-hidden`}
                       title="Click to clear selections from this era"
                     >
                       <span className="relative z-10">{selectedCount}</span>
@@ -166,27 +166,31 @@ export default function MovementListView({
                     >
                       <div className="flex-1">
                         <div className={`text-sm ${
-                          isSelected 
-                            ? theme.accent 
+                          isSelected
+                            ? 'text-amber-200/60'
                             : isHovered
-                              ? theme.text
-                              : theme.textSecondary
+                              ? 'text-amber-100/30'
+                              : 'text-stone-200'
                         }`}>
                           {movement.label}
                         </div>
-                        <div className={`${theme.textMuted} text-xs`}>
+                        <div className={`text-xs ${
+                          isHovered && !isSelected
+                            ? 'text-stone-400'
+                            : 'text-stone-300'
+                        }`}>
                           {movement.period}
                         </div>
                       </div>
                       
                       {/* Selection Indicator */}
                       <div className={`w-4 h-4 rounded border-2 transition-all ${
-                        isSelected 
-                          ? 'bg-amber-600 border-amber-600' 
-                          : `${theme.border.replace('border-', 'border-')} hover:${theme.textMuted.replace('text-', 'border-')}`
+                        isSelected
+                          ? 'bg-amber-200/30 border-stone-500'
+                          : `border-stone-800 hover:border-stone-700`
                       }`}>
                         {isSelected && (
-                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-3 h-3 text-amber-100" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                         )}

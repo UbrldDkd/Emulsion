@@ -23,9 +23,9 @@ export default function AdvancedSearchDropdown() {
   const timelineViewerRef = useRef(null); // Reference to TimelineViewer for zoom functionality
 
 
-  // State for MediaDisplay
-  const [selectedMediaItems, setSelectedMediaItems] = useState(new Set());
-  const [hoveredMediaItem, setHoveredMediaItem] = useState(null);
+  // State for MediumDisplay
+  const [selectedMediumItems, setSelectedMediumItems] = useState(new Set());
+  const [hoveredMediumItem, setHoveredMediumItem] = useState(null);
   
   // Artform filter states
   const [artformFilterState, setArtformFilterState] = useState({
@@ -46,7 +46,7 @@ export default function AdvancedSearchDropdown() {
       case 'Artform':
       case 'Medium':
       case 'Genre':
-        setSelectedMediaItems(new Set());
+        setSelectedMediumItems(new Set());
         break;
       case 'Year':
         setYearRange({ from: '', to: '' });
@@ -71,6 +71,7 @@ export default function AdvancedSearchDropdown() {
   const dropdownRef = useRef(null);
   const advancedPanelRef = useRef(null);
   const timelineRef = useRef(null);
+  const buttonRef = useRef(null);
 
 
   function handleSelectFilterBy(type) {
@@ -85,9 +86,10 @@ export default function AdvancedSearchDropdown() {
         setFilterByOpen(false);
       }
       
-      // Close advanced panel if clicking outside of it (but not timeline)
+      // Close advanced panel if clicking outside of it (but not timeline or button)
       if (advancedPanelRef.current && !advancedPanelRef.current.contains(event.target) &&
-          (!timelineRef.current || !timelineRef.current.contains(event.target))) {
+          (!timelineRef.current || !timelineRef.current.contains(event.target)) &&
+          (!buttonRef.current || !buttonRef.current.contains(event.target))) {
         setIsOpen(false);
         setShowTimeline(false); // Close timeline when closing main panel
         clearAllFilters(); // Clear all filters when dropdown closes
@@ -109,10 +111,11 @@ export default function AdvancedSearchDropdown() {
         {/* Search Button - Icon Only */}
         <div className="relative">
           <button
+            ref={buttonRef}
             onClick={() => setIsOpen(!isOpen)}
             onMouseEnter={() => !isOpen && setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
-            className="flex items-center justify-center bg-transparent border-none rounded-r px-3 h-[44px] text-stone-100 hover:text-amber-400 hover:border hover:border-amber-400 hover:border-l-0 active:text-stone-100 transition-colors duration-200"
+            className={`flex items-center justify-center bg-transparent border-none rounded-r px-3 h-[44px] ${theme.text} hover:text-amber-400/50 hover:bg-stone-700/30 active:${theme.text} transition-all duration-200`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
@@ -125,16 +128,16 @@ export default function AdvancedSearchDropdown() {
             ? 'opacity-100 translate-y-0 pointer-events-auto' 
             : 'opacity-0 -translate-y-1 pointer-events-none'
         }`}>
-              <div className="bg-stone-900 text-stone-100 text-xs px-3 py-2 rounded-md shadow-lg border border-stone-700 w-max">
-                <div className="font-medium text-stone-100 mb-1.5 text-center">Advanced Search Filters</div>
-                <div className="text-stone-100 text-[10px] mb-1">Filter by:</div>
+              <div className={`${theme.cardBackground} ${theme.text} text-xs px-3 py-2 rounded-md shadow-lg ${theme.border} border w-max`}>
+                <div className={`font-medium ${theme.text} mb-1.5 text-center`}>Advanced Search Filters</div>
+                <div className={`${theme.text} text-[10px] mb-1`}>Filter by:</div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px]">
-                  <span className="text-amber-400">• year</span>
-                  <span className="text-amber-400">• artist</span>
-                  <span className="text-amber-400">• era</span>
-                  <span className="text-amber-400">• artform</span>
+                  <span className="text-amber-400/50">• year</span>
+                  <span className="text-amber-400/50">• artist</span>
+                  <span className="text-amber-400/50">• era</span>
+                  <span className="text-amber-400/50">• artform</span>
                 </div>
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-l-4 border-r-4 border-b-4 border-transparent border-b-stone-900"></div>
+                <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 border-l-4 border-r-4 border-b-4 border-transparent ${theme.cardBackground.includes('stone-100') ? 'border-b-stone-100' : 'border-b-stone-800'}`}></div>
               </div>
             </div>
       </div>
@@ -188,7 +191,7 @@ export default function AdvancedSearchDropdown() {
                     <div className="relative" ref={dropdownRef}>
                       <button
                         onClick={() => setFilterByOpen(!filterByOpen)}
-                        className={`flex items-center gap-x-1 px-2 py-1 ${theme.text} ${theme.hover} rounded transition-all duration-200`}
+                        className={`flex items-center gap-x-1 px-2 py-1 text-stone-200 hover:text-stone-300 ${theme.hover} rounded transition-all duration-200`}
                       >
                         <span>{filterBy}</span>
                         <svg 
@@ -212,12 +215,12 @@ export default function AdvancedSearchDropdown() {
                     }}
                   >
                           <div className="flex items-center whitespace-nowrap">
-                            <span className={`${theme.textMuted} text-sm px-1`}>or</span>
+                            <span className="text-stone-300 text-sm px-1">or</span>
                             {availableOptions.map((option) => (
                               <button
                                 key={option}
                                 onClick={() => handleSelectFilterBy(option)}
-                                className={`px-2 py-1 ${theme.textSecondary} ${theme.hover} rounded transition-all duration-200 whitespace-nowrap`}
+                                className="px-2 py-1 text-stone-200 hover:text-stone-300 hover:bg-stone-700/30 rounded transition-all duration-200 whitespace-nowrap"
                               >
                                 {option}
                               </button>
@@ -260,10 +263,10 @@ export default function AdvancedSearchDropdown() {
 
               {filterBy === 'Artform' && (
                 <ArtformFilter 
-                  selectedMediaItems={selectedMediaItems}
-                  setSelectedMediaItems={setSelectedMediaItems}
-                  hoveredMediaItem={hoveredMediaItem}
-                  setHoveredMediaItem={setHoveredMediaItem}
+                  selectedMediumItems={selectedMediumItems}
+                  setSelectedMediumItems={setSelectedMediumItems}
+                  hoveredMediumItem={hoveredMediumItem}
+                  setHoveredMediumItem={setHoveredMediumItem}
                 />
               )}
                 </div>
@@ -274,7 +277,7 @@ export default function AdvancedSearchDropdown() {
             <div className={`border-t ${theme.border} p-3 flex items-center justify-between`}>
           <button 
             onClick={clearCurrentFilters}
-            className={`${theme.textMuted} hover:${theme.textSecondary} text-xs font-medium transition-colors`}
+            className="text-stone-400 hover:text-stone-300 text-xs font-medium transition-colors"
           >
                 Clear All
               </button>

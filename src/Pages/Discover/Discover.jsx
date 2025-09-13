@@ -7,8 +7,8 @@ export default function Discover() {
         <div className="text-center mb-16">
           <div className="relative">
             <div className="text-center pt-3 pb-8 px-4">
-              <h1 className="text-stone-100 text-4xl font-extralight tracking-[0.3em] uppercase mb-4">Explorationem</h1>
-              <p className="text-stone-100 text-lg font-light tracking-wide max-w-3xl mx-auto">
+              <h1 className="text-stone-200 text-4xl font-extralight tracking-[0.3em] uppercase mb-4">Explorationem</h1>
+              <p className="text-stone-200 text-lg font-light tracking-wide max-w-3xl mx-auto">
                 Explore curated collections of artworks from around the world. Discover hidden gems, masterpieces, and emerging artists across different periods and movements.
               </p>
             </div>
@@ -26,10 +26,10 @@ export default function Discover() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Curated Collections</h3>
+                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Curated Collections</h3>
                 </div>
               </div>
-              <p className="text-stone-100 text-sm leading-relaxed mb-6">
+              <p className="text-stone-300 text-sm leading-relaxed mb-6">
                 Thoughtfully assembled collections showcasing thematic connections and artistic dialogues across time periods.
               </p>
               <div className="space-y-2">
@@ -56,10 +56,10 @@ export default function Discover() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Interactive Galleries</h3>
+                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Interactive Galleries</h3>
                 </div>
               </div>
-              <p className="text-stone-100 text-sm leading-relaxed mb-6">
+              <p className="text-stone-300 text-sm leading-relaxed mb-6">
                 Immersive viewing experiences with detailed artwork analysis, historical context, and artistic techniques.
               </p>
               <div className="space-y-2">
@@ -86,10 +86,10 @@ export default function Discover() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Smart Discovery</h3>
+                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Smart Discovery</h3>
                 </div>
               </div>
-              <p className="text-stone-100 text-sm leading-relaxed mb-6">
+              <p className="text-stone-300 text-sm leading-relaxed mb-6">
                 AI-powered recommendations tailored to your preferences, exploring new movements and hidden connections.
               </p>
               <div className="space-y-2">
@@ -120,7 +120,7 @@ export default function Discover() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Explore by Movement</h3>
+                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Explore by Movement</h3>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -151,7 +151,7 @@ export default function Discover() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Discover by Theme</h3>
+                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Discover by Theme</h3>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -187,9 +187,9 @@ export default function Discover() {
                   <svg className="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                   </svg>
-                  <h3 className="text-stone-100 text-lg font-light tracking-wide">Discovery Platform Coming Soon</h3>
+                  <h3 className="text-stone-200 text-lg font-light tracking-wide">Discovery Platform Coming Soon</h3>
                 </div>
-                <p className="text-stone-100 text-sm font-light">
+                <p className="text-stone-300 text-sm font-light">
                   We are crafting an immersive discovery experience with interactive galleries, detailed artwork information, and personalized recommendations. A journey through the vast landscape of human artistic achievement awaits.
                 </p>
               </div>

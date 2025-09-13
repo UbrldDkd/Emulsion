@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navigation/Navbar.jsx'
 import Home from './Components/Pages/Home.jsx'
-import Discover from './Components/Pages/Discover.jsx'
+import Discover from './Pages/Discover/Discover.jsx'
 import Artists from './Components/Pages/Artists.jsx'
 import { ThemeProvider } from './contexts/ThemeContext.jsx'
 

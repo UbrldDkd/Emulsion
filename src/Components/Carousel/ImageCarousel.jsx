@@ -18,13 +18,21 @@ export default function ImageCarousel() {
     isTransitioning,
     goToSlide,
     goToPrevious,
-    goToNext
+    goToNext,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd
   } = useCarouselLogic(Artworks);
 
   const currentArtwork = Artworks[currentIndex];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div
+      className="relative w-full h-screen overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Image Preloader */}
       <ImagePreloader
         artworks={Artworks}
@@ -50,12 +58,24 @@ export default function ImageCarousel() {
       />
 
       {/* Artwork Description Panel */}
-      <div className="absolute right-0 top-0 h-full flex items-center">
-        <ArtworkDescription 
-          artwork={currentArtwork} 
-          isTransitioning={isTransitioning} 
-          getEraFromDate={getEraFromDate} 
+      <div className="absolute right-0 top-0 h-full flex items-center hidden lg:flex">
+        <ArtworkDescription
+          artwork={currentArtwork}
+          isTransitioning={isTransitioning}
+          getEraFromDate={getEraFromDate}
         />
+      </div>
+
+      {/* Mobile Artwork Info - Bottom overlay */}
+      <div className="absolute bottom-0 left-0 right-0 lg:hidden">
+        <div className="bg-gradient-to-t from-black/80 via-black/60 to-transparent text-white p-4 pb-16">
+          <h2 className="text-xl font-serif italic mb-1">{currentArtwork.title}</h2>
+          <p className="text-sm text-stone-200 mb-2">{currentArtwork.artistDisplayName}</p>
+          <div className="flex gap-4 text-xs text-stone-300">
+            <span>{currentArtwork.objectDate}</span>
+            <span>{currentArtwork.period}</span>
+          </div>
+        </div>
       </div>
 
       {/* Dots Indicator */}

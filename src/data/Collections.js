@@ -12,7 +12,7 @@ export const Collections = [
         date: "1919",
         medium: "Oil on canvas",
         dimensions: "100.4 cm × 201 cm",
-        image: "https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg"
+        image: "/src/assets/Water Lilies.jpg"
       },
       {
         title: "A Bar at the Folies-Bergère",
@@ -20,7 +20,7 @@ export const Collections = [
         date: "1882",
         medium: "Oil on canvas",
         dimensions: "96 cm × 130 cm",
-        image: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Edouard_Manet%2C_A_Bar_at_the_Folies-Berg%C3%A8re.jpg"
+        image: "/src/assets/A Bar at the Folies-Bergère.jpg"
       },
       {
         title: "Boulevard Montmartre at Night",
@@ -28,7 +28,15 @@ export const Collections = [
         date: "1897",
         medium: "Oil on canvas",
         dimensions: "53.3 cm × 64.8 cm",
-        image: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Camille_Pissarro_-_Boulevard_Montmartre_at_Night_-_Google_Art_Project.jpg"
+        image: "/src/assets/Boulevard Montmartre at Night.jpg"
+      },
+      {
+        title: "Dance at le Moulin de la Galette",
+        artist: "Pierre-Auguste Renoir",
+        date: "1876",
+        medium: "Oil on canvas",
+        dimensions: "131 × 175 cm",
+        image: "/src/assets/Dance at le Moulin de la Galette.jpg"
       }
     ]
   },
@@ -43,7 +51,7 @@ export const Collections = [
         date: "1839",
         medium: "Oil on canvas",
         dimensions: "90.7 cm × 121.6 cm",
-        image: "https://upload.wikimedia.org/wikipedia/commons/3/30/The_Fighting_Temeraire%2C_JMW_Turner%2C_National_Gallery.jpg"
+        image: "/src/assets/The Fighting Temeraire.jpg"
       },
       {
         title: "The Hay Wain",
@@ -51,15 +59,23 @@ export const Collections = [
         date: "1821",
         medium: "Oil on canvas",
         dimensions: "130.2 cm × 185.4 cm",
-        image: "https://upload.wikimedia.org/wikipedia/commons/f/f4/John_Constable_-_The_Hay_Wain_%281821%29.jpg"
+        image: "/src/assets/The Hay Wain.jfif"
       },
       {
-        title: "Liberty Leading the People",
-        artist: "Eugène Delacroix",
-        date: "1830",
+        title: "The Raft of the Medusa",
+        artist: "Théodore Géricault",
+        date: "1819",
         medium: "Oil on canvas",
-        dimensions: "260 cm × 325 cm",
-        image: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Delacroix_-_La_libert%C3%A9_guidant_le_peuple.jpg"
+        dimensions: "491 × 716 cm",
+        image: "/src/assets/The Raft of the Medusa.jpg"
+      },
+      {
+        title: "Wanderer above the Sea of Fog",
+        artist: "Caspar David Friedrich",
+        date: "1818",
+        medium: "Oil on canvas",
+        dimensions: "94.8 × 74.8 cm",
+        image: "/src/assets/Wanderer above the Sea of Fog.jpg"
       }
     ]
   },
@@ -74,7 +90,7 @@ export const Collections = [
         date: "c. 1831",
         medium: "Polychrome woodblock print",
         dimensions: "25.7 cm × 37.9 cm",
-        image: "https://images.metmuseum.org/CRDImages/as/web-large/DP130155.jpg"
+        image: "/src/assets/The Great Wave off Kanagawa.jpg"
       },
       {
         title: "Red Fuji",
@@ -82,15 +98,23 @@ export const Collections = [
         date: "c. 1831",
         medium: "Polychrome woodblock print",
         dimensions: "24.7 cm × 37.8 cm",
-        image: "https://upload.wikimedia.org/wikipedia/commons/5/57/Hokusai_Fuji_red.jpg"
+        image: "/src/assets/Red Fuji.jpg"
       },
       {
-        title: "Courtesan (Oiran)",
-        artist: "Kitagawa Utamaro",
-        date: "c. 1790",
-        medium: "Polychrome woodblock print",
-        dimensions: "35 cm × 24 cm",
-        image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Utamaro_Oiran.jpg"
+        title: "Sudden Shower over Shin-Ōhashi bridge and Atake",
+        artist: "Utagawa Hiroshige",
+        date: "c. 1857",
+        medium: "Woodblock print",
+        dimensions: "36 × 24 cm",
+        image: "/src/assets/Sudden Shower over Shin-Ōhashi bridge and Atake.jpg"
+      },
+      {
+        title: "Plum Garden at Kameido",
+        artist: "Utagawa Hiroshige",
+        date: "1857",
+        medium: "Woodblock print",
+        dimensions: "36 × 23 cm",
+        image: "/src/assets/Plum Garden at Kameido.jpg"
       }
     ]
   }

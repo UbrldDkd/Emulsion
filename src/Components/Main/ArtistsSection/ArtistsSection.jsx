@@ -13,15 +13,15 @@ export default function ArtistsSection({ artists, onWorkClick }) {
     <section className="py-24">
       <div className="w-[95%] mx-auto">
         {/* Header */}
-        <div className="text-center mb-20">
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent mx-auto mb-8"></div>
-          <h2 className="text-4xl font-extralight text-stone-100 mb-6 tracking-[0.2em] uppercase">
-            Magistri Artium
+        <div className="text-center">
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent mx-auto mb-8"></div>
+          <h2 className="text-2xl font-extralight text-stone-100 mb-1 tracking-[0.2em] uppercase">
+            Artists
           </h2>
-          <p className="text-stone-300 font-light max-w-3xl mx-auto text-lg tracking-wide leading-relaxed">
-            Artists whose works influenced the development of artistic practice and remain part of cultural history.
+          <p className="text-stone-400 font-light max-w-3xl mx-auto text-lg tracking-wide leading-relaxed">
+            Discover your new favorite artists
           </p>
-          <div className="w-32 h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent mx-auto mt-8"></div>
+          <div className="w-32 h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent mx-auto mt-4 mb-4"></div>
         </div>
 
         {/* Artists List */}

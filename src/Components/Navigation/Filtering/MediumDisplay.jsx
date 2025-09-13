@@ -1,15 +1,15 @@
 import { Keys } from '../../Keys.js';
 
-export default function MediaDisplay({
-  selectedMediaItems,
-  setSelectedMediaItems,
-  hoveredMediaItem,
-  setHoveredMediaItem
+export default function MediumDisplay({
+  selectedMediumItems,
+  setSelectedMediumItems,
+  hoveredMediumItem,
+  setHoveredMediumItem
 }) {
   const { artForms } = Keys;
 
-  const toggleMediaSelection = (itemId) => {
-    setSelectedMediaItems(prev => {
+  const toggleMediumSelection = (itemId) => {
+    setSelectedMediumItems(prev => {
       const newSet = new Set(prev);
       if (newSet.has(itemId)) {
         newSet.delete(itemId);
@@ -31,8 +31,8 @@ export default function MediaDisplay({
           <div className="grid grid-cols-2 gap-2">
             {artForm.mediums.slice(0, 6).map((medium, index) => {
               const itemId = `${artFormKey}-medium-${index}`;
-              const isSelected = selectedMediaItems.has(itemId);
-              const isHovered = hoveredMediaItem === itemId;
+              const isSelected = selectedMediumItems.has(itemId);
+              const isHovered = hoveredMediumItem === itemId;
 
               return (
                 <button
@@ -44,9 +44,9 @@ export default function MediaDisplay({
                         ? 'bg-stone-700 text-stone-300'
                         : 'bg-stone-800 text-stone-400 hover:text-stone-300 hover:bg-stone-700'
                   }`}
-                  onMouseEnter={() => setHoveredMediaItem(itemId)}
-                  onMouseLeave={() => setHoveredMediaItem(null)}
-                  onClick={() => toggleMediaSelection(itemId)}
+                  onMouseEnter={() => setHoveredMediumItem(itemId)}
+                  onMouseLeave={() => setHoveredMediumItem(null)}
+                  onClick={() => toggleMediumSelection(itemId)}
                 >
                   {medium.label}
                 </button>
@@ -59,24 +59,32 @@ export default function MediaDisplay({
             <div className="grid grid-cols-3 gap-1">
               {artForm.genres.slice(0, 6).map((genre, index) => {
                 const itemId = `${artFormKey}-genre-${index}`;
-                const isSelected = selectedMediaItems.has(itemId);
-                const isHovered = hoveredMediaItem === itemId;
+                const isSelected = selectedMediumItems.has(itemId);
+                const isHovered = hoveredMediumItem === itemId;
 
                 return (
                   <button
                     key={index}
-                    className={`p-1.5 rounded text-xs text-center transition-all ${
-                      isSelected 
-                        ? 'bg-amber-600/20 text-amber-400 border border-amber-600/30' 
+                    className={`p-1.5 rounded text-xs text-center transition-all flex items-center justify-center ${
+                      isSelected
+                        ? 'bg-stone-900/40 backdrop-blur-sm border border-stone-500'
                         : isHovered
-                          ? 'bg-stone-700 text-stone-400'
-                          : 'bg-stone-800 text-stone-500 hover:text-stone-400 hover:bg-stone-700'
+                          ? 'bg-stone-700 border border-stone-700'
+                          : 'bg-stone-800 border border-stone-800 hover:bg-stone-700 hover:border-stone-700'
                     }`}
-                    onMouseEnter={() => setHoveredMediaItem(itemId)}
-                    onMouseLeave={() => setHoveredMediaItem(null)}
-                    onClick={() => toggleMediaSelection(itemId)}
+                    onMouseEnter={() => setHoveredMediumItem(itemId)}
+                    onMouseLeave={() => setHoveredMediumItem(null)}
+                    onClick={() => toggleMediumSelection(itemId)}
                   >
-                    {genre.label}
+                    <span className={`${
+                      isSelected
+                        ? 'text-amber-200/60'
+                        : isHovered
+                          ? 'text-amber-100/30'
+                          : 'text-stone-200'
+                    }`}>
+                      {genre.label}
+                    </span>
                   </button>
                 );
               })}

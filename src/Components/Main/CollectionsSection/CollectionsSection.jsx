@@ -10,19 +10,18 @@ export default function CollectionsSection({ collections, onWorkClick }) {
   }
 
   return (
-    <section className="py-24">
+    <section className="py-12">
       <div className="w-[95%] mx-auto">
         {/* Header */}
-        <div className="text-center mb-20">
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent mx-auto mb-8"></div>
-          <h2 className="text-4xl font-extralight text-stone-100 mb-6 tracking-[0.2em] uppercase">
+        <div className="text-center mb-8">
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent mx-auto mb-4"></div>
+          <h2 className="text-[26px] font-extralight text-stone-100 mb-3 tracking-[0.2em] uppercase">
             Collections
           </h2>
-          <p className="text-stone-300 font-light max-w-3xl mx-auto text-lg tracking-wide leading-relaxed">
-            Curated selections spanning the great artistic movements of history,
-            each collection a testament to the enduring power of human creativity.
+          <p className="text-stone-300 text-base font-light max-w-3xl mx-auto tracking-wide leading-relaxed">
+            Explore new collections of curated artworks from various art movements.
           </p>
-          <div className="w-33 h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent mx-auto mt-8"></div>
+          <div className="w-33 h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent mx-auto mt-4"></div>
         </div>
 
         {/* Collections List */}
@@ -37,12 +36,10 @@ export default function CollectionsSection({ collections, onWorkClick }) {
                 />
                 {/* Add dots separator except after the last item */}
                 {idx < array.length - 1 && (
-                  <div className="flex justify-center py-8 lg:py-16">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-1 h-1 bg-amber-500/40 rounded-full"></div>
-                      <div className="w-1 h-1 bg-amber-500/30 rounded-full"></div>
-                      <div className="w-1 h-1 bg-amber-500/20 rounded-full"></div>
-                    </div>
+                  <div className="flex justify-center py-4 lg:py-6">
+                    <svg className="w-4 h-4 text-amber-500/50" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L14 10L22 12L14 14L12 22L10 14L2 12L10 10L12 2Z"/>
+                    </svg>
                   </div>
                 )}
               </div>
@@ -50,12 +47,12 @@ export default function CollectionsSection({ collections, onWorkClick }) {
         </div>
 
         {/* Toggle Button */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-8">
           <button
             onClick={() => setShowMore(!showMore)}
-            className="inline-flex items-center px-11 py-4 text-sm font-light text-stone-200 border border-stone-600/50 hover:bg-stone-800/50 hover:border-amber-500/30 transition-all duration-300 tracking-wider uppercase"
+            className="inline-flex items-center px-8 py-3 text-sm font-light text-stone-200 border border-stone-600/50 hover:bg-stone-800/50 hover:border-amber-500/30 transition-all duration-300 tracking-wider uppercase"
           >
-            {showMore ? "Minus" : "Plus"}
+            {showMore ? "Show less" : "Show more"}
             <svg
               className={`ml-3 w-4 h-4 transition-transform duration-300 ${
                 showMore ? "rotate-180" : ""

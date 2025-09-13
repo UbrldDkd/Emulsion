@@ -47,7 +47,7 @@
             <div>
               <span className="text-stone-400 uppercase text-xs tracking-wider block mb-1">Artist Details:</span>
               <div className="font-light">
-                {selectedWork.artist.nationality && `${selectedWork.artist.nationality}`}
+                {selectedWork.artist.birthplace && `${selectedWork.artist.birthplace}`}
                 {selectedWork.artist.birthYear && ` (${selectedWork.artist.birthYear}${selectedWork.artist.deathYear ? `-${selectedWork.artist.deathYear}` : ''})`}
               </div>
               {selectedWork.artist.period && (

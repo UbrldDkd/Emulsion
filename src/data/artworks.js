@@ -1,5 +1,31 @@
 export const Artworks = [
-  // Pre-Raphaelite / Academic
+  // Romanticism - Landscapes and Peaceful Scenes
+  {
+    title: "The Hay Wain",
+    artistDisplayName: "John Constable",
+    artistNationality: "British",
+    artistBeginDate: "1776",
+    artistEndDate: "1837",
+    objectDate: "1821",
+    medium: "Oil on canvas",
+    dimensions: "130 × 185 cm",
+    repository: "National Gallery, London",
+    period: "Romanticism",
+    primaryImage: "src/assets/The Hay Wain.jfif"
+  },
+  {
+    title: "The Fighting Temeraire",
+    artistDisplayName: "J.M.W. Turner",
+    artistNationality: "British",
+    artistBeginDate: "1775",
+    artistEndDate: "1851",
+    objectDate: "1839",
+    medium: "Oil on canvas",
+    dimensions: "91 × 122 cm",
+    repository: "National Gallery, London",
+    period: "Romanticism",
+    primaryImage: "src/assets/The Fighting Temeraire.jpg"
+  },
   {
     title: "The Lady of Shalott",
     artistDisplayName: "John William Waterhouse",
@@ -14,32 +40,6 @@ export const Artworks = [
     primaryImage: "src/assets/The Lady of Shalott.jpg"
   },
   {
-    title: "Christ in the House of His Parents",
-    artistDisplayName: "John Everett Millais",
-    artistNationality: "British",
-    artistBeginDate: "1829",
-    artistEndDate: "1896",
-    objectDate: "1850",
-    medium: "Oil on canvas",
-    dimensions: "56 × 72 cm",
-    repository: "Tate Britain, London",
-    period: "Pre-Raphaelite",
-    primaryImage: "src/assets/Christ in the House of His Parents.jpg"
-  },
-  {
-    title: "Isabella",
-    artistDisplayName: "John Everett Millais",
-    artistNationality: "British",
-    artistBeginDate: "1829",
-    artistEndDate: "1896",
-    objectDate: "1849",
-    medium: "Oil on canvas",
-    dimensions: "53 × 85 cm",
-    repository: "Manchester Art Gallery",
-    period: "Pre-Raphaelite",
-    primaryImage: "src/assets/Isabella.jpg"
-  },
-  {
     title: "Ophelia",
     artistDisplayName: "John Everett Millais",
     artistNationality: "British",
@@ -52,111 +52,30 @@ export const Artworks = [
     period: "Pre-Raphaelite",
     primaryImage: "src/assets/Ophelia.jpg"
   },
-
-  // Romanticism
   {
-    title: "The Raft of the Medusa",
-    artistDisplayName: "Théodore Géricault",
-    artistNationality: "French",
-    artistBeginDate: "1791",
-    artistEndDate: "1824",
-    objectDate: "1818–1819",
+    title: "Isabella",
+    artistDisplayName: "John Everett Millais",
+    artistNationality: "British",
+    artistBeginDate: "1829",
+    artistEndDate: "1896",
+    objectDate: "1849",
     medium: "Oil on canvas",
-    dimensions: "491 × 716 cm",
-    repository: "Louvre Museum, Paris",
-    period: "Romanticism",
-    primaryImage: "src/assets/The Raft of the Medusa.jpg"
+    dimensions: "103 × 143 cm",
+    repository: "Walker Art Gallery, Liverpool",
+    period: "Pre-Raphaelite",
+    primaryImage: "src/assets/Isabella.jpg"
   },
   {
-    title: "The Death of Sardanapalus",
-    artistDisplayName: "Eugène Delacroix",
-    artistNationality: "French",
-    artistBeginDate: "1798",
-    artistEndDate: "1863",
-    objectDate: "1827",
+    title: "Christ in the House of His Parents",
+    artistDisplayName: "John Everett Millais",
+    artistNationality: "British",
+    artistBeginDate: "1829",
+    artistEndDate: "1896",
+    objectDate: "1850",
     medium: "Oil on canvas",
-    dimensions: "392 × 496 cm",
-    repository: "Louvre Museum, Paris",
-    period: "Romanticism",
-    primaryImage: "src/assets/The Death of Sardanapalus.jpg"
-  },
-  {
-    title: "The Third of May 1808",
-    artistDisplayName: "Francisco Goya",
-    artistNationality: "Spanish",
-    artistBeginDate: "1746",
-    artistEndDate: "1828",
-    objectDate: "1814",
-    medium: "Oil on canvas",
-    dimensions: "268 × 347 cm",
-    repository: "Prado Museum, Madrid",
-    period: "Romanticism",
-    primaryImage: "src/assets/The Third of May 1808.jpg"
-  },
-  {
-    title: "The Great Wave off Kanagawa",
-    artistDisplayName: "Katsushika Hokusai",
-    artistNationality: "Japanese",
-    artistBeginDate: "1760",
-    artistEndDate: "1849",
-    objectDate: "1831",
-    medium: "Woodblock print",
-    dimensions: "25 × 37 cm",
-    repository: "Various Collections",
-    period: "Edo Period",
-    primaryImage: "src/assets/The Great Wave off Kanagawa.jpg"
-  },
-   // Georgian Artists
-  {
-    title: "Vepxistyaosani Illustration 1",
-    artistDisplayName: "Sergo Qobuladze",
-    artistNationality: "Georgian",
-    artistBeginDate: "1923",
-    artistEndDate: "1999",
-    objectDate: "1960",
-    medium: "Illustration / Gouache",
-    dimensions: "50 × 70 cm",
-    repository: "Private Collection",
-    period: "Modern Georgian",
-    primaryImage: "src/assets/qobuladze_vepxistyaosani_1.jpg"
-  },
-  {
-    title: "Tarieli / Illustration from 'Vepxistyaosani'",
-    artistDisplayName: "Sergo Qobuladze",
-    artistNationality: "Georgian",
-    artistBeginDate: "1923",
-    artistEndDate: "1999",
-    objectDate: "1962",
-    medium: "Illustration / Gouache",
-    dimensions: "50 × 70 cm",
-    repository: "Private Collection",
-    period: "Modern Georgian",
-    primaryImage: "src/assets/Tarieli.jpg"
-  },
-  {
-    title: "Gudiashvili Painting 1",
-    artistDisplayName: "Lado Gudiashvili",
-    artistNationality: "Georgian",
-    artistBeginDate: "1896",
-    artistEndDate: "1980",
-    objectDate: "1930",
-    medium: "Oil on canvas",
-    dimensions: "80 × 100 cm",
-    repository: "Private Collection",
-    period: "Modern Georgian",
-    primaryImage: "src/assets/gudiashvili_1.jpg"
-  },
-  {
-    title: "Gudiashvili Painting 2",
-    artistDisplayName: "Lado Gudiashvili",
-    artistNationality: "Georgian",
-    artistBeginDate: "1896",
-    artistEndDate: "1980",
-    objectDate: "1935",
-    medium: "Oil on canvas",
-    dimensions: "80 × 100 cm",
-    repository: "Private Collection",
-    period: "Modern Georgian",
-    primaryImage: "src/assets/gudiashvili_2.jpg"
+    dimensions: "86 × 140 cm",
+    repository: "Tate Britain, London",
+    period: "Pre-Raphaelite",
+    primaryImage: "src/assets/Christ in the House of His Parents.jpg"
   }
 ];

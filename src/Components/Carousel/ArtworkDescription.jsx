@@ -9,7 +9,7 @@ export default function ArtworkDescription({ artwork, isTransitioning, getEraFro
           <div className="space-y-2">
             <p className="text-xl font-light text-stone-200">{artwork.artistDisplayName}</p>
             <p className="text-sm text-stone-300 tracking-wide">
-              {artwork.artistNationality}, {artwork.artistBeginDate}–{artwork.artistEndDate}
+               {artwork.artistBeginDate}–{artwork.artistEndDate}
             </p>
           </div>
         </div>
@@ -20,11 +20,6 @@ export default function ArtworkDescription({ artwork, isTransitioning, getEraFro
           <div>
             <span className="text-stone-400 tracking-wide text-xs block">Date:</span>
             <p className="text-stone-200">{artwork.objectDate}</p>
-          </div>
-
-          <div>
-            <span className="text-stone-400 tracking-wide text-xs block">Era:</span>
-            <p className="text-stone-200">{getEraFromDate(artwork.objectDate)}</p>
           </div>
 
           <div>

@@ -95,11 +95,11 @@ export default function ArtistsFilter() {
 
       {/* Results / Recommendations */}
       <div className="max-h-48 overflow-y-auto space-y-1 scrollbar-hide">
-          <div className={`text-xs ${theme.textMuted} mb-3 font-medium`}>
-            {showOnlySelected 
+          <div className={`text-xs text-stone-300 mb-3 font-medium`}>
+            {showOnlySelected
               ? `SELECTED (${displayArtists.length})`
-              : searchTerm 
-                ? `RESULTS (${displayArtists.length})` 
+              : searchTerm
+                ? `RESULTS (${displayArtists.length})`
                 : 'RECOMMENDED'
             }
           </div>
@@ -110,25 +110,35 @@ export default function ArtistsFilter() {
                 key={index}
                 onClick={() => toggleArtist(artist.name)}
                 className={`w-full text-left p-2 ${theme.border} transition-all duration-200 ${
-                  isSelected 
-                    ? theme.selected 
-                    : `${theme.cardBackground} ${theme.hover} ${theme.textSecondary}`
+                  isSelected
+                    ? theme.selected
+                    : `${theme.cardBackground} ${theme.hover} hover:border-amber-400/50`
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-medium text-sm">{artist.name}</div>
-                    <div className={`text-xs ${theme.textMuted} mt-0.5`}>
+                    <div className={`font-medium text-sm ${
+                      isSelected
+                        ? 'text-amber-200/60'
+                        : 'text-stone-200'
+                    }`}>{artist.name}</div>
+                    <div className={`text-xs mt-0.5 text-stone-300`}>
                       {artist.period} • {artist.movement}
                     </div>
                   </div>
-                  {isSelected && (
-                    <div className="w-4 h-4 bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
-                      <svg className="w-3 h-3 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+
+                  {/* Selection Indicator */}
+                  <div className={`w-4 h-4 rounded border-2 transition-all ${
+                    isSelected
+                      ? 'bg-amber-200/30 border-stone-500'
+                      : 'border-stone-800 hover:border-stone-700'
+                  }`}>
+                    {isSelected && (
+                      <svg className="w-3 h-3 text-amber-100" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </button>
             );
@@ -140,10 +150,10 @@ export default function ArtistsFilter() {
         <div className={`flex items-center justify-between ${theme.cardBackground} ${theme.border} px-3 py-2`}>
           <button
             onClick={() => setShowOnlySelected(!showOnlySelected)}
-            className="flex items-center gap-2 text-xs hover:text-amber-300 transition-colors"
+            className="flex items-center gap-2 text-xs transition-colors hover:bg-amber-200/50 active:bg-amber-200/50 px-2 py-1 rounded"
           >
-            <span className={`${theme.accent} font-medium`}>{selectedArtists.size}</span>
-            <span className={`${theme.textMuted}`}>selected</span>
+            <span className="bg-amber-200/30 text-amber-950 font-medium px-1.5 py-0.5 rounded-full">{selectedArtists.size}</span>
+            <span className="text-stone-300">selected</span>
             <svg 
               className={`w-3 h-3 text-stone-400 transition-transform duration-200 ${
                 showOnlySelected ? 'rotate-180' : ''
