@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import AdvancedSearchDropdown from './Filtering/AdvancedSearchDropdown.jsx';
-import SearchPreview from './SearchPreview.jsx';
-import SearchInput from './SearchInput.jsx';
+import SearchPreview from './Search/SearchPreview.jsx';
+import SearchInput from './Search/SearchInput.jsx';
 import { useFetchSearch } from './CustomHooks/useFetchSearch.jsx';
 
 export default function Navbar() {

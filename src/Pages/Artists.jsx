@@ -7,8 +7,8 @@ export default function Artists() {
         <div className="text-center mb-16">
           <div className="relative">
             <div className="text-center pt-3 pb-8 px-4">
-              <h1 className="text-stone-300 text-4xl font-extralight tracking-[0.3em] uppercase mb-4">Magistri Artium</h1>
-              <p className="text-stone-400 text-lg font-light tracking-wide max-w-3xl mx-auto">
+              <h1 className="text-stone-100 text-4xl font-extralight tracking-[0.3em] uppercase mb-4">Magistri Artium</h1>
+              <p className="text-stone-100 text-lg font-light tracking-wide max-w-3xl mx-auto">
                 Explore the lives, works, and stories of artists who have shaped the world of art. From classical masters to contemporary innovators, discover their unique contributions to human creativity.
               </p>
             </div>
@@ -26,10 +26,10 @@ export default function Artists() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Master Artists</h3>
+                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Master Artists</h3>
                 </div>
               </div>
-              <p className="text-stone-400 text-sm leading-relaxed mb-6">
+              <p className="text-stone-100 text-sm leading-relaxed mb-6">
                 Explore the lives and works of history's most influential artists and their lasting impact on the world of art and culture.
               </p>
               <div className="space-y-2">
@@ -56,10 +56,10 @@ export default function Artists() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Emerging Talents</h3>
+                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Emerging Talents</h3>
                 </div>
               </div>
-              <p className="text-stone-400 text-sm leading-relaxed mb-6">
+              <p className="text-stone-100 text-sm leading-relaxed mb-6">
                 Discover contemporary artists who are pushing boundaries and redefining artistic expression in the modern world.
               </p>
               <div className="space-y-2">
@@ -86,10 +86,10 @@ export default function Artists() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Artist Biographies</h3>
+                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Artist Biographies</h3>
                 </div>
               </div>
-              <p className="text-stone-400 text-sm leading-relaxed mb-6">
+              <p className="text-stone-100 text-sm leading-relaxed mb-6">
                 Deep dive into detailed biographies, artistic journeys, and the stories behind the masterpieces that changed art forever.
               </p>
               <div className="space-y-2">
@@ -120,7 +120,7 @@ export default function Artists() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Artists by Period</h3>
+                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Artists by Period</h3>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -151,7 +151,7 @@ export default function Artists() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-1.5 h-8 bg-gradient-to-b from-amber-400 to-amber-600"></div>
                 <div>
-                  <h3 className="text-stone-200 text-xl font-light tracking-wide">Artists by Medium</h3>
+                  <h3 className="text-stone-100 text-xl font-light tracking-wide">Artists by Medium</h3>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -187,9 +187,9 @@ export default function Artists() {
                   <svg className="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  <h3 className="text-stone-300 text-lg font-light tracking-wide">Artist Directory Coming Soon</h3>
+                  <h3 className="text-stone-100 text-lg font-light tracking-wide">Artist Directory Coming Soon</h3>
                 </div>
-                <p className="text-stone-400 text-sm font-light">
+                <p className="text-stone-100 text-sm font-light">
                   We're building a comprehensive artist directory and biography collection with detailed profiles, artwork galleries, and interactive timelines.
                 </p>
               </div>

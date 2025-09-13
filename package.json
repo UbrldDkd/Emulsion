@@ -13,7 +13,9 @@
     "papaparse": "^5.5.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-medium-image-zoom": "^5.3.0",
     "react-router-dom": "^7.8.2",
+    "react-zoom-pan-pinch": "^3.7.0",
     "tailwind-scrollbar-hide": "^4.0.0"
   },
   "devDependencies": {

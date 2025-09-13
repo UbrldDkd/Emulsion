@@ -112,7 +112,7 @@ export default function AdvancedSearchDropdown() {
             onClick={() => setIsOpen(!isOpen)}
             onMouseEnter={() => !isOpen && setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
-            className="flex items-center justify-center bg-transparent border-none rounded-r px-3 h-[44px] text-stone-300 hover:text-amber-400 hover:border hover:border-amber-400 hover:border-l-0 active:text-stone-200 transition-colors duration-200"
+            className="flex items-center justify-center bg-transparent border-none rounded-r px-3 h-[44px] text-stone-100 hover:text-amber-400 hover:border hover:border-amber-400 hover:border-l-0 active:text-stone-100 transition-colors duration-200"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
@@ -125,9 +125,9 @@ export default function AdvancedSearchDropdown() {
             ? 'opacity-100 translate-y-0 pointer-events-auto' 
             : 'opacity-0 -translate-y-1 pointer-events-none'
         }`}>
-              <div className="bg-stone-900 text-stone-200 text-xs px-3 py-2 rounded-md shadow-lg border border-stone-700 w-max">
-                <div className="font-medium text-stone-300 mb-1.5 text-center">Advanced Search Filters</div>
-                <div className="text-stone-400 text-[10px] mb-1">Filter by:</div>
+              <div className="bg-stone-900 text-stone-100 text-xs px-3 py-2 rounded-md shadow-lg border border-stone-700 w-max">
+                <div className="font-medium text-stone-100 mb-1.5 text-center">Advanced Search Filters</div>
+                <div className="text-stone-100 text-[10px] mb-1">Filter by:</div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px]">
                   <span className="text-amber-400">• year</span>
                   <span className="text-amber-400">• artist</span>
@@ -297,8 +297,8 @@ export default function AdvancedSearchDropdown() {
                 }}
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm backdrop-blur-sm ${
                 theme.cardBackground.includes('stone') && theme.text.includes('950')
-                  ? 'bg-stone-700 hover:bg-stone-600 active:bg-stone-800 text-stone-200 hover:text-white' // Light mode
-                  : 'bg-stone-800 hover:bg-stone-700 active:bg-stone-900 text-stone-200 hover:text-white' // Dark mode - darker
+                  ? 'bg-stone-700 hover:bg-stone-600 active:bg-stone-800 text-stone-100 hover:text-white' // Light mode
+                  : 'bg-stone-800 hover:bg-stone-700 active:bg-stone-900 text-stone-100 hover:text-white' // Dark mode - darker
               }`}>
                 {(filterBy === 'Artform' && (artformFilterState.selectedArtform || artformFilterState.selectedGenres.size > 0 || artformFilterState.showMediums)) ? 'Done' : 'Apply Search'}
               </button>

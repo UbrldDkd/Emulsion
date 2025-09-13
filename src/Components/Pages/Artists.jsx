@@ -5,8 +5,11 @@ export default function Artists() {
         
         {/* Header Section */}
         <div className="text-center mb-16">
+
           <div className="relative">
+
             <div className="text-center pt-3 pb-8 px-4">
+              
               <h1 className="text-stone-300 text-4xl font-extralight tracking-[0.3em] uppercase mb-4">Magistri Artium</h1>
               <p className="text-stone-400 text-lg font-light tracking-wide max-w-3xl mx-auto">
                 Explore the lives, works, and stories of artists who have shaped the world of art. From classical masters to contemporary innovators, discover their unique contributions to human creativity.

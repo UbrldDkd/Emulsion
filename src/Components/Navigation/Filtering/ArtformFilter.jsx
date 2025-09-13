@@ -18,6 +18,7 @@ export default function ArtformFilter({
   const [filterType, setFilterType] = useState(null); // 'genres' or 'mediums'
   const [hoveredGenreBadge, setHoveredGenreBadge] = useState(null); // Track which genre badge is hovered
   const [hoveredMediumBadge, setHoveredMediumBadge] = useState(null); // Track which medium badge is hovered
+  const [hoveredArtform, setHoveredArtform] = useState(null); // Track which artform is being hovered
 
   const toggleSelection = (itemId, type) => {
     setSelectedMediaItems(prev => {
@@ -150,7 +151,12 @@ export default function ArtformFilter({
             ).length;
 
             return (
-              <div key={artFormKey} className="relative">
+              <div 
+                key={artFormKey} 
+                className="relative"
+                onMouseEnter={() => setHoveredArtform(artFormKey)}
+                onMouseLeave={() => setHoveredArtform(null)}
+              >
                 {/* Main artform selection button */}
                 <button
                   onClick={() => toggleArtformSelection(artFormKey)}
@@ -163,7 +169,7 @@ export default function ArtformFilter({
                 >
                   <div className="flex items-center justify-between gap-3">
                     {/* Artform Info */}
-                    <div className="flex-1 pr-20">
+                    <div className="flex-1">
                       <div className={`font-medium text-sm ${isSelected ? theme.accent : theme.text}`}>
                         {artForm.label}
                       </div>
@@ -174,8 +180,12 @@ export default function ArtformFilter({
                   </div>
                 </button>
                 
-                {/* Filter Buttons - Positioned absolutely */}
-                <div className="absolute top-3 right-3 flex gap-2">
+                {/* Filter Buttons - Only show when hovering this specific artform */}
+                <div className={`absolute top-3 right-3 flex flex-col gap-2 transition-all duration-300 ease-in-out ${
+                  hoveredArtform === artFormKey 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-4 pointer-events-none'
+                }`}>
                     {(() => {
                       // Count selected genres for this artform
                       const genreCount = Array.from(selectedMediaItems).filter(item => 
@@ -189,7 +199,7 @@ export default function ArtformFilter({
                               e.stopPropagation();
                               handleGenreFilterClick(artFormKey);
                             }}
-                            className={`px-2 py-1 text-xs rounded transition-all duration-200 ${theme.cardBackground} ${theme.border} border hover:${theme.hover} hover:border-amber-400/50 flex items-center gap-1`}
+                            className={`px-2 py-1 text-xs rounded transition-all duration-200 ${theme.cardBackground} ${theme.border} border hover:${theme.hover} hover:border-amber-400/50 flex items-center justify-center gap-1`}
                             title="Filter by genres"
                           >
                             <span className={theme.text}>Genres</span>
@@ -246,7 +256,7 @@ export default function ArtformFilter({
                               e.stopPropagation();
                               handleMediumFilterClick(artFormKey);
                             }}
-                            className={`px-2 py-1 text-xs rounded transition-all duration-200 ${theme.cardBackground} ${theme.border} border hover:${theme.hover} hover:border-amber-400/50 flex items-center gap-1`}
+                            className={`px-2 py-1 text-xs rounded transition-all duration-200 ${theme.cardBackground} ${theme.border} border hover:${theme.hover} hover:border-amber-400/50 flex items-center justify-center gap-1`}
                             title="Filter by mediums"
                           >
                             <span className={theme.text}>Mediums</span>

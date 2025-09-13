@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Keys } from '../Keys.js';
+import { Keys } from '../../Keys.js';
 
 export default function SearchPreview({ data, isLoading, isVisible }) {
   const { Fields } = Keys;
