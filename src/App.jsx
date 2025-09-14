@@ -1,19 +1,31 @@
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navigation/Navbar.jsx'
+import Footer from './Components/Footer/Footer.jsx'
 import Home from './Components/Pages/Home.jsx'
-import Discover from './Pages/Discover/Discover.jsx'
-import Artists from './Components/Pages/Artists.jsx'
+import Discover from './Pages/Discover.jsx'
+import Artists from './Pages/Artists.jsx'
+import About from './Pages/About.jsx'
+import Contact from './Pages/Contact.jsx'
+import Privacy from './Pages/Privacy.jsx'
+import Terms from './Pages/Terms.jsx'
 import { ThemeProvider } from './contexts/ThemeContext.jsx'
 
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
+import { useEffect } from 'react';
 
 function App() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+
   return (
     <ThemeProvider>
-      <div className="relative">
+      <div className="relative overflow-x-hidden">
         {isHomePage ? (
           <>
             <Routes>
@@ -29,7 +41,12 @@ function App() {
             <Routes>
               <Route path="/discover" element={ <Discover />} />
               <Route path="/artists" element={ <Artists />} />
+              <Route path="/about" element={ <About />} />
+              <Route path="/contact" element={ <Contact />} />
+              <Route path="/privacy" element={ <Privacy />} />
+              <Route path="/terms" element={ <Terms />} />
             </Routes>
+            <Footer />
           </>
         )}
       </div>

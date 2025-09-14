@@ -14,16 +14,16 @@ export default function SearchInput({ onChange, isHomePage = false }) {
 
   const getPlaceholderClass = () => {
     if (isHomePage) {
-      return 'placeholder-stone-300/70';
+      return 'placeholder-stone-800 md:placeholder-stone-300/70';
     }
-    return 'placeholder-stone-400';
+    return 'placeholder-stone-800 md:placeholder-stone-400';
   };
 
   const getTextClass = () => {
     if (isHomePage) {
-      return 'text-stone-200';
+      return 'text-stone-800';
     }
-    return 'text-stone-300';
+    return 'text-stone-100';
   };
 
   return (

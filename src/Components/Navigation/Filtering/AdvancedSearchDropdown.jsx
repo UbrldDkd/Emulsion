@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import TimelineViewer from './TimelineViewer.jsx';
-import MovementListView from './MovementListView.jsx';
-import YearFilter from './YearFilter.jsx';
-import ArtistsFilter from './ArtistsFilter.jsx';
-import EraFilter from './EraFilter.jsx';
-import ArtformFilter from './ArtformFilter.jsx';
+import TimelineViewer from './FilterPages/EraFilter/TimelineViewer.jsx';
+import MovementListView from './FilterPages/EraFilter/MovementListView.jsx';
+import YearFilter from './FilterPages/YearFilter/YearFilter.jsx';
+import ArtistsFilter from './FilterPages/ArtistsFilter/ArtistsFilter.jsx';
+import EraFilter from './FilterPages/EraFilter/EraFilter.jsx';
+import ArtformFilter from './FilterPages/ArtformFilter/ArtformFilter.jsx';
 import ThemeToggle from '../../ThemeToggle.jsx';
 import { useTheme } from '../../../contexts/ThemeContext.jsx';
 
@@ -62,7 +62,7 @@ export default function AdvancedSearchDropdown() {
     setSelectedEras(new Set());
     setSelectedMovements(new Set());
     setExpandedEras(new Set());
-    setSelectedMediaItems(new Set());
+    setSelectedMediumItems(new Set());
     setYearRange({ from: '', to: '' });
     setShowTimeline(false);
     // Clear any other filter states
@@ -107,79 +107,78 @@ export default function AdvancedSearchDropdown() {
 
   return (
     <>
-      <div className="relative">
-        {/* Search Button - Icon Only */}
-        <div className="relative">
-          <button
-            ref={buttonRef}
-            onClick={() => setIsOpen(!isOpen)}
-            onMouseEnter={() => !isOpen && setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-            className={`flex items-center justify-center bg-transparent border-none rounded-r px-3 h-[44px] ${theme.text} hover:text-amber-400/50 hover:bg-stone-700/30 active:${theme.text} transition-all duration-200`}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-            </svg>
-          </button>
-        
-        {/* Custom Tooltip */}
-        <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 transition-all duration-200 ${
-          showTooltip && !isOpen
-            ? 'opacity-100 translate-y-0 pointer-events-auto' 
-            : 'opacity-0 -translate-y-1 pointer-events-none'
-        }`}>
-              <div className={`${theme.cardBackground} ${theme.text} text-xs px-3 py-2 rounded-md shadow-lg ${theme.border} border w-max`}>
-                <div className={`font-medium ${theme.text} mb-1.5 text-center`}>Advanced Search Filters</div>
-                <div className={`${theme.text} text-[10px] mb-1`}>Filter by:</div>
-                <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px]">
-                  <span className="text-amber-400/50">• year</span>
-                  <span className="text-amber-400/50">• artist</span>
-                  <span className="text-amber-400/50">• era</span>
-                  <span className="text-amber-400/50">• artform</span>
-                </div>
-                <div className={`absolute bottom-full left-1/2 transform -translate-x-1/2 border-l-4 border-r-4 border-b-4 border-transparent ${theme.cardBackground.includes('stone-100') ? 'border-b-stone-100' : 'border-b-stone-800'}`}></div>
-              </div>
-            </div>
-      </div>
+      {/* Search Button - Icon Only */}
+      <button
+        ref={buttonRef}
+        onClick={() => setIsOpen(!isOpen)}
+        onMouseEnter={() => !isOpen && setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+        className="flex items-center justify-center bg-transparent border-none rounded-r px-3 h-[44px] text-stone-400 hover:text-amber-400/50 hover:bg-stone-700/30 active:text-stone-400 transition-all duration-200"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+        </svg>
+      </button>
 
-      {/* Timeline Panel - Conditionally rendered at main level */}
-      {showTimeline && filterBy === 'Era' && isOpen && (
-        <div 
+      {/* Custom Tooltip */}
+      <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 transition-all duration-200 ${
+        showTooltip && !isOpen
+          ? 'opacity-100 translate-y-0 pointer-events-auto'
+          : 'opacity-0 -translate-y-1 pointer-events-none'
+      }`}>
+            <div className="bg-stone-800 text-stone-200 text-xs px-3 py-2 rounded-md shadow-lg border-stone-700 border w-max">
+              <div className="font-medium text-stone-200 mb-1.5 text-center">Advanced Search Filters</div>
+              <div className="text-stone-200 text-[10px] mb-1">Filter by:</div>
+              <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px]">
+                <span className="text-amber-400/50">• year</span>
+                <span className="text-amber-400/50">• artist</span>
+                <span className="text-amber-400/50">• era</span>
+                <span className="text-amber-400/50">• artform</span>
+              </div>
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 border-l-4 border-r-4 border-b-4 border-transparent border-b-stone-800"></div>
+            </div>
+          </div>
+
+      {/* Timeline Panel - Always rendered but animated */}
+      {filterBy === 'Era' && isOpen && (
+        <div
           ref={timelineRef}
-          className={`absolute right-96 mt-4 w-96 h-[550px] ${
+          className={`absolute right-[25rem] top-16 w-96 h-[550px] ${
             theme.cardBackground.includes('stone') && theme.text.includes('950')
               ? 'bg-stone-100/70 backdrop-blur-xl'
               : 'bg-stone-800/90 backdrop-blur-xl'
-          } rounded-l shadow-xl p-4 z-[60] transition-all duration-300 ease-out transform ${
-            isOpen 
-              ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
-              : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
+          } rounded-l shadow-xl p-4 z-[60] transition-all duration-300 ease-out ${
+            showTimeline
+              ? 'opacity-100 pointer-events-auto translate-x-0'
+              : 'opacity-0 pointer-events-none translate-x-10'
           }`}
         >
           <div className={`${theme.textMuted} text-xs uppercase tracking-wider mb-3`}>
             Timeline View
           </div>
-          <TimelineViewer 
-            ref={timelineViewerRef}
-            viewMode="timeline"
-            expandedEras={expandedEras}
-            setExpandedEras={setExpandedEras}
-            selectedMovements={selectedMovements}
-            hoveredMovement={hoveredMovement}
-            setHoveredMovement={setHoveredMovement}
-          />
+          <div className="h-[calc(100%-3rem)]">
+            <TimelineViewer
+              ref={timelineViewerRef}
+              viewMode="timeline"
+              expandedEras={expandedEras}
+              setExpandedEras={setExpandedEras}
+              selectedMovements={selectedMovements}
+              hoveredMovement={hoveredMovement}
+              setHoveredMovement={setHoveredMovement}
+            />
+          </div>
         </div>
       )}
 
       {/* Main Advanced Search Panel */}
-          <div 
-            ref={advancedPanelRef}
-        className={`absolute right-0.5 mt-4 ${theme.cardBackground} ${theme.border} rounded shadow-xl z-50 transition-all duration-300 ease-out transform ${
-          isOpen 
-            ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
+      <div
+        ref={advancedPanelRef}
+        className={`absolute right-4 top-16 w-96 ${theme.cardBackground} ${theme.border} rounded shadow-xl z-50 transition-all duration-300 ease-out ${
+          isOpen
+            ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
             : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
         }`}
-          >
+      >
             <div className="relative flex">
           {/* Main Center Panel - Years */}
               <div className="w-96 p-4">
@@ -191,7 +190,11 @@ export default function AdvancedSearchDropdown() {
                     <div className="relative" ref={dropdownRef}>
                       <button
                         onClick={() => setFilterByOpen(!filterByOpen)}
-                        className={`flex items-center gap-x-1 px-2 py-1 text-stone-200 hover:text-stone-300 ${theme.hover} rounded transition-all duration-200`}
+                        className={`flex items-center gap-x-1 px-2 py-1 ${theme.text} ${
+                          theme.cardBackground.includes('stone') && theme.text.includes('950')
+                            ? 'hover:text-stone-800'
+                            : 'hover:text-stone-200'
+                        } ${theme.hover} rounded transition-all duration-200`}
                       >
                         <span>{filterBy}</span>
                         <svg 
@@ -220,7 +223,11 @@ export default function AdvancedSearchDropdown() {
                               <button
                                 key={option}
                                 onClick={() => handleSelectFilterBy(option)}
-                                className="px-2 py-1 text-stone-200 hover:text-stone-300 hover:bg-stone-700/30 rounded transition-all duration-200 whitespace-nowrap"
+                                className={`px-2 py-1 rounded transition-all duration-200 whitespace-nowrap ${
+                                  theme.cardBackground.includes('stone') && theme.text.includes('950')
+                                    ? '!text-black hover:!text-stone-700 hover:bg-stone-300/30'
+                                    : '!text-stone-400 hover:!text-stone-300 hover:bg-stone-700/30'
+                                }`}
                               >
                                 {option}
                               </button>
@@ -307,7 +314,6 @@ export default function AdvancedSearchDropdown() {
               </button>
             </div>
           </div>
-      </div>
     </>
   );
 }

@@ -1,0 +1,133 @@
+import { useState } from 'react';
+import { useTheme } from '../../../../../contexts/ThemeContext.jsx';
+
+export default function Era({
+  eraKey, era, eraId, isExpanded, isEraSelected, selectedCount,
+  selectedMovements, hoveredMovement, setHoveredMovement,
+  toggleEra, toggleMovementSelection, clearEraSelections, onZoomToEra
+}) {
+  const { theme } = useTheme();
+  const [hoveredEra, setHoveredEra] = useState(null);
+
+  const isLightMode = theme.cardBackground.includes('stone') && theme.text.includes('950');
+
+  const getMovementTextColor = (isSelected, isHovered) => {
+    if (isSelected) return 'text-amber-200/60';
+    if (isHovered) return isLightMode ? 'text-stone-700' : 'text-amber-100/50';
+    return isLightMode ? 'text-stone-800' : 'text-stone-200';
+  };
+
+  const getPeriodTextColor = (isHovered, isSelected) => {
+    if (isHovered && !isSelected) return isLightMode ? 'text-stone-600' : 'text-stone-400';
+    return isLightMode ? 'text-stone-500' : 'text-stone-300';
+  };
+
+  return (
+    <div className={`border ${theme.border} rounded-lg overflow-hidden`}>
+      <div
+        className={`flex items-center justify-between p-3 cursor-pointer transition-colors ${
+          isEraSelected ? theme.selected : `${theme.cardBackground} ${theme.hover}`
+        }`}
+        onClick={() => toggleEra(eraId)}
+        onMouseEnter={() => setHoveredEra(eraId)}
+        onMouseLeave={() => setHoveredEra(null)}
+      >
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <span className={`${theme.text} text-sm font-medium`}>{era.label}</span>
+            <span className="text-stone-300 text-xs">({era.period})</span>
+            {selectedCount > 0 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  clearEraSelections(eraId, era.movements);
+                }}
+                className="group bg-amber-200/30 border border-stone-500 text-amber-200/60 text-xs px-1.5 py-0.5 rounded-full font-medium hover:pr-6 hover:bg-amber-200/50 active:bg-amber-200/50 transition-all duration-200 ease-in-out relative overflow-hidden"
+                title="Click to clear selections from this era"
+              >
+                <span className="relative z-10">{selectedCount}</span>
+                <svg className="w-3 h-3 absolute right-1.5 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+          <div className={`${theme.textMuted} text-xs mt-0.5`}>
+            {era.movements.length} movements
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {onZoomToEra && hoveredEra === eraId && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onZoomToEra(eraId);
+              }}
+              className={`p-1 rounded ${theme.textMuted} hover:${theme.accent} ${theme.hover} transition-colors`}
+              title="Zoom to timeline"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+            </button>
+          )}
+
+          <svg className={`w-4 h-4 ${theme.textMuted} transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+
+      {isExpanded && (
+        <div className={`border-t ${theme.border} ${isLightMode ? 'bg-stone-100/25' : 'bg-stone-800/40'} backdrop-blur-sm`}>
+          {era.movements.map((movement, index) => {
+            const movementId = `${eraId}-${movement.label}`;
+            const isSelected = selectedMovements?.has(movementId);
+            const isHovered = hoveredMovement === movementId;
+
+            return (
+              <div
+                key={index}
+                data-movement-id={movementId}
+                className={`flex items-center justify-between p-2 border-b ${theme.border} last:border-b-0 cursor-pointer transition-all duration-200 ${
+                  isSelected
+                    ? `${theme.selected} ${isLightMode ? 'hover:bg-stone-300/60' : 'hover:bg-stone-600/70'}`
+                    : isHovered
+                      ? isLightMode
+                        ? 'bg-stone-200/70 hover:bg-stone-200/80'
+                        : 'bg-stone-700/50 hover:bg-stone-700/70'
+                      : isLightMode
+                        ? 'hover:bg-stone-200/40'
+                        : 'hover:bg-stone-700/30'
+                }`}
+                onMouseEnter={() => setHoveredMovement(movementId)}
+                onMouseLeave={() => setHoveredMovement(null)}
+                onClick={() => toggleMovementSelection(movementId)}
+              >
+                <div className="flex-1">
+                  <div className={`text-sm ${getMovementTextColor(isSelected, isHovered)}`}>
+                    {movement.label}
+                  </div>
+                  <div className={`text-xs ${getPeriodTextColor(isHovered, isSelected)}`}>
+                    {movement.period}
+                  </div>
+                </div>
+
+                <div className={`w-4 h-4 rounded border-2 transition-all ${
+                  isSelected ? 'bg-amber-200/30 border-stone-500' : 'border-stone-800 hover:border-stone-700'
+                }`}>
+                  {isSelected && (
+                    <svg className="w-3 h-3 text-amber-100" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}

@@ -3,7 +3,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 export default function ZoomableImage({ selectedWork, onFullscreen }) {
   return (
-    <div className="relative max-w-[calc(100vw-28rem)]">
+    <div className="relative max-w-full lg:max-w-[calc(100vw-28rem)]">
       <div className="relative">
         <TransformWrapper
           initialScale={1}
@@ -55,12 +55,12 @@ export default function ZoomableImage({ selectedWork, onFullscreen }) {
                 <img
                   src={selectedWork.image}
                   alt={selectedWork.title}
-                  className="object-contain w-full max-w-full min-h-[90vh] max-h-[90vh] cursor-pointer select-none"
+                  className="object-contain w-full max-w-full h-auto max-h-[50vh] lg:min-h-[90vh] lg:max-h-[90vh] cursor-pointer select-none"
                 />
               </TransformComponent>
 
-              {/* Zoom Controls - Positioned to the left side at bottom of image */}
-              <div className="absolute bottom-0 -left-16 flex flex-col gap-2 z-10">
+              {/* Zoom Controls - Mobile: below image, Desktop: left side */}
+              <div className="lg:absolute relative justify-center mt-2 lg:mt-0 lg:bottom-0 lg:-left-16 lg:right-auto flex flex-row lg:flex-col gap-2 z-10">
                 <button
                   onClick={() => zoomIn()}
                   className="w-10 h-10 lg:w-8 lg:h-8 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg"

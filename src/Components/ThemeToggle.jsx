@@ -15,25 +15,25 @@ export default function ThemeToggle() {
 
   return (
     <div className="relative" aria-label="Theme toggle">
-      <div className="relative w-12 h-6">
-        <svg 
-          viewBox="0 0 60 30" 
+      <div className="relative w-10 h-5">
+        <svg
+          viewBox="0 0 50 25"
           className="w-full h-full cursor-pointer"
           onClick={handleToggle}
         >
           
           {/* Track */}
           <rect
-            x="5" y="10" width="50" height="10" rx="5"
+            x="4" y="8" width="42" height="9" rx="4.5"
             fill={isLightMode ? "#f1f5f9" : "#57534e"}
             className="transition-all duration-500"
           />
-          
+
           {/* Handle */}
           <circle
-            cx={isLightMode ? "15" : "45"}
-            cy="15"
-            r="8"
+            cx={isLightMode ? "12" : "38"}
+            cy="12.5"
+            r="6.5"
             fill={isLightMode ? "#ffffff" : "#1c1917"}
             stroke="#d1d5db"
             strokeWidth="1"

@@ -5,21 +5,14 @@ export default function FullscreenImage({ selectedWork, onClose }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Prevent body scroll
-    const scrollY = window.scrollY;
-    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-    
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
-    document.body.style.paddingRight = `${scrollBarWidth}px`;
-
     // Trigger fade in animation
     setTimeout(() => setIsVisible(true), 10);
 
     // Handle escape key to close fullscreen
     const handleKeyPress = (e) => {
       if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
         handleClose();
         return;
       }
@@ -33,17 +26,13 @@ export default function FullscreenImage({ selectedWork, onClose }) {
       e.stopPropagation();
     };
 
-    document.addEventListener('keydown', handleKeyPress);
-    window.addEventListener('keydown', handleKeyPress);
+    // Use capture phase to intercept escape before other handlers
+    document.addEventListener('keydown', handleKeyPress, true);
+    window.addEventListener('keydown', handleKeyPress, true);
 
     return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.paddingRight = '';
-      window.scrollTo(0, scrollY);
-      document.removeEventListener('keydown', handleKeyPress);
-      window.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener('keydown', handleKeyPress, true);
+      window.removeEventListener('keydown', handleKeyPress, true);
     };
   }, []);
 
@@ -54,7 +43,7 @@ export default function FullscreenImage({ selectedWork, onClose }) {
 
   return (
     <div
-      className={`fixed inset-0 bg-black z-[60] flex items-center justify-center transition-opacity duration-300 ${
+      className={`fixed inset-0 bg-black z-[9999] flex items-center justify-center transition-opacity duration-300 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       onClick={handleClose}
@@ -109,12 +98,33 @@ export default function FullscreenImage({ selectedWork, onClose }) {
 
             return (
               <>
-                {/* Image */}
-                <TransformComponent>
+                {/* Image Container - Centers the image */}
+                <TransformComponent
+                  wrapperStyle={{
+                    width: '100%',
+                    height: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  contentStyle={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: '100%'
+                  }}
+                >
                   <img
                     src={selectedWork.image}
                     alt={selectedWork.title}
-                    className="object-contain w-full h-full cursor-pointer select-none"
+                    className="max-w-full max-h-screen object-contain cursor-pointer select-none"
+                    style={{
+                      width: 'auto',
+                      height: 'auto',
+                      maxWidth: '95vw',
+                      maxHeight: '95vh'
+                    }}
                   />
                 </TransformComponent>
 

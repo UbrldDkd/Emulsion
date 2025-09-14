@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import MovementListView from './MovementListView.jsx';
 import TimelineViewer from './TimelineViewer.jsx';
-import { useTheme } from '../../../contexts/ThemeContext.jsx';
+import { useTheme } from '../../../../../contexts/ThemeContext.jsx';
 
 export default function EraFilter({
   expandedEras,
@@ -79,7 +79,7 @@ export default function EraFilter({
       </div>
 
       {/* Primary List View - FULL WIDTH */}
-      <MovementListView 
+      <MovementListView
         viewMode="list"
         expandedEras={expandedEras}
         setExpandedEras={setExpandedEras}
@@ -90,6 +90,7 @@ export default function EraFilter({
         hoveredMovement={hoveredMovement}
         setHoveredMovement={setHoveredMovement}
         onZoomToEra={handleZoomToEra}
+        showTimeline={showTimeline}
       />
     </div>
   );

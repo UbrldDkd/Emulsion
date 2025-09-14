@@ -1,4 +1,4 @@
-import { Keys } from '../../Keys.js';
+import { Keys } from '../../../../Keys.js';
 
 export default function MediumDisplay({
   selectedMediumItems,

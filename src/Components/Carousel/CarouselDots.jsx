@@ -18,7 +18,7 @@ export default function CarouselDots({
             onClick={() => goToSlide(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 relative ${
               isCurrentSlide
-                ? 'bg-amber-400'
+                ? 'bg-amber-300/40'
                 : isCached
                   ? 'bg-white/60 hover:bg-white/80'
                   : 'bg-white/20 hover:bg-white/40'

@@ -28,7 +28,11 @@ export default function ImageCarousel() {
 
   return (
     <div
-      className="relative w-full h-screen overflow-hidden"
+      className="relative w-full h-screen overflow-hidden md:h-screen"
+      style={{
+        height: window.innerWidth <= 768 ? '100vh' : '100vh',
+        minHeight: window.innerWidth <= 768 ? '100vh' : '100vh'
+      }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}

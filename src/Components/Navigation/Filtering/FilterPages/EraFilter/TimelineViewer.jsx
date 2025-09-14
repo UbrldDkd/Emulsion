@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Keys } from '../../Keys.js';
-import { useTheme } from '../../../contexts/ThemeContext.jsx';
+import { Keys } from '../../../../Keys.js';
+import { useTheme } from '../../../../../contexts/ThemeContext.jsx';
 
 const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExpandedEras, selectedMovements, hoveredMovement, setHoveredMovement }, ref) {
   const { theme } = useTheme();
@@ -292,16 +292,22 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
 
   // Generate SVG path for curly brace
   const generateCurlyBrace = (startY, endY, side = 'right', depth = 20) => {
-    const height = endY - startY;
-    if (height < 10) return `M 0,${startY} L 0,${endY}`;
-    
-    const midY = startY + height / 2;
+    const height = Math.abs(endY - startY);
+    const actualStartY = Math.min(startY, endY);
+    const actualEndY = Math.max(startY, endY);
+
+    // Always generate a proper curly brace, even for small heights
+    const minHeight = Math.max(height, 6); // Ensure minimum visual height
+    const midY = actualStartY + minHeight / 2;
     const direction = side === 'right' ? 1 : -1;
-    
+
+    // Scale depth based on height to avoid overly pronounced curves on small movements
+    const scaledDepth = Math.min(depth, height * 0.8);
+
     return [
-      `M 0,${startY}`,
-      `Q ${depth * 0.5 * direction},${startY + height * 0.2} ${depth * 0.8 * direction},${midY}`,
-      `Q ${depth * 0.5 * direction},${endY - height * 0.2} 0,${endY}`
+      `M 0,${actualStartY}`,
+      `Q ${scaledDepth * 0.5 * direction},${actualStartY + minHeight * 0.2} ${scaledDepth * 0.8 * direction},${midY}`,
+      `Q ${scaledDepth * 0.5 * direction},${actualEndY - minHeight * 0.2} 0,${actualEndY}`
     ].join(' ');
   };
 
@@ -389,9 +395,9 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
 
 
   return (
-    <div className="relative" style={{ height: '450px' }}>
+    <div className="relative" style={{ height: '490px' }}>
       {/* Timeline Container */}
-      <div 
+      <div
         ref={containerRef}
         className={`relative overflow-auto rounded-lg ${theme.border} ${
           theme.cardBackground.includes('stone') && theme.text.includes('950')
@@ -422,7 +428,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
               y1="50" 
               x2={timelineX} 
               y2={svgHeight + 50} 
-              stroke="#d97706" 
+              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#d97706'} 
               strokeWidth="2"
               className="opacity-70"
             />
@@ -472,7 +478,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                     x={timelineX + braceDepth + 10}
                     y={startY + (endY - startY) / 2 + 14}
                     className={`text-xs font-light ${
-                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-700' : 'fill-stone-500'
+                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-800' : 'fill-stone-400'
                     }`}
                     dominantBaseline="central"
                     textAnchor="start"
@@ -879,7 +885,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             <path
                               d={generateCurlyBrace(movStartY, movEndY, 'left', 15)}
                               fill="none"
-                              stroke="#a8a29e"
+                              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#78716c' : '#a8a29e'}
                               strokeWidth="1.5"
                               transform={`translate(${timelineX - 50}, 0)`}
                             />
@@ -890,7 +896,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                               y1={movStartY}
                               x2={timelineX}
                               y2={movStartY}
-                              stroke="#a8a29e"
+                              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#78716c' : '#a8a29e'}
                               strokeWidth="1"
                               strokeDasharray="2,3"
                             />
@@ -901,7 +907,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                               y1={movEndY}
                               x2={timelineX}
                               y2={movEndY}
-                              stroke="#a8a29e"
+                              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#78716c' : '#a8a29e'}
                               strokeWidth="1"
                               strokeDasharray="2,3"
                             />
@@ -928,14 +934,14 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                     cx={timelineX}
                     cy={y}
                     r={2}
-                    fill="#78716c"
+                    fill={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#57534e' : '#78716c'}
                     className="opacity-60"
                   />
                   <text
                     x={timelineX - 15}
                     y={y}
                     className={`text-[10px] font-light ${
-                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-700' : 'fill-stone-500'
+                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-800' : 'fill-stone-400'
                     }`}
                     dominantBaseline="central"
                     textAnchor="end"
@@ -950,11 +956,12 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
 
       </div>
 
-      {/* Zoom Controls - Positioned in bottom right corner */}
-      <div className={`absolute bottom-2 right-2 flex items-center gap-1 ${theme.cardBackground} backdrop-blur-sm rounded-md p-1 z-10`}>
-        <button 
+      {/* Zoom Controls - Positioned at bottom right below timeline */}
+      <div className="flex justify-end mt-1.5">
+        <div className={`flex items-center gap-1 ${theme.cardBackground} ${theme.border} border backdrop-blur-sm rounded-md p-1.5 shadow-sm`}>
+        <button
           onClick={() => setZoom(prev => Math.min(prev + 1, 100))}
-          className={`w-6 h-6 flex items-center justify-center ${theme.textMuted} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
+          className={`w-6 h-6 flex items-center justify-center ${theme.text} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
           title="Zoom In"
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -962,28 +969,29 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
         </button>
-        <button 
-          onClick={() => setZoom(prev => Math.max(prev - 1, 0.2))}
-          className={`w-6 h-6 flex items-center justify-center ${theme.textMuted} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
+        <button
+          onClick={zoom > 1 ? () => setZoom(prev => Math.max(prev - 1, 1)) : undefined}
+          className={`w-6 h-6 flex items-center justify-center ${zoom <= 1 ? theme.textMuted : theme.text + ' hover:' + theme.accent + ' ' + theme.hover} rounded transition-colors`}
           title="Zoom Out"
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
         </button>
-        <button 
-          onClick={() => { 
-            setZoom(1); 
+        <button
+          onClick={() => {
+            setZoom(1);
             setExpandedEras(new Set());
             if (containerRef.current) {
               containerRef.current.scrollTop = 0;
             }
           }}
-          className={`px-2 py-1 text-[10px] ${theme.textMuted} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
+          className={`px-2 py-1 text-xs font-semibold ${theme.text} hover:${theme.accent} ${theme.hover} rounded transition-colors`}
           title="Reset View"
         >
           ↻
         </button>
+        </div>
       </div>
     </div>
   );

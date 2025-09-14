@@ -109,36 +109,8 @@ export const ArtistsData = [
     period: "Northern Renaissance",
     biography: "The greatest artist of the Northern Renaissance, Dürer revolutionized printmaking and brought Italian Renaissance ideas to Northern Europe, creating works of extraordinary detail and psychological depth.",
     paintings: [
-      {
-        id: "melencolia",
-        title: "Melencolia I",
-        medium: "Engraving",
-        dimensions: "24 × 18.8 cm",
-        objectDate: "1514",
-        location: "Various collections",
-        image: "/src/assets/Melencolia I.jpg",
-        description: "A complex allegorical engraving exploring melancholy, creativity, and mathematical symbolism."
-      },
-      {
-        id: "knight-death-devil",
-        title: "Knight, Death and the Devil",
-        medium: "Engraving",
-        dimensions: "24.5 × 19.1 cm",
-        objectDate: "1513",
-        location: "Various collections",
-        image: "/src/assets/Knight, Death and the Devil.jpg",
-        description: "A knight rides through a dark valley, unmoved by Death and the Devil beside him."
-      },
-      {
-        id: "young-hare",
-        title: "Young Hare",
-        medium: "Watercolor and bodycolor",
-        dimensions: "25.1 × 22.6 cm",
-        objectDate: "1502",
-        location: "Albertina, Vienna",
-        image: "/src/assets/Young Hare.jpg",
-        description: "A naturalistic study of a hare, demonstrating unprecedented observational skill."
-      },
+      // PAINTINGS WITH PIGMENTS
+      // Oil paintings
       {
         id: "self-portrait-1500",
         title: "Self-Portrait at 28",
@@ -150,24 +122,25 @@ export const ArtistsData = [
         description: "A frontal self-portrait with Christ-like imagery, asserting the artist's divine creativity."
       },
       {
-        id: "rhinoceros",
-        title: "Rhinoceros",
-        medium: "Woodcut",
-        dimensions: "21.4 × 29.8 cm",
-        objectDate: "1515",
-        location: "Various collections",
-        image: "/src/assets/Rhinoceros.jpg",
-        description: "An imaginative woodcut of a rhinoceros based on descriptions, becoming an iconic image."
+        id: "four-apostles",
+        title: "The Four Apostles",
+        medium: "Oil on wood",
+        dimensions: "215 × 76 cm each",
+        objectDate: "1526",
+        location: "Alte Pinakothek, Munich",
+        image: "/src/assets/The Four Apostles.jpg",
+        description: "Monumental panels depicting John, Peter, Mark, and Paul with Protestant overtones."
       },
+      // Watercolors
       {
-        id: "praying-hands",
-        title: "Praying Hands",
-        medium: "Pen and ink drawing",
-        dimensions: "29.1 × 19.7 cm",
-        objectDate: "1508",
+        id: "young-hare",
+        title: "Young Hare",
+        medium: "Watercolor and bodycolor",
+        dimensions: "25.1 × 22.6 cm",
+        objectDate: "1502",
         location: "Albertina, Vienna",
-        image: "/src/assets/Praying Hands.jpg",
-        description: "A study of hands in prayer, becoming one of the most reproduced religious images."
+        image: "/src/assets/Young Hare.jpg",
+        description: "A naturalistic study of a hare, demonstrating unprecedented observational skill."
       },
       {
         id: "great-piece-turf",
@@ -179,16 +152,29 @@ export const ArtistsData = [
         image: "/src/assets/The Great Piece of Turf.jpg",
         description: "A detailed study of wild grasses and plants, revolutionary in its attention to nature."
       },
+      // PRINTS AND DRAWINGS
+      // Engravings
       {
-        id: "four-apostles",
-        title: "The Four Apostles",
-        medium: "Oil on wood",
-        dimensions: "215 × 76 cm each",
-        objectDate: "1526",
-        location: "Alte Pinakothek, Munich",
-        image: "/src/assets/The Four Apostles.jpg",
-        description: "Monumental panels depicting John, Peter, Mark, and Paul with Protestant overtones."
+        id: "knight-death-devil",
+        title: "Knight, Death and the Devil",
+        medium: "Engraving",
+        dimensions: "24.5 × 19.1 cm",
+        objectDate: "1513",
+        location: "Various collections",
+        image: "/src/assets/Knight, Death and the Devil.jpg",
+        description: "A knight rides through a dark valley, unmoved by Death and the Devil beside him."
       },
+      {
+        id: "melencolia",
+        title: "Melencolia I",
+        medium: "Engraving",
+        dimensions: "24 × 18.8 cm",
+        objectDate: "1514",
+        location: "Various collections",
+        image: "/src/assets/Melencolia I.jpg",
+        description: "A complex allegorical engraving exploring melancholy, creativity, and mathematical symbolism."
+      },
+      // Woodcuts
       {
         id: "apocalypse-four-horsemen",
         title: "The Four Horsemen of the Apocalypse",
@@ -198,6 +184,27 @@ export const ArtistsData = [
         location: "Various collections",
         image: "/src/assets/The Four Horsemen of the Apocalypse.jpg",
         description: "A dramatic woodcut from the Apocalypse series showing the biblical horsemen."
+      },
+      {
+        id: "rhinoceros",
+        title: "Rhinoceros",
+        medium: "Woodcut",
+        dimensions: "21.4 × 29.8 cm",
+        objectDate: "1515",
+        location: "Various collections",
+        image: "/src/assets/Rhinoceros.jpg",
+        description: "An imaginative woodcut of a rhinoceros based on descriptions, becoming an iconic image."
+      },
+      // Drawings
+      {
+        id: "praying-hands",
+        title: "Praying Hands",
+        medium: "Pen and ink drawing",
+        dimensions: "29.1 × 19.7 cm",
+        objectDate: "1508",
+        location: "Albertina, Vienna",
+        image: "/src/assets/Praying Hands.jpg",
+        description: "A study of hands in prayer, becoming one of the most reproduced religious images."
       }
     ]
   },
@@ -210,35 +217,17 @@ export const ArtistsData = [
     period: "Metaphysical Painting",
     biography: "Founder of the Metaphysical art movement, de Chirico created dreamlike cityscapes with classical architecture, mysterious shadows, and surreal juxtapositions that influenced Surrealism.",
     paintings: [
+      // All are Oil on canvas - organizing by period/theme
+      // Early Metaphysical Period (1910-1913)
       {
-        id: "mystery-melancholy-street",
-        title: "The Mystery and Melancholy of a Street",
+        id: "enigma-oracle",
+        title: "The Enigma of the Oracle",
         medium: "Oil on canvas",
-        dimensions: "87 × 71.5 cm",
-        objectDate: "1914",
+        dimensions: "41.5 × 60 cm",
+        objectDate: "1910",
         location: "Private collection",
-        image: "/src/assets/The Mystery and Melancholy of a Street.jpg",
-        description: "A haunting cityscape with dramatic shadows and mysterious architectural elements."
-      },
-      {
-        id: "red-tower",
-        title: "The Red Tower",
-        medium: "Oil on canvas",
-        dimensions: "73.5 × 100.5 cm",
-        objectDate: "1913",
-        location: "Peggy Guggenheim Collection, Venice",
-        image: "/src/assets/The Red Tower.jpg",
-        description: "An enigmatic architectural composition featuring a prominent red tower against a dreamlike landscape."
-      },
-      {
-        id: "song-love",
-        title: "The Song of Love",
-        medium: "Oil on canvas",
-        dimensions: "73 × 59.1 cm",
-        objectDate: "1914",
-        location: "Museum of Modern Art, New York",
-        image: "/src/assets/The Song of Love.jpg",
-        description: "A surreal composition featuring a classical sculpture head, rubber glove, and green ball."
+        image: "/src/assets/The Enigma of the Oracle.jpg",
+        description: "An early metaphysical work featuring mysterious curtains and architectural elements."
       },
       {
         id: "nostalgia-infinite",
@@ -251,6 +240,16 @@ export const ArtistsData = [
         description: "A towering structure casting long shadows in a metaphysical landscape."
       },
       {
+        id: "red-tower",
+        title: "The Red Tower",
+        medium: "Oil on canvas",
+        dimensions: "73.5 × 100.5 cm",
+        objectDate: "1913",
+        location: "Peggy Guggenheim Collection, Venice",
+        image: "/src/assets/The Red Tower.jpg",
+        description: "An enigmatic architectural composition featuring a prominent red tower against a dreamlike landscape."
+      },
+      {
         id: "uncertainty-poet",
         title: "The Uncertainty of the Poet",
         medium: "Oil on canvas",
@@ -261,15 +260,37 @@ export const ArtistsData = [
         description: "A dreamlike scene with classical architecture and unexpected juxtapositions."
       },
       {
-        id: "enigma-oracle",
-        title: "The Enigma of the Oracle",
+        id: "piazza-italia",
+        title: "Piazza d'Italia",
         medium: "Oil on canvas",
-        dimensions: "41.5 × 60 cm",
-        objectDate: "1910",
-        location: "Private collection",
-        image: "/src/assets/The Enigma of the Oracle.jpg",
-        description: "An early metaphysical work featuring mysterious curtains and architectural elements."
+        dimensions: "35 × 60 cm",
+        objectDate: "1913",
+        location: "Art Gallery of Ontario, Toronto",
+        image: "/src/assets/Piazza d'Italia.jpg",
+        description: "An archetypal metaphysical piazza with classical architecture and mysterious shadows."
       },
+      // Peak Metaphysical Period (1914)
+      {
+        id: "mystery-melancholy-street",
+        title: "The Mystery and Melancholy of a Street",
+        medium: "Oil on canvas",
+        dimensions: "87 × 71.5 cm",
+        objectDate: "1914",
+        location: "Private collection",
+        image: "/src/assets/The Mystery and Melancholy of a Street.jpg",
+        description: "A haunting cityscape with dramatic shadows and mysterious architectural elements."
+      },
+      {
+        id: "song-love",
+        title: "The Song of Love",
+        medium: "Oil on canvas",
+        dimensions: "73 × 59.1 cm",
+        objectDate: "1914",
+        location: "Museum of Modern Art, New York",
+        image: "/src/assets/The Song of Love.jpg",
+        description: "A surreal composition featuring a classical sculpture head, rubber glove, and green ball."
+      },
+      // Mannequin Period (1916-1918)
       {
         id: "melancholy-departure",
         title: "The Melancholy of Departure",
@@ -300,6 +321,7 @@ export const ArtistsData = [
         image: "/src/assets/The Great Metaphysician.jpg",
         description: "A towering architectural construction of geometric forms suggesting a mysterious figure."
       },
+      // Later Work
       {
         id: "archaeologists",
         title: "The Archaeologists",
@@ -309,16 +331,6 @@ export const ArtistsData = [
         location: "Private collection",
         image: "/src/assets/The Archaeologists.jpg",
         description: "A later work featuring mannequin figures examining classical fragments."
-      },
-      {
-        id: "piazza-italia",
-        title: "Piazza d'Italia",
-        medium: "Oil on canvas",
-        dimensions: "35 × 60 cm",
-        objectDate: "1913",
-        location: "Art Gallery of Ontario, Toronto",
-        image: "/src/assets/Piazza d'Italia.jpg",
-        description: "An archetypal metaphysical piazza with classical architecture and mysterious shadows."
       }
     ]
   }

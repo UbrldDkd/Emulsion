@@ -64,18 +64,5 @@ export const Artworks = [
     repository: "Walker Art Gallery, Liverpool",
     period: "Pre-Raphaelite",
     primaryImage: "src/assets/Isabella.jpg"
-  },
-  {
-    title: "Christ in the House of His Parents",
-    artistDisplayName: "John Everett Millais",
-    artistNationality: "British",
-    artistBeginDate: "1829",
-    artistEndDate: "1896",
-    objectDate: "1850",
-    medium: "Oil on canvas",
-    dimensions: "86 × 140 cm",
-    repository: "Tate Britain, London",
-    period: "Pre-Raphaelite",
-    primaryImage: "src/assets/Christ in the House of His Parents.jpg"
   }
 ];
