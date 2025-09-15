@@ -12,7 +12,7 @@ export default function ArtistsCard({ artist, onWorkClick }) {
 
       {/* Mobile Layout - Description above Gallery */}
       <div className="block md:hidden py-8">
-        <div className="sticky top-0 bg-stone-900/95 backdrop-blur-sm z-10 mb-8 pb-4 -mx-4 px-4">
+        <div className="sticky top-0 bg-stone-900/95 backdrop-blur-sm z-20 mb-8 pb-4 -mx-4 px-4">
           {/* Collapsed Header */}
           <div className="flex items-center justify-between cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
             <div className="flex-1">
@@ -44,8 +44,8 @@ export default function ArtistsCard({ artist, onWorkClick }) {
           </div>
 
           {/* Expandable Content */}
-          <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
-            isExpanded ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+          <div className={`transition-all duration-300 ease-in-out ${
+            isExpanded ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0 overflow-hidden'
           }`}>
             <p className="text-xs text-stone-500 uppercase tracking-wider mb-3">
               {artist.period}

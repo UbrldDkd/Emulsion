@@ -144,7 +144,7 @@ export default function AdvancedSearchDropdown() {
       {filterBy === 'Era' && isOpen && (
         <div
           ref={timelineRef}
-          className={`hidden lg:block absolute right-[25rem] top-24 w-96 h-[550px] ${
+          className={`hidden lg:block absolute right-[25rem] top-[65px] w-96 h-[550px] ${
             theme.cardBackground.includes('stone') && theme.text.includes('950')
               ? 'bg-stone-100/70 backdrop-blur-xl'
               : 'bg-stone-800/90 backdrop-blur-xl'

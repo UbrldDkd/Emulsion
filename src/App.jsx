@@ -25,7 +25,8 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="relative overflow-x-hidden">
+      <div className="relative"
+        style={{ overflowX: 'clip' }}>
         {isHomePage ? (
           <>
             <Routes>
