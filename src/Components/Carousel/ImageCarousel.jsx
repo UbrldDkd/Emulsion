@@ -1,4 +1,4 @@
-import { Artworks } from '../../data/Artworks.js';
+import { Artworks } from '../../data/artworks.js';
 import { useCarouselLogic, getEraFromDate } from './CarouselLogic.jsx';
 import CarouselImage from './CarouselImage.jsx';
 import NavigationArrows from './NavigationArrows.jsx';
