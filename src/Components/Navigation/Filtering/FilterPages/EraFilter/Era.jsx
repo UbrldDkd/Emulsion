@@ -4,7 +4,7 @@ import { useTheme } from '../../../../../contexts/ThemeContext.jsx';
 export default function Era({
   eraKey, era, eraId, isExpanded, isEraSelected, selectedCount,
   selectedMovements, hoveredMovement, setHoveredMovement,
-  toggleEra, toggleMovementSelection, clearEraSelections, onZoomToEra
+  toggleEra, toggleMovementSelection, clearEraSelections, onZoomToEra, onZoomToMovement, showTimeline
 }) {
   const { theme } = useTheme();
   const [hoveredEra, setHoveredEra] = useState(null);
@@ -114,14 +114,33 @@ export default function Era({
                   </div>
                 </div>
 
-                <div className={`w-4 h-4 rounded border-2 transition-all ${
-                  isSelected ? 'bg-amber-200/30 border-stone-500' : 'border-stone-800 hover:border-stone-700'
-                }`}>
-                  {isSelected && (
-                    <svg className="w-3 h-3 text-amber-100" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
+                <div className="flex items-center gap-2">
+                  {/* Eye icon for zooming to movement on timeline - mobile only when timeline is open and era is expanded */}
+                  {onZoomToMovement && showTimeline && isExpanded && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onZoomToMovement(movementId);
+                      }}
+                      className={`lg:hidden p-1 rounded ${theme.textMuted} hover:${theme.accent} ${theme.hover} transition-colors`}
+                      title="View on timeline"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </button>
                   )}
+
+                  <div className={`w-4 h-4 rounded border-2 transition-all ${
+                    isSelected ? 'bg-amber-200/30 border-stone-500' : 'border-stone-800 hover:border-stone-700'
+                  }`}>
+                    {isSelected && (
+                      <svg className="w-3 h-3 text-amber-100" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
                 </div>
               </div>
             );

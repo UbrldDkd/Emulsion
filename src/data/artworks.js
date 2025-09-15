@@ -11,7 +11,7 @@ export const Artworks = [
     dimensions: "130 × 185 cm",
     repository: "National Gallery, London",
     period: "Romanticism",
-    primaryImage: "src/assets/The Hay Wain.jfif"
+    primaryImage: "/images/The Hay Wain.jfif"
   },
   {
     title: "The Fighting Temeraire",
@@ -24,7 +24,7 @@ export const Artworks = [
     dimensions: "91 × 122 cm",
     repository: "National Gallery, London",
     period: "Romanticism",
-    primaryImage: "src/assets/The Fighting Temeraire.jpg"
+    primaryImage: "/images/The Fighting Temeraire.jpg"
   },
   {
     title: "The Lady of Shalott",
@@ -37,7 +37,7 @@ export const Artworks = [
     dimensions: "183 × 230 cm",
     repository: "Tate Britain, London",
     period: "Pre-Raphaelite",
-    primaryImage: "src/assets/The Lady of Shalott.jpg"
+    primaryImage: "/images/The Lady of Shalott.jpg"
   },
   {
     title: "Ophelia",
@@ -50,7 +50,7 @@ export const Artworks = [
     dimensions: "76 × 112 cm",
     repository: "Tate Britain, London",
     period: "Pre-Raphaelite",
-    primaryImage: "src/assets/Ophelia.jpg"
+    primaryImage: "/images/Ophelia.jpg"
   },
   {
     title: "Isabella",
@@ -63,6 +63,6 @@ export const Artworks = [
     dimensions: "103 × 143 cm",
     repository: "Walker Art Gallery, Liverpool",
     period: "Pre-Raphaelite",
-    primaryImage: "src/assets/Isabella.jpg"
+    primaryImage: "/images/Isabella.jpg"
   }
 ];

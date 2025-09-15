@@ -284,9 +284,42 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
     }
   };
 
-  // Expose zoomToFitEra function to parent components
+  // Helper function to scroll to specific movement (without changing zoom)
+  const zoomToMovement = (movementId) => {
+    // Parse the movement ID to get era and movement info
+    const parts = movementId.split('-');
+    if (parts.length >= 2) {
+      const eraId = parts.slice(0, -1).join('-'); // Everything except the last part
+      const movementName = parts[parts.length - 1]; // Last part
+
+      // First expand the era if it's not already expanded
+      setExpandedEras(prev => {
+        const newSet = new Set(prev);
+        newSet.add(eraId);
+        return newSet;
+      });
+
+      // Find the era and movement
+      const era = timelineEras.find(e => e.id === eraId);
+      const movement = era?.subMovements.find(m => m.name === movementName);
+
+      if (era && movement && containerRef.current) {
+        // Calculate the movement's position with current zoom level
+        const pixelsPerYear = (baseHeight * zoom) / totalYears;
+        const movStartY = (maxYear - movement.endYear) * pixelsPerYear + 50;
+        const movEndY = (maxYear - movement.startYear) * pixelsPerYear + 50;
+        const movementCenterY = (movStartY + movEndY) / 2;
+
+        // Scroll to center the movement in the view
+        scrollToElement(movementCenterY);
+      }
+    }
+  };
+
+  // Expose both functions to parent components
   useImperativeHandle(ref, () => ({
-    zoomToFitEra
+    zoomToFitEra,
+    zoomToMovement
   }));
 
 
@@ -395,7 +428,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
 
 
   return (
-    <div className="relative" style={{ height: '490px' }}>
+    <div className="relative lg:h-[490px] h-[280px]">
       {/* Timeline Container */}
       <div
         ref={containerRef}
@@ -405,7 +438,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
             : 'bg-stone-900/20 backdrop-blur-sm'
         }`}
         style={{
-          height: '450px',
+          height: window.innerWidth >= 1024 ? '450px' : '240px',
           scrollbarWidth: 'none', /* Firefox */
           msOverflowStyle: 'none', /* IE and Edge */
         }}

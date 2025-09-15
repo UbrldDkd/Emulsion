@@ -30,6 +30,17 @@ export default function EraFilter({
     }, 100);
   };
 
+  // Function to handle zoom to specific movement from MovementListView
+  const handleZoomToMovement = (movementId) => {
+    setShowTimeline(true);
+    // Use a timeout to allow the timeline to render before zooming
+    setTimeout(() => {
+      if (timelineViewerRef.current && timelineViewerRef.current.zoomToMovement) {
+        timelineViewerRef.current.zoomToMovement(movementId);
+      }
+    }, 100);
+  };
+
   return (
     <div className="space-y-4">
       {/* Header with Timeline Toggle */}
@@ -90,6 +101,7 @@ export default function EraFilter({
         hoveredMovement={hoveredMovement}
         setHoveredMovement={setHoveredMovement}
         onZoomToEra={handleZoomToEra}
+        onZoomToMovement={handleZoomToMovement}
         showTimeline={showTimeline}
       />
     </div>

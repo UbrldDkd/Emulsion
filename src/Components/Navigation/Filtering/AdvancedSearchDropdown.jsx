@@ -121,7 +121,7 @@ export default function AdvancedSearchDropdown() {
       </button>
 
       {/* Custom Tooltip */}
-      <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-2 transition-all duration-200 ${
+      <div className={`absolute top-full right-0 mt-2 transition-all duration-200 ${
         showTooltip && !isOpen
           ? 'opacity-100 translate-y-0 pointer-events-auto'
           : 'opacity-0 -translate-y-1 pointer-events-none'
@@ -139,11 +139,12 @@ export default function AdvancedSearchDropdown() {
             </div>
           </div>
 
-      {/* Timeline Panel - Always rendered but animated */}
+
+      {/* Desktop Timeline Panel - Always rendered but animated */}
       {filterBy === 'Era' && isOpen && (
         <div
           ref={timelineRef}
-          className={`absolute right-[25rem] top-16 w-96 h-[550px] ${
+          className={`hidden lg:block absolute right-[25rem] top-24 w-96 h-[550px] ${
             theme.cardBackground.includes('stone') && theme.text.includes('950')
               ? 'bg-stone-100/70 backdrop-blur-xl'
               : 'bg-stone-800/90 backdrop-blur-xl'
@@ -170,14 +171,47 @@ export default function AdvancedSearchDropdown() {
         </div>
       )}
 
+      {/* Mobile Timeline Panel - Pushes entire dropdown down */}
+      {filterBy === 'Era' && isOpen && showTimeline && (
+        <div
+          className={`lg:hidden absolute right-4 top-16 w-96 h-[300px] ${
+            theme.cardBackground.includes('stone') && theme.text.includes('950')
+              ? 'bg-stone-100/95 backdrop-blur-xl'
+              : 'bg-stone-800/95 backdrop-blur-xl'
+          } ${theme.border} rounded shadow-xl p-4 z-[60] transition-all duration-300 ease-out ${
+            showTimeline
+              ? 'opacity-100 pointer-events-auto translate-y-0'
+              : 'opacity-0 pointer-events-none -translate-y-4'
+          }`}
+        >
+          <div className={`${theme.textMuted} text-xs uppercase tracking-wider mb-3`}>
+            Timeline View
+          </div>
+          <div className="h-[calc(100%-3rem)]">
+            <TimelineViewer
+              ref={timelineViewerRef}
+              viewMode="timeline"
+              expandedEras={expandedEras}
+              setExpandedEras={setExpandedEras}
+              selectedMovements={selectedMovements}
+              hoveredMovement={hoveredMovement}
+              setHoveredMovement={setHoveredMovement}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Main Advanced Search Panel */}
       <div
         ref={advancedPanelRef}
-        className={`absolute right-4 top-16 w-96 ${theme.cardBackground} ${theme.border} rounded shadow-xl z-50 transition-all duration-300 ease-out ${
+        className={`absolute right-4 w-96 ${theme.cardBackground} ${theme.border} rounded shadow-xl z-50 transition-all duration-300 ease-out ${
           isOpen
             ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
             : 'opacity-0 -translate-y-2 scale-95 pointer-events-none'
         }`}
+        style={{
+          top: filterBy === 'Era' && showTimeline && window.innerWidth < 1024 ? '336px' : '64px' // 16px base + 320px timeline height
+        }}
       >
             <div className="relative flex">
           {/* Main Center Panel - Years */}
@@ -249,19 +283,41 @@ export default function AdvancedSearchDropdown() {
                   )}
 
               {filterBy === 'Era' && (
-                <EraFilter 
-                  expandedEras={expandedEras}
-                  setExpandedEras={setExpandedEras}
-                  selectedEras={selectedEras}
-                  setSelectedEras={setSelectedEras}
-                  selectedMovements={selectedMovements}
-                  setSelectedMovements={setSelectedMovements}
-                  hoveredMovement={hoveredMovement}
-                  setHoveredMovement={setHoveredMovement}
-                  showTimeline={showTimeline}
-                  setShowTimeline={setShowTimeline}
-                  timelineViewerRef={timelineViewerRef}
-                />
+                <>
+                  {/* Desktop Version - Original layout */}
+                  <div className="hidden lg:block">
+                    <EraFilter
+                      expandedEras={expandedEras}
+                      setExpandedEras={setExpandedEras}
+                      selectedEras={selectedEras}
+                      setSelectedEras={setSelectedEras}
+                      selectedMovements={selectedMovements}
+                      setSelectedMovements={setSelectedMovements}
+                      hoveredMovement={hoveredMovement}
+                      setHoveredMovement={setHoveredMovement}
+                      showTimeline={showTimeline}
+                      setShowTimeline={setShowTimeline}
+                      timelineViewerRef={timelineViewerRef}
+                    />
+                  </div>
+
+                  {/* Mobile Version - Normal era filter (timeline is separate) */}
+                  <div className="lg:hidden">
+                    <EraFilter
+                      expandedEras={expandedEras}
+                      setExpandedEras={setExpandedEras}
+                      selectedEras={selectedEras}
+                      setSelectedEras={setSelectedEras}
+                      selectedMovements={selectedMovements}
+                      setSelectedMovements={setSelectedMovements}
+                      hoveredMovement={hoveredMovement}
+                      setHoveredMovement={setHoveredMovement}
+                      showTimeline={showTimeline}
+                      setShowTimeline={setShowTimeline}
+                      timelineViewerRef={timelineViewerRef}
+                    />
+                  </div>
+                </>
               )}
 
               {filterBy === 'Artists' && (

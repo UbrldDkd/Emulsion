@@ -12,7 +12,7 @@ export const Collections = [
         date: "1919",
         medium: "Oil on canvas",
         dimensions: "100.4 cm × 201 cm",
-        image: "/src/assets/Water Lilies.jpg"
+        image: "/images/Water Lilies.jpg"
       },
       {
         title: "A Bar at the Folies-Bergère",
@@ -20,7 +20,7 @@ export const Collections = [
         date: "1882",
         medium: "Oil on canvas",
         dimensions: "96 cm × 130 cm",
-        image: "/src/assets/A Bar at the Folies-Bergère.jpg"
+        image: "/images/A Bar at the Folies-Bergère.jpg"
       },
       {
         title: "Boulevard Montmartre at Night",
@@ -28,7 +28,7 @@ export const Collections = [
         date: "1897",
         medium: "Oil on canvas",
         dimensions: "53.3 cm × 64.8 cm",
-        image: "/src/assets/Boulevard Montmartre at Night.jpg"
+        image: "/images/Boulevard Montmartre at Night.jpg"
       },
       {
         title: "Dance at le Moulin de la Galette",
@@ -36,7 +36,7 @@ export const Collections = [
         date: "1876",
         medium: "Oil on canvas",
         dimensions: "131 × 175 cm",
-        image: "/src/assets/Dance at le Moulin de la Galette.jpg"
+        image: "/images/Dance at le Moulin de la Galette.jpg"
       }
     ]
   },
@@ -51,7 +51,7 @@ export const Collections = [
         date: "1839",
         medium: "Oil on canvas",
         dimensions: "90.7 cm × 121.6 cm",
-        image: "/src/assets/The Fighting Temeraire.jpg"
+        image: "/images/The Fighting Temeraire.jpg"
       },
       {
         title: "The Hay Wain",
@@ -67,7 +67,7 @@ export const Collections = [
         date: "1819",
         medium: "Oil on canvas",
         dimensions: "491 × 716 cm",
-        image: "/src/assets/The Raft of the Medusa.jpg"
+        image: "/images/The Raft of the Medusa.jpg"
       },
       {
         title: "Wanderer above the Sea of Fog",
@@ -75,7 +75,7 @@ export const Collections = [
         date: "1818",
         medium: "Oil on canvas",
         dimensions: "94.8 × 74.8 cm",
-        image: "/src/assets/Wanderer above the Sea of Fog.jpg"
+        image: "/images/Wanderer above the Sea of Fog.jpg"
       }
     ]
   },
@@ -90,7 +90,7 @@ export const Collections = [
         date: "c. 1831",
         medium: "Polychrome woodblock print",
         dimensions: "25.7 cm × 37.9 cm",
-        image: "/src/assets/The Great Wave off Kanagawa.jpg"
+        image: "/images/The Great Wave off Kanagawa.jpg"
       },
       {
         title: "Red Fuji",
@@ -98,7 +98,7 @@ export const Collections = [
         date: "c. 1831",
         medium: "Polychrome woodblock print",
         dimensions: "24.7 cm × 37.8 cm",
-        image: "/src/assets/Red Fuji.jpg"
+        image: "/images/Red Fuji.jpg"
       },
       {
         title: "Sudden Shower over Shin-Ōhashi bridge and Atake",
@@ -106,7 +106,7 @@ export const Collections = [
         date: "c. 1857",
         medium: "Woodblock print",
         dimensions: "36 × 24 cm",
-        image: "/src/assets/Sudden Shower over Shin-Ōhashi bridge and Atake.jpg"
+        image: "/images/Sudden Shower over Shin-Ōhashi bridge and Atake.jpg"
       },
       {
         title: "Plum Garden at Kameido",
@@ -114,7 +114,7 @@ export const Collections = [
         date: "1857",
         medium: "Woodblock print",
         dimensions: "36 × 23 cm",
-        image: "/src/assets/Plum Garden at Kameido.jpg"
+        image: "/images/Plum Garden at Kameido.jpg"
       }
     ]
   }

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function MovementListView({
   expandedEras, setExpandedEras, selectedEras, selectedMovements,
-  setSelectedMovements, hoveredMovement, setHoveredMovement, onZoomToEra
+  setSelectedMovements, hoveredMovement, setHoveredMovement, onZoomToEra, onZoomToMovement, showTimeline
 }) {
   const { movementsByEra } = Keys.filters;
 
@@ -51,6 +51,8 @@ export default function MovementListView({
             toggleMovementSelection={toggleMovementSelection}
             clearEraSelections={clearEraSelections}
             onZoomToEra={onZoomToEra}
+            onZoomToMovement={onZoomToMovement}
+            showTimeline={showTimeline}
           />
         );
       })}

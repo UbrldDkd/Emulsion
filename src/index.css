@@ -53,21 +53,19 @@ select:focus {
   box-shadow: none !important;
 }
 
-/* Mobile scaling - everything 80% on screens 768px and below */
+/* Mobile: reduce base font size instead of scaling */
 @media (max-width: 768px) {
-  body {
-    transform: scale(0.8);
-    transform-origin: top left;
-    width: 125vw;
-    height: 125vh;
-    overflow-x: hidden;
-  }
-
   html {
+    font-size: 80%; /* 80% of default font size */
     overflow-x: hidden;
   }
-
+  body {
+    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
   #root {
     overflow-x: hidden;
   }
 }
+

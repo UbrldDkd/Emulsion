@@ -15,7 +15,7 @@ export const ArtistsData = [
         dimensions: "41.2 × 54.2 cm",
         objectDate: "1954",
         location: "Art Gallery of Hamilton",
-        image: "/src/assets/Horse and Train.jpg",
+        image: "/images/Horse and Train.jpg",
         description: "An iconic image of a dark horse galloping toward an oncoming train on railway tracks."
       },
       {
@@ -25,7 +25,7 @@ export const ArtistsData = [
         dimensions: "60.5 × 91.5 cm",
         objectDate: "1967",
         location: "Private collection",
-        image: "/src/assets/Swimmers.jpg",
+        image: "/images/Swimmers.jpg",
         description: "Two figures diving in perfect symmetry, capturing a moment of suspended motion."
       },
       {
@@ -35,7 +35,7 @@ export const ArtistsData = [
         dimensions: "61 × 92.5 cm",
         objectDate: "1965",
         location: "National Gallery of Canada",
-        image: "/src/assets/To Prince Edward Island.jpg",
+        image: "/images/To Prince Edward Island.jpg",
         description: "A woman gazing through binoculars from a ferry, with geometric precision and maritime atmosphere."
       },
       {
@@ -45,7 +45,7 @@ export const ArtistsData = [
         dimensions: "59.5 × 92.3 cm",
         objectDate: "1967",
         location: "Private collection",
-        image: "/src/assets/Pacific.jpg",
+        image: "/images/Pacific.jpg",
         description: "A man with a pistol facing the ocean, creating an atmosphere of existential tension."
       },
       {
@@ -55,7 +55,7 @@ export const ArtistsData = [
         dimensions: "57.1 × 74.9 cm",
         objectDate: "1955",
         location: "National Gallery of Canada",
-        image: "/src/assets/Family and Rainstorm.jpg",
+        image: "/images/Family and Rainstorm.jpg",
         description: "A family in a car watching an approaching storm, capturing suburban anxiety."
       },
       {
@@ -65,7 +65,7 @@ export const ArtistsData = [
         dimensions: "61 × 86.5 cm",
         objectDate: "1978",
         location: "Private collection",
-        image: "/src/assets/Dog and Priest.jpg",
+        image: "/images/Dog and Priest.jpg",
         description: "A priest and dog running in opposite directions, suggesting spiritual and earthly tensions."
       },
       {
@@ -75,7 +75,7 @@ export const ArtistsData = [
         dimensions: "50.8 × 66 cm",
         objectDate: "1966",
         location: "Private collection",
-        image: "/src/assets/Stop for Travellers.jpg",
+        image: "/images/Stop for Travellers.jpg",
         description: "A woman at a roadside rest stop, capturing the loneliness of modern travel."
       },
       {
@@ -85,7 +85,7 @@ export const ArtistsData = [
         dimensions: "71 × 92.5 cm",
         objectDate: "1963",
         location: "Private collection",
-        image: "/src/assets/Moon and Cow.jpg",
+        image: "/images/Moon and Cow.jpg",
         description: "A black and white cow under moonlight, creating a surreal nocturnal scene."
       },
       {
@@ -95,7 +95,7 @@ export const ArtistsData = [
         dimensions: "36.5 × 36.5 cm",
         objectDate: "1966",
         location: "Private collection",
-        image: "/src/assets/Truck Stop.jpg",
+        image: "/images/Truck Stop.jpg",
         description: "A night scene at a truck stop, capturing the transient nature of highway culture."
       }
     ]
@@ -118,7 +118,7 @@ export const ArtistsData = [
         dimensions: "67 × 49 cm",
         objectDate: "1500",
         location: "Alte Pinakothek, Munich",
-        image: "/src/assets/Self-Portrait at 28.jpg",
+        image: "/images/Self-Portrait at 28.jpg",
         description: "A frontal self-portrait with Christ-like imagery, asserting the artist's divine creativity."
       },
       {
@@ -128,7 +128,7 @@ export const ArtistsData = [
         dimensions: "215 × 76 cm each",
         objectDate: "1526",
         location: "Alte Pinakothek, Munich",
-        image: "/src/assets/The Four Apostles.jpg",
+        image: "/images/The Four Apostles.jpg",
         description: "Monumental panels depicting John, Peter, Mark, and Paul with Protestant overtones."
       },
       // Watercolors
@@ -139,7 +139,7 @@ export const ArtistsData = [
         dimensions: "25.1 × 22.6 cm",
         objectDate: "1502",
         location: "Albertina, Vienna",
-        image: "/src/assets/Young Hare.jpg",
+        image: "/images/Young Hare.jpg",
         description: "A naturalistic study of a hare, demonstrating unprecedented observational skill."
       },
       {
@@ -149,7 +149,7 @@ export const ArtistsData = [
         dimensions: "41 × 31.5 cm",
         objectDate: "1503",
         location: "Albertina, Vienna",
-        image: "/src/assets/The Great Piece of Turf.jpg",
+        image: "/images/The Great Piece of Turf.jpg",
         description: "A detailed study of wild grasses and plants, revolutionary in its attention to nature."
       },
       // PRINTS AND DRAWINGS
@@ -161,7 +161,7 @@ export const ArtistsData = [
         dimensions: "24.5 × 19.1 cm",
         objectDate: "1513",
         location: "Various collections",
-        image: "/src/assets/Knight, Death and the Devil.jpg",
+        image: "/images/Knight, Death and the Devil.jpg",
         description: "A knight rides through a dark valley, unmoved by Death and the Devil beside him."
       },
       {
@@ -171,7 +171,7 @@ export const ArtistsData = [
         dimensions: "24 × 18.8 cm",
         objectDate: "1514",
         location: "Various collections",
-        image: "/src/assets/Melencolia I.jpg",
+        image: "/images/Melencolia I.jpg",
         description: "A complex allegorical engraving exploring melancholy, creativity, and mathematical symbolism."
       },
       // Woodcuts
@@ -182,7 +182,7 @@ export const ArtistsData = [
         dimensions: "39.2 × 27.9 cm",
         objectDate: "1498",
         location: "Various collections",
-        image: "/src/assets/The Four Horsemen of the Apocalypse.jpg",
+        image: "/images/The Four Horsemen of the Apocalypse.jpg",
         description: "A dramatic woodcut from the Apocalypse series showing the biblical horsemen."
       },
       {
@@ -192,7 +192,7 @@ export const ArtistsData = [
         dimensions: "21.4 × 29.8 cm",
         objectDate: "1515",
         location: "Various collections",
-        image: "/src/assets/Rhinoceros.jpg",
+        image: "/images/Rhinoceros.jpg",
         description: "An imaginative woodcut of a rhinoceros based on descriptions, becoming an iconic image."
       },
       // Drawings
@@ -203,7 +203,7 @@ export const ArtistsData = [
         dimensions: "29.1 × 19.7 cm",
         objectDate: "1508",
         location: "Albertina, Vienna",
-        image: "/src/assets/Praying Hands.jpg",
+        image: "/images/Praying Hands.jpg",
         description: "A study of hands in prayer, becoming one of the most reproduced religious images."
       }
     ]
@@ -226,7 +226,7 @@ export const ArtistsData = [
         dimensions: "41.5 × 60 cm",
         objectDate: "1910",
         location: "Private collection",
-        image: "/src/assets/The Enigma of the Oracle.jpg",
+        image: "/images/The Enigma of the Oracle.jpg",
         description: "An early metaphysical work featuring mysterious curtains and architectural elements."
       },
       {
@@ -236,7 +236,7 @@ export const ArtistsData = [
         dimensions: "135.2 × 64.8 cm",
         objectDate: "1912-1913",
         location: "Museum of Modern Art, New York",
-        image: "/src/assets/The Nostalgia of the Infinite.jpg",
+        image: "/images/The Nostalgia of the Infinite.jpg",
         description: "A towering structure casting long shadows in a metaphysical landscape."
       },
       {
@@ -246,7 +246,7 @@ export const ArtistsData = [
         dimensions: "73.5 × 100.5 cm",
         objectDate: "1913",
         location: "Peggy Guggenheim Collection, Venice",
-        image: "/src/assets/The Red Tower.jpg",
+        image: "/images/The Red Tower.jpg",
         description: "An enigmatic architectural composition featuring a prominent red tower against a dreamlike landscape."
       },
       {
@@ -256,7 +256,7 @@ export const ArtistsData = [
         dimensions: "106 × 94 cm",
         objectDate: "1913",
         location: "Private collection",
-        image: "/src/assets/The Uncertainty of the Poet.jpg",
+        image: "/images/The Uncertainty of the Poet.jpg",
         description: "A dreamlike scene with classical architecture and unexpected juxtapositions."
       },
       {
@@ -266,7 +266,7 @@ export const ArtistsData = [
         dimensions: "35 × 60 cm",
         objectDate: "1913",
         location: "Art Gallery of Ontario, Toronto",
-        image: "/src/assets/Piazza d'Italia.jpg",
+        image: "/images/Piazza d'Italia.jpg",
         description: "An archetypal metaphysical piazza with classical architecture and mysterious shadows."
       },
       // Peak Metaphysical Period (1914)
@@ -277,7 +277,7 @@ export const ArtistsData = [
         dimensions: "87 × 71.5 cm",
         objectDate: "1914",
         location: "Private collection",
-        image: "/src/assets/The Mystery and Melancholy of a Street.jpg",
+        image: "/images/The Mystery and Melancholy of a Street.jpg",
         description: "A haunting cityscape with dramatic shadows and mysterious architectural elements."
       },
       {
@@ -287,7 +287,7 @@ export const ArtistsData = [
         dimensions: "73 × 59.1 cm",
         objectDate: "1914",
         location: "Museum of Modern Art, New York",
-        image: "/src/assets/The Song of Love.jpg",
+        image: "/images/The Song of Love.jpg",
         description: "A surreal composition featuring a classical sculpture head, rubber glove, and green ball."
       },
       // Mannequin Period (1916-1918)
@@ -298,7 +298,7 @@ export const ArtistsData = [
         dimensions: "51.5 × 71.5 cm",
         objectDate: "1916",
         location: "Tate Modern, London",
-        image: "/src/assets/The Melancholy of Departure.jpg",
+        image: "/images/The Melancholy of Departure.jpg",
         description: "A station scene with mysterious mannequin figures and geometric architecture."
       },
       {
@@ -308,7 +308,7 @@ export const ArtistsData = [
         dimensions: "97 × 66 cm",
         objectDate: "1916-1918",
         location: "Private collection",
-        image: "/src/assets/The Disquieting Muses.jpg",
+        image: "/images/The Disquieting Muses.jpg",
         description: "Mannequin-like figures in a desolate square with factory chimneys in the background."
       },
       {
@@ -318,7 +318,7 @@ export const ArtistsData = [
         dimensions: "104.5 × 69.8 cm",
         objectDate: "1917",
         location: "Museum of Modern Art, New York",
-        image: "/src/assets/The Great Metaphysician.jpg",
+        image: "/images/The Great Metaphysician.jpg",
         description: "A towering architectural construction of geometric forms suggesting a mysterious figure."
       },
       // Later Work
@@ -329,7 +329,7 @@ export const ArtistsData = [
         dimensions: "60 × 50 cm",
         objectDate: "1968",
         location: "Private collection",
-        image: "/src/assets/The Archaeologists.jpg",
+        image: "/images/The Archaeologists.jpg",
         description: "A later work featuring mannequin figures examining classical fragments."
       }
     ]

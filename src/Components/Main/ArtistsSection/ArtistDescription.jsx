@@ -2,7 +2,7 @@ export default function ArtistDescription({ artist }) {
   return (
     <div>
       {/* Artist Header */}
-      <div className="flex items-start justify-between mb-6">
+      <div className="sticky top-0 bg-stone-900 z-10 py-4 -mx-4 px-4 flex items-start justify-between mb-6">
         <div>
           <h3 className="text-xl font-light text-stone-100 tracking-wide mb-2">
             {artist.name}
