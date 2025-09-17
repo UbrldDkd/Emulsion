@@ -196,9 +196,9 @@ export default function ArtformFilter({
             <div className="flex-1">
               <div className={`font-medium text-sm flex items-center gap-2 ${
                 isSelected
-                  ? theme.accent
+                  ? (isLightMode ? 'text-amber-100' : 'text-amber-300/50')
                   : hoveredArtform === artFormKey
-                    ? 'text-stone-600'
+                    ? 'text-stone-300'
                     : theme.text
               }`}>
                 {artForm.label}
@@ -263,9 +263,9 @@ export default function ArtformFilter({
             >
               <span className={`${
                 isSelected
-                  ? theme.accent
+                  ? (isLightMode ? 'text-amber-100' : 'text-amber-300/50')
                   : isHovered
-                    ? 'text-stone-800'
+                    ? (isLightMode ? 'text-stone-800' : 'text-stone-300')
                     : theme.text
               }`}>
                 {item.label}
