@@ -1,62 +1,43 @@
 import { Keys } from '../../../../Keys.js';
 import Era from './Era.jsx';
-import { useEffect, useRef, useState } from 'react';
+import { toggleSetItem, removeMultipleFromSet } from '../../../../../utils/setHelpers.js';
 
-export default function MovementListView({
-  expandedEras, setExpandedEras, selectedEras, selectedMovements,
-  setSelectedMovements, hoveredMovement, setHoveredMovement, onZoomToEra, onZoomToMovement, showTimeline
-}) {
+export default function MovementListView(props) {
   const { movementsByEra } = Keys.filters;
+  const { setExpandedEras, setSelectedMovements, selectedMovements, expandedEras } = props;
 
-  const toggleSet = (setState, key) => setState(prev => {
-    const newSet = new Set(prev);
-    newSet.has(key) ? newSet.delete(key) : newSet.add(key);
-    return newSet;
-  });
-
-  const toggleEra = (eraKey) => toggleSet(setExpandedEras, eraKey);
-  const toggleMovementSelection = (movementId) => toggleSet(setSelectedMovements, movementId);
-
-  const clearEraSelections = (eraId, eraMovements) => {
-    setSelectedMovements(prev => {
-      const newSet = new Set(prev);
-      eraMovements.forEach(movement => newSet.delete(`${eraId}-${movement.label}`));
-      return newSet;
-    });
+  const actions = {
+    toggleEra: (id) => setExpandedEras(prev => toggleSetItem(prev, id)),
+    toggleMovement: (id) => setSelectedMovements(prev => toggleSetItem(prev, id)),
+    clearEraSelections: (eraId, movements) => {
+      const ids = movements.map(m => `${eraId}-${m.label}`);
+      setSelectedMovements(prev => removeMultipleFromSet(prev, ids));
+    }
   };
 
   return (
-    <div className="relative">
-
-      <div className="space-y-3 max-h-80 overflow-y-auto scrollbar-hide">
-      {Object.entries(movementsByEra).map(([eraKey, era]) => {
+    <div className="space-y-3 max-h-80 overflow-y-auto scrollbar-hide">
+      {Object.entries(movementsByEra).map(([key, era]) => {
         const eraId = era.label.toLowerCase().replace(/\s+/g, '-');
-        const selectedCount = era.movements.filter(movement =>
-          selectedMovements?.has(`${eraId}-${movement.label}`)
+        const selectedCount = era.movements.filter(m =>
+          selectedMovements?.has(`${eraId}-${m.label}`)
         ).length;
 
         return (
           <Era
-            key={eraKey}
-            eraKey={eraKey}
+            key={key}
+            {...props}
             era={era}
             eraId={eraId}
+            eraKey={key}
             isExpanded={expandedEras.has(eraId)}
-            isEraSelected={selectedEras?.has(eraId)}
             selectedCount={selectedCount}
-            selectedMovements={selectedMovements}
-            hoveredMovement={hoveredMovement}
-            setHoveredMovement={setHoveredMovement}
-            toggleEra={toggleEra}
-            toggleMovementSelection={toggleMovementSelection}
-            clearEraSelections={clearEraSelections}
-            onZoomToEra={onZoomToEra}
-            onZoomToMovement={onZoomToMovement}
-            showTimeline={showTimeline}
+            toggleEra={actions.toggleEra}
+            toggleMovementSelection={actions.toggleMovement}
+            clearEraSelections={actions.clearEraSelections}
           />
         );
       })}
-      </div>
     </div>
   );
 }

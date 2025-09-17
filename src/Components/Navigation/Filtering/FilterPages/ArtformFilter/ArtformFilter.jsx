@@ -8,7 +8,7 @@ export default function ArtformFilter({
   hoveredMediumItem,
   setHoveredMediumItem
 }) {
-  const { theme } = useTheme();
+  const { theme, isLightMode } = useTheme();
   const { artForms } = Keys;
 
   const [selectedArtform, setSelectedArtform] = useState(null);
@@ -133,7 +133,7 @@ export default function ArtformFilter({
             e.stopPropagation();
             handleFilterClick(artform, `${type}s`);
           }}
-          className={`px-2 py-0.5 text-xs rounded transition-all duration-200 ${theme.cardBackground} ${theme.border} border hover:${theme.hover} hover:border-amber-400/50 flex items-center justify-center gap-1`}
+          className={`px-2 py-1.5 text-xs rounded transition-all duration-200 ${theme.cardBackground} ${theme.border} border hover:bg-stone-200/40 hover:text-amber-800/60 flex items-center justify-center gap-1`}
           title={`Filter by ${type}s`}
         >
           <span className={theme.text}>{type === 'genre' ? 'Genres' : 'Mediums'}</span>
@@ -185,19 +185,25 @@ export default function ArtformFilter({
           onClick={() => toggleArtformSelection(artFormKey)}
           className={`w-full p-3 rounded text-left transition-all duration-200 ${
             isSelected
-              ? `${theme.selected} border-2 ${theme.border}`
-              : `${theme.cardBackground} ${theme.border} border hover:${theme.hover} hover:border-amber-400/70`
+              ? `${theme.selected} border ${theme.border}`
+              : hoveredArtform === artFormKey
+                ? `${theme.hover} border ${theme.border}`
+                : `${theme.cardBackground} ${theme.border} border hover:${theme.hover}`
           }`}
           title="Select all content from this artform"
         >
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1">
               <div className={`font-medium text-sm flex items-center gap-2 ${
-                isSelected ? theme.accent : theme.text
+                isSelected
+                  ? theme.accent
+                  : hoveredArtform === artFormKey
+                    ? 'text-stone-600'
+                    : theme.text
               }`}>
                 {artForm.label}
                 {selectedCount > 0 && (
-                  <div className={`w-5 h-5 bg-amber-200/30 text-amber-950 text-xs font-medium rounded-full flex items-center justify-center transition-opacity duration-300 ${
+                  <div className={`w-5 h-5 bg-amber-200/30 text-amber-950 text-xs font-medium rounded-full flex items-center justify-center transition-all duration-300 ${
                     hoveredArtform !== artFormKey ? 'opacity-100' : 'opacity-0'
                   }`}>
                     {selectedCount}
@@ -211,7 +217,7 @@ export default function ArtformFilter({
           </div>
         </button>
 
-        <div className={`absolute top-1/2 right-1 transform -translate-y-1/2 flex flex-col gap-2 transition-all duration-300 ${
+        <div className={`absolute top-1/2 right-1 transform -translate-y-1/2 flex flex-col gap-0.5 transition-all duration-300 ${
           hoveredArtform === artFormKey
             ? 'opacity-100 translate-x-0'
             : 'opacity-0 translate-x-4 pointer-events-none'
@@ -319,7 +325,7 @@ export default function ArtformFilter({
           {selectedArtform && (
             <button
               onClick={handleBackClick}
-              className={`flex items-center gap-1 ${theme.textMuted} hover:${theme.text} transition-colors text-xs focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1`}
+              className={`flex items-center gap-1 ${theme.textMuted} hover:${theme.text} transition-colors text-xs focus:outline-none rounded px-2 py-1`}
               aria-label="Go back to artform list"
               type="button"
             >

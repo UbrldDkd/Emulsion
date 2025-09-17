@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 're
 import { Keys } from '../../../../Keys.js';
 import { useTheme } from '../../../../../contexts/ThemeContext.jsx';
 
-const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExpandedEras, selectedMovements, hoveredMovement, setHoveredMovement }, ref) {
+const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExpandedEras, selectedMovements, hoveredMovement, setHoveredMovement, deviceType = 'desktop' }, ref) {
   const { theme } = useTheme();
   const [zoom, setZoom] = useState(1);
   const [localHoveredMovement, setLocalHoveredMovement] = useState(null); // For timeline-only hovers
@@ -43,7 +43,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
     }
 
     // Color scheme based on era type - optimized for light/dark modes
-    const colors = theme.cardBackground.includes('stone') && theme.text.includes('950') 
+    const colors = theme.cardBackground.includes('stone-100') 
       ? [ // Light mode - darker yellows/ambers, lighter others
         '#b45309', // Contemporary - brown amber (was light yellow)
         '#d97706', // Early 20th - dark amber (was yellow)
@@ -428,12 +428,12 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
 
 
   return (
-    <div className="relative lg:h-[490px] h-[280px]">
+    <div className={`relative ${deviceType === 'desktop' ? 'h-[490px]' : 'h-[280px]'}`}>
       {/* Timeline Container */}
       <div
         ref={containerRef}
         className={`relative overflow-auto rounded-lg ${theme.border} ${
-          theme.cardBackground.includes('stone') && theme.text.includes('950')
+          theme.cardBackground.includes('stone-100')
             ? 'bg-stone-200/20 backdrop-blur-sm'
             : 'bg-stone-900/20 backdrop-blur-sm'
         }`}
@@ -461,7 +461,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
               y1="50" 
               x2={timelineX} 
               y2={svgHeight + 50} 
-              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#d97706'} 
+              stroke={theme.cardBackground.includes('stone-100') ? '#b45309' : '#d97706'} 
               strokeWidth="2"
               className="opacity-70"
             />
@@ -493,11 +493,11 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                     x={timelineX + braceDepth + 10}
                     y={startY + (endY - startY) / 2}
                     className={`text-sm font-light cursor-pointer transition-colors ${
-                      theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                      theme.cardBackground.includes('stone-100') 
                         ? 'hover:fill-stone-700' 
                         : 'hover:fill-amber-300'
                     } ${
-                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-900' : 'fill-stone-200'
+                      theme.cardBackground.includes('stone-100') ? 'fill-stone-700' : 'fill-stone-200'
                     }`}
                     dominantBaseline="central"
                     textAnchor="start"
@@ -511,7 +511,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                     x={timelineX + braceDepth + 10}
                     y={startY + (endY - startY) / 2 + 14}
                     className={`text-xs font-light ${
-                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-800' : 'fill-stone-400'
+                      theme.cardBackground.includes('stone-100') ? 'fill-stone-800' : 'fill-stone-400'
                     }`}
                     dominantBaseline="central"
                     textAnchor="start"
@@ -570,7 +570,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                   x={timelineX - 40}
                                   y={startY + (endY - startY) / 2}
                                   className={`text-xs font-light cursor-pointer transition-colors ${
-                                    theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                    theme.cardBackground.includes('stone-100') 
                                       ? 'fill-stone-800 hover:fill-stone-600' 
                                       : 'fill-amber-400 hover:fill-amber-300'
                                   }`}
@@ -620,10 +620,10 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                   y={startY + (endY - startY) / 2}
                                   className={`text-xs font-light cursor-pointer transition-colors ${
                                     isShowingSelected 
-                                      ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                      ? (theme.cardBackground.includes('stone-100') 
                                           ? 'fill-stone-700 hover:fill-stone-600' 
                                           : 'fill-amber-400 hover:fill-amber-300')
-                                      : (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                      : (theme.cardBackground.includes('stone-100') 
                                           ? 'fill-stone-500 hover:fill-stone-700' 
                                           : 'fill-stone-400 hover:fill-amber-300')
                                   }`}
@@ -683,7 +683,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                   className={`cursor-pointer transition-all duration-300 ease-out text-xs font-medium ${
                                     isHovered 
                                       ? 'fill-amber-300' 
-                                      : (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                      : (theme.cardBackground.includes('stone-100') 
                                           ? 'fill-stone-700 hover:fill-stone-600' 
                                           : 'fill-amber-500 hover:fill-amber-400')
                                   }`}
@@ -698,7 +698,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                   <path
                                     d={generateCurlyBrace(movStartY, movEndY, 'left', 15)}
                                     fill="none"
-                                    stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#f59e0b'}
+                                    stroke={theme.cardBackground.includes('stone-100') ? '#b45309' : '#f59e0b'}
                                     strokeWidth="1.5"
                                     transform={`translate(${timelineX - 50}, 0)`}
                                   />
@@ -708,7 +708,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                     y1={movStartY}
                                     x2={timelineX}
                                     y2={movStartY}
-                                    stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#f59e0b'}
+                                    stroke={theme.cardBackground.includes('stone-100') ? '#b45309' : '#f59e0b'}
                                     strokeWidth="1"
                                     strokeDasharray="2,3"
                                   />
@@ -718,7 +718,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                                     y1={movEndY}
                                     x2={timelineX}
                                     y2={movEndY}
-                                    stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#f59e0b'}
+                                    stroke={theme.cardBackground.includes('stone-100') ? '#b45309' : '#f59e0b'}
                                     strokeWidth="1"
                                     strokeDasharray="2,3"
                                   />
@@ -789,14 +789,14 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                           r={zoom >= 5 ? 4 : 3}
                           fill={
                             isSelected 
-                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24')
+                              ? (theme.cardBackground.includes('stone-100') ? '#b45309' : '#fbbf24')
                               : isHoveredFromList
-                                ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') // Dark amber for list hover
+                                ? (theme.cardBackground.includes('stone-100') ? '#b45309' : '#fbbf24') // Dark amber for list hover
                                 : isHoveredFromTimeline 
-                                  ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                  ? (theme.cardBackground.includes('stone-100') 
                                       ? `${era.color}dd` // Darker tone of era color for timeline hover in light mode
                                       : era.color) // Original color for dark mode
-                                  : (theme.cardBackground.includes('stone') && theme.text.includes('950')
+                                  : (theme.cardBackground.includes('stone-100')
                                       ? `${era.color}80` // Lighter tone of era color for light mode
                                       : era.color) // Original color for dark mode
                           }
@@ -806,7 +806,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                               ? 1 
                               : isSelected 
                                 ? 0.9 
-                                : (theme.cardBackground.includes('stone') && theme.text.includes('950') ? 0.3 : 0.6)
+                                : (theme.cardBackground.includes('stone-100') ? 0.3 : 0.6)
                           }}
                         />
 
@@ -820,11 +820,11 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             isHoveredFromTimeline
                               ? 'fill-stone-300' // Light color for direct timeline hover only
                               : isHoveredFromList
-                                ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                ? (theme.cardBackground.includes('stone-100') 
                                   ? 'fill-amber-800' // Dark amber for light mode list hover
                                   : 'fill-amber-300') // Amber for dark mode list hover
                                 : isSelected
-                                  ? (theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                                  ? (theme.cardBackground.includes('stone-100') 
                                       ? 'fill-amber-700' // Dark amber for light mode selected
                                       : 'fill-amber-400') // Amber for dark mode selected 
                                   : isExpanded 
@@ -858,8 +858,8 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             d={generateCurlyBrace(movStartY, movEndY, 'left', 15)}
                             fill="none"
                             stroke={isSelected 
-                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') 
-                              : (isHoveredFromList && theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                              ? (theme.cardBackground.includes('stone-100') ? '#b45309' : '#fbbf24') 
+                              : (isHoveredFromList && theme.cardBackground.includes('stone-100') 
                                   ? '#b45309' 
                                   : era.color)
                             }
@@ -876,8 +876,8 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             x2={timelineX}
                             y2={movStartY}
                             stroke={isSelected 
-                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') 
-                              : (isHoveredFromList && theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                              ? (theme.cardBackground.includes('stone-100') ? '#b45309' : '#fbbf24') 
+                              : (isHoveredFromList && theme.cardBackground.includes('stone-100') 
                                   ? '#b45309' 
                                   : era.color)
                             }
@@ -894,8 +894,8 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             x2={timelineX}
                             y2={movEndY}
                             stroke={isSelected 
-                              ? (theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#b45309' : '#fbbf24') 
-                              : (isHoveredFromList && theme.cardBackground.includes('stone') && theme.text.includes('950') 
+                              ? (theme.cardBackground.includes('stone-100') ? '#b45309' : '#fbbf24') 
+                              : (isHoveredFromList && theme.cardBackground.includes('stone-100') 
                                   ? '#b45309' 
                                   : era.color)
                             }
@@ -918,7 +918,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                             <path
                               d={generateCurlyBrace(movStartY, movEndY, 'left', 15)}
                               fill="none"
-                              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#78716c' : '#a8a29e'}
+                              stroke={theme.cardBackground.includes('stone-100') ? '#78716c' : '#a8a29e'}
                               strokeWidth="1.5"
                               transform={`translate(${timelineX - 50}, 0)`}
                             />
@@ -929,7 +929,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                               y1={movStartY}
                               x2={timelineX}
                               y2={movStartY}
-                              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#78716c' : '#a8a29e'}
+                              stroke={theme.cardBackground.includes('stone-100') ? '#78716c' : '#a8a29e'}
                               strokeWidth="1"
                               strokeDasharray="2,3"
                             />
@@ -940,7 +940,7 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                               y1={movEndY}
                               x2={timelineX}
                               y2={movEndY}
-                              stroke={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#78716c' : '#a8a29e'}
+                              stroke={theme.cardBackground.includes('stone-100') ? '#78716c' : '#a8a29e'}
                               strokeWidth="1"
                               strokeDasharray="2,3"
                             />
@@ -967,14 +967,14 @@ const TimelineViewer = forwardRef(function TimelineViewer({ expandedEras, setExp
                     cx={timelineX}
                     cy={y}
                     r={2}
-                    fill={theme.cardBackground.includes('stone') && theme.text.includes('950') ? '#57534e' : '#78716c'}
+                    fill={theme.cardBackground.includes('stone-100') ? '#57534e' : '#78716c'}
                     className="opacity-60"
                   />
                   <text
                     x={timelineX - 15}
                     y={y}
                     className={`text-[10px] font-light ${
-                      theme.cardBackground.includes('stone') && theme.text.includes('950') ? 'fill-stone-800' : 'fill-stone-400'
+                      theme.cardBackground.includes('stone-100') ? 'fill-stone-800' : 'fill-stone-400'
                     }`}
                     dominantBaseline="central"
                     textAnchor="end"

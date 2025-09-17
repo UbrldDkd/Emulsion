@@ -20,7 +20,8 @@ export default function AdvancedSearchDropdown() {
   const [selectedEras, setSelectedEras] = useState(new Set()); // Selected eras
   const [selectedMovements, setSelectedMovements] = useState(new Set()); // Selected movements
   const [hoveredMovement, setHoveredMovement] = useState(null); // Shared hover state
-  const timelineViewerRef = useRef(null); // Reference to TimelineViewer for zoom functionality
+  const desktopTimelineRef = useRef(null); // Desktop timeline reference
+  const mobileTimelineRef = useRef(null); // Mobile timeline reference
 
 
   // State for MediumDisplay
@@ -145,7 +146,7 @@ export default function AdvancedSearchDropdown() {
         <div
           ref={timelineRef}
           className={`hidden lg:block absolute right-[25rem] top-[65px] w-96 h-[550px] ${
-            theme.cardBackground.includes('stone') && theme.text.includes('950')
+            theme.cardBackground.includes('stone-100')
               ? 'bg-stone-100/70 backdrop-blur-xl'
               : 'bg-stone-800/90 backdrop-blur-xl'
           } rounded-l shadow-xl p-4 z-[60] transition-all duration-300 ease-out ${
@@ -159,13 +160,14 @@ export default function AdvancedSearchDropdown() {
           </div>
           <div className="h-[calc(100%-3rem)]">
             <TimelineViewer
-              ref={timelineViewerRef}
+              ref={desktopTimelineRef}
               viewMode="timeline"
               expandedEras={expandedEras}
               setExpandedEras={setExpandedEras}
               selectedMovements={selectedMovements}
               hoveredMovement={hoveredMovement}
               setHoveredMovement={setHoveredMovement}
+              deviceType="desktop"
             />
           </div>
         </div>
@@ -175,7 +177,7 @@ export default function AdvancedSearchDropdown() {
       {filterBy === 'Era' && isOpen && showTimeline && (
         <div
           className={`lg:hidden absolute right-4 top-16 w-96 h-[300px] ${
-            theme.cardBackground.includes('stone') && theme.text.includes('950')
+            theme.cardBackground.includes('stone-100')
               ? 'bg-stone-100/95 backdrop-blur-xl'
               : 'bg-stone-800/95 backdrop-blur-xl'
           } ${theme.border} rounded shadow-xl p-4 z-[60] transition-all duration-300 ease-out ${
@@ -189,13 +191,14 @@ export default function AdvancedSearchDropdown() {
           </div>
           <div className="h-[calc(100%-3rem)]">
             <TimelineViewer
-              ref={timelineViewerRef}
+              ref={mobileTimelineRef}
               viewMode="timeline"
               expandedEras={expandedEras}
               setExpandedEras={setExpandedEras}
               selectedMovements={selectedMovements}
               hoveredMovement={hoveredMovement}
               setHoveredMovement={setHoveredMovement}
+              deviceType="mobile"
             />
           </div>
         </div>
@@ -225,7 +228,7 @@ export default function AdvancedSearchDropdown() {
                       <button
                         onClick={() => setFilterByOpen(!filterByOpen)}
                         className={`flex items-center gap-x-1 px-2 py-1 ${theme.text} ${
-                          theme.cardBackground.includes('stone') && theme.text.includes('950')
+                          theme.cardBackground.includes('stone-100')
                             ? 'hover:text-stone-800'
                             : 'hover:text-stone-200'
                         } ${theme.hover} rounded transition-all duration-200`}
@@ -258,8 +261,8 @@ export default function AdvancedSearchDropdown() {
                                 key={option}
                                 onClick={() => handleSelectFilterBy(option)}
                                 className={`px-2 py-1 rounded transition-all duration-200 whitespace-nowrap ${
-                                  theme.cardBackground.includes('stone') && theme.text.includes('950')
-                                    ? '!text-black hover:!text-stone-700 hover:bg-stone-300/30'
+                                  theme.cardBackground.includes('stone-100')
+                                    ? '!text-stone-500 hover:!text-stone-700 hover:bg-stone-300/30'
                                     : '!text-stone-400 hover:!text-stone-300 hover:bg-stone-700/30'
                                 }`}
                               >
@@ -297,7 +300,8 @@ export default function AdvancedSearchDropdown() {
                       setHoveredMovement={setHoveredMovement}
                       showTimeline={showTimeline}
                       setShowTimeline={setShowTimeline}
-                      timelineViewerRef={timelineViewerRef}
+                      timelineViewerRef={desktopTimelineRef}
+                      deviceType="desktop"
                     />
                   </div>
 
@@ -314,7 +318,8 @@ export default function AdvancedSearchDropdown() {
                       setHoveredMovement={setHoveredMovement}
                       showTimeline={showTimeline}
                       setShowTimeline={setShowTimeline}
-                      timelineViewerRef={timelineViewerRef}
+                      timelineViewerRef={mobileTimelineRef}
+                      deviceType="mobile"
                     />
                   </div>
                 </>
@@ -338,9 +343,13 @@ export default function AdvancedSearchDropdown() {
 
         {/* Action Buttons */}
             <div className={`border-t ${theme.border} p-3 flex items-center justify-between`}>
-          <button 
+          <button
             onClick={clearCurrentFilters}
-            className="text-stone-400 hover:text-stone-300 text-xs font-medium transition-colors"
+            className={`text-xs font-medium transition-colors ${
+              theme.cardBackground.includes('stone-100')
+                ? 'text-stone-600 hover:text-stone-700'
+                : 'text-stone-400 hover:text-stone-300'
+            }`}
           >
                 Clear All
               </button>
@@ -362,7 +371,7 @@ export default function AdvancedSearchDropdown() {
                   }
                 }}
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 shadow-sm backdrop-blur-sm ${
-                theme.cardBackground.includes('stone') && theme.text.includes('950')
+                theme.cardBackground.includes('stone-100')
                   ? 'bg-stone-700 hover:bg-stone-600 active:bg-stone-800 text-stone-100 hover:text-white' // Light mode
                   : 'bg-stone-800 hover:bg-stone-700 active:bg-stone-900 text-stone-100 hover:text-white' // Dark mode - darker
               }`}>
