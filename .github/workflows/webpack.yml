@@ -1,0 +1,43 @@
+name: NodeJS with Webpack
+
+on:
+  push:
+    branches: [ "ApplicationReady" ]
+  pull_request:
+    branches: [ "ApplicationReady" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Build
+      run: |
+        npm install
+        npx webpack
+
+          
+          
+          - name: Setup React
+          uses: kirkeaton/setup-react@v1.0.5
+          with:
+            # The React version to install.
+            react-version: 
+            # The React DOM version to install.
+            react-dom-version: 
+            # The React types version to install.
+            react-types-version: # optional
+            # The React DOM types version to install.
+            react-dom-types-version: # optional
+          
