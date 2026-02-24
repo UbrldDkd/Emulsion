@@ -1,12 +1,66 @@
-# React + Vite
+Art Archive
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Art Archive is a static frontend web application built as a portfolio project to demonstrate frontend development skills, UI structure, and scalable project organization.
 
-Currently, two official plugins are available:
+The application is currently frontend-only. Backend functionality and data integration are planned for future iterations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⸻
 
-## Expanding the ESLint configuration
+Project Status
+	•	Static frontend
+	•	No backend or API
+	•	No database
+	•	No authentication
+	•	Placeholder / local data
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+⸻
+
+Current Features
+	•	Responsive UI built with Tailwind CSS
+	•	Component-based architecture using React
+	•	Structured layout prepared for:
+	•	Art form filtering
+	•	Media filtering
+	•	Artist filtering
+	•	Year filtering (specific year or period)
+	•	Art movement and sub-movement filtering
+
+Feature logic will be implemented incrementally as the project evolves.
+
+⸻
+
+Tech Stack
+	•	React
+	•	Next.js
+	•	Vite
+	•	Tailwind CSS
+	•	JavaScript
+
+⸻
+
+Development Setup
+
+This project uses Vite for fast builds and development with Hot Module Replacement (HMR).
+
+Available official plugins:
+	•	@vitejs/plugin-react (Babel + Fast Refresh)
+	•	@vitejs/plugin-react-swc (SWC + Fast Refresh)
+
+⸻
+
+Purpose
+
+This project was created as a portfolio piece to showcase:
+	•	Frontend architecture and component structure
+	•	Styling and responsive design
+	•	Maintainable code practices
+	•	Readiness for future feature expansion
+
+⸻
+
+Planned Work
+	•	Implement filtering logic
+	•	Replace local data with API-driven content
+	•	Add backend services
+	•	Introduce persistence and authentication
+	•	Improve accessibility and performance
